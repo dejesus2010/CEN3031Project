@@ -1,7 +1,9 @@
 CEN3031Project
 ==============
-Ryan DeJesus - rdejes2010
+Team Members:
+Ryan DeJesus - rdejes2010  
+JR Aviles - jeanralphaviles  
+Joe Liccini - josephliccini  
+Daniel Gollahon - dgollahon  
 
-JR Aviles - jeanralphaviles
-
-Joe Liccini - josephliccini
+Project Description: N/A (Joe is pursuing an opportunity with his startup.)
