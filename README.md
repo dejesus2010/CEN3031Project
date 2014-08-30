@@ -3,7 +3,7 @@ CEN3031Project
 ##### Team Members:
 Ryan DeJesus - rdejes2010  
 JR Aviles - jeanralphaviles  
-Joe Liccini - josephliccini  
+Joe Liccini - joseph.liccini  
 Daniel Gollahon - dgollahon  
 
 ##### Project Description:
