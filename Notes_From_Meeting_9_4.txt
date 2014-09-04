@@ -1,0 +1,67 @@
+ABC_001122   (e.g. CTC_020305)
+
+ABC (first three positions: human reading, chosen arbitrarily) (e.g.: CTC)
+
+00 : (Species ID) (e.g. 02)
+
+11 : (Customer ID) (e.g. 03)
+
+22 : (Number of Project with that 'Customer' and 'Species') (e.g. 05)
+
+
+Sample IDS: ABC_001122_PXX_WNXX (e.g.: CTC_020305_P01_WB09)
+
+LIMS: Laborartory Information Management System
+Contains Data for Each Sample, and keeping track of EVERYTHING that happens in the lab
+Will have a series of 'checks' so that the techs do not mistakenly skip a step of the laboratory process
+Will Generate Metrics on Efficiency within the Lab
+
+When Samples Arrive (in plates):
+	In between each step, a barcode will be printed for each step, and scanned (maybe upload a picture, add comments, etc)
+1: Get Plates (For example, 3 Plates)
+2: Barcode the plates (comments, 'Plates arrived in Ice'), make a note in the Log
+3: Plates are placed somewhere in the Lab, so the lab needs to update whwat Freezer, shelf, cabinet in the Lab
+	(Plates are kept for up to a year, and need to be updated accordingly)
+4: QC: a 'visual' inspection 
+5: Quantification (Using a robot, we put the Samples in a special solution, and measures the amount of flurescnecse (sp?) )
+6: Normalization (Make all the samples to use the same 'amount' of DNA (.csv is read in by the robot))
+7: Library Prep (This is where RAPIDseq deviates from TARGETseq (aka CAPTUREseq))
+CAPTUREseq
+{
+	a) Shear the DNA (chop it up!) to about 200 bases (a base is either an A, G, C, or T)
+	b) End-Repair (some things don't chop up so nicely)
+	c) Adenylation (we attach an 'A' (adenenine), and then we attach 'known' regions called 'adapters', so that we know where we start 
+		reading something that we know and don't know)
+	d) Ligation (Joining the synthetic 'barcode' sequence to attach to the sequence we are looking for)
+	e) Size-selection (Gets rid of excess & bad reads)
+	f) Amplification (Making the DNA more visible and usable, so that we can really see what we have)
+	g) Capture (That's why it's called CAPTUREseq) (We make a synthetic compliment, so that the DNA will stick to it, and the Sticky-End (Biotene)
+		Then, we use a very strong protein, that will recognize the Biotene, and bind the Protein to a bead of Iron, and then we use a Magnet on
+		the Iron beads, pulling up our 'targets', thus 'Capturing' the areas we want)
+		
+		The Probes are designed to Capture the areas we are interested in (especially areas that are Unique)
+		A binds to T, and G binds to C
+	h) SEQ (Sequencing)
+}
+
+Module 0: Steps 1 - 4.
+Module 1: Steps 5 - 6.
+Module 2: Library Prep (CAPTUREseq)
+
+
+Q+A
+Ryan: Access Control, who should have access to
+Answer: We will be using Dummy files and reads, and the User (Lab Techs) will have access from Beginning of LIMS
+Eventually clients will be able to view the status of their project
+
+Dan: Logins?
+Answer: User logs in (Orin, Ediene, one of the techs), they choose a project. They scan a plate.  If it is the right plate, then it will say OK, otherwise throw error
+
+Dan: Should lab techs be able to share?
+Answer: They will be sharing, as of now.  But we might be changing that soon.  Together the lab techs carry the projects from beginning to end TOGETHER. 
+(An aside, should there be a 'Lab' login)
+
+How often should we meet?
+Every 1 or 2 weeks
+
+Next Meeting: 
