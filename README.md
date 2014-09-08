@@ -18,7 +18,12 @@ Goals:
 	Allow Lab Techs to use Barcode scanner to update project status.
 	
 Customer: 
+
 	RAPiD Genomics, LLC.
+	
 	747 SW 2nd Ave
+	
 	Gainesville, FL 32601
+	
 	Contacts: lneves@rapid-genomics.com
+	
