@@ -12,9 +12,10 @@ LIMS Web Application for Next-Generation Sequencing (NGS)
 LIMS: Laboratory Information Management System (or Software)
 
 Goals:
-	1. Create and Maintain a database for all customers, species, and projects.
 
-	2. Allow Lab Techs to use Barcode scanner to update project status.
+	Create and Maintain a database for all customers, species, and projects.
+
+	Allow Lab Techs to use Barcode scanner to update project status.
 	
 Customer: 
 	RAPiD Genomics, LLC.
