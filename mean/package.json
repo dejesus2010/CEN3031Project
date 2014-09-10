@@ -1,12 +1,12 @@
 {
-	"name": "meanjs",
-	"description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
-	"version": "0.3.2",
+	"name": "lims",
+	"description": "A MEAN Application For Tracking Samples used in NextGeneration Sequencing",
+	"version": "0.0.1",
 	"private": false,
-	"author": "https://github.com/meanjs/mean/graphs/contributors",
+	"author": "https://github.com/dejesus2010/CEN3031Project/README.md",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/meanjs/mean.git"
+		"url": "https://github.com/dejesus2010/CEN3031Project.git"
 	},
 	"engines": {
 		"node": "0.10.x",
