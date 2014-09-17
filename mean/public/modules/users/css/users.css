@@ -3,7 +3,6 @@
 		position: fixed;
 	}
 }
-
 .remove-account-container {
 	display: inline-block;
 	position: relative;
@@ -13,4 +12,9 @@
 	top: 10px;
 	right: 10px;
 	position: absolute;
+}
+
+.signin-logo {
+  margin-top: 2%;
+  margin-bottom: 1%;
 }
