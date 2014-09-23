@@ -24,10 +24,30 @@ var ProjectSchema = new Schema({
 		trim: true,
 		required: 'Project Code cannot be blank, always in format (ABC_010203)'
 	},
-	content: {
+	customerCode: {
 		type: String,
 		default: '',
-		trim: true
+		required: 'Customer Code cannot be blank, always in format (ABC_010203)'
+	},
+	species: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Species'
+	},
+	customerDescription: {
+		type: String,
+		default: '',
+		trim: true,
+		required: 'Customer Description'
+	},
+	numSamples: {
+		type: Number,
+		default: 0,
+	},
+	numPlates: {
+		type: Number,
+		default: 0,
 	},
 	user: {
 		type: Schema.ObjectId,
