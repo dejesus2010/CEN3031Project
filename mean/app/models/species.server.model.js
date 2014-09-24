@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  * Species Schema
  */
 var SpeciesSchema = new Schema({
-	id: Number
+	id: Number,
 	name: String
 });
 
