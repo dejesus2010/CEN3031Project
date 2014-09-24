@@ -45,14 +45,6 @@ var ProjectSchema = new Schema({
 		trim: true,
 		required: 'Customer Description'
 	},
-	numSamples: {
-		type: Number,
-		default: 0,
-	},
-	numPlates: {
-		type: Number,
-		default: 0,
-	},
 	projectStatus: {
 		type: Boolean,
 		default: false,
