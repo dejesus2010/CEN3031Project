@@ -12,8 +12,10 @@ var mongoose = require('mongoose'),
 var PlateSchema = new Schema({
 	numSamples: Number,
 	plateNumber: Number,	
-	project: Schema.ObjectId,
-	ref: 'Project'
+	project: {
+		type: Schema.ObjectId,
+		ref: 'Project'
+	}	
 });
 
 mongoose.model('Plate', PlateSchema);
