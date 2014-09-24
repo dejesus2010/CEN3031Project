@@ -18,6 +18,10 @@ var ProjectSchema = new Schema({
 		type: Date,
 		default: Date.now // We don't want this to be due 'Now', this is just a place holder
 	},
+	lastEdited: {
+		type: Date,
+		default: Date.now 
+	},
 	projectCode: {
 		type: String,
 		default: '',
@@ -27,7 +31,7 @@ var ProjectSchema = new Schema({
 	customerCode: {
 		type: String,
 		default: '',
-		required: 'Customer Code cannot be blank, always in format (ABC_010203)'
+		required: 'Customer Code cannot be blank, always in format (ABC)'
 	},
 	species: {
 		type: String,
@@ -35,7 +39,7 @@ var ProjectSchema = new Schema({
 		trim: true,
 		required: 'Species'
 	},
-	customerDescription: {
+	description: {
 		type: String,
 		default: '',
 		trim: true,
@@ -49,10 +53,16 @@ var ProjectSchema = new Schema({
 		type: Number,
 		default: 0,
 	},
+	projectStatus: {
+		type: Boolean,
+		default: false,
+	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+	speciesId: Number,	
+	customerId: Number	
 });
 
 mongoose.model('Project', ProjectSchema);
