@@ -5,48 +5,28 @@
 	<div class="col-md-12">
 		<form name="projectForm" class="form-horizontal" data-ng-submit="update(projectForm.$valid)" novalidate>
 			<fieldset>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
+				<div class="form-group" ng-class="{ 'has-error': projectForm.projectCode.$dirty && projectForm.projectCode.$invalid }">
 					<label class="control-label" for="projectCode">Project Code</label>
 					<div class="controls">
-						<input name="title" type="text" data-ng-model="project.projectCode" id="projectCode" class="form-control" placeholder="Project Code (i.e. ABC_123456)" required>
-					</div>
-					<div ng-show="submitted && projectForm.title.$invalid" class="help-block">
-						<p ng-show="projectForm.title.$error.required" class="text-danger">Required*</p>
+						<input name="projectCode" type="text" data-ng-model="projectCode" id="projectCode" class="form-control" placeholder="i.e. ABC_010203" required>
 					</div>
 				</div>
 				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
-					<label class="control-label" for="numSamples">Number of Samples</label>
+					<label class="control-label" for="description">Description</label>
 					<div class="controls">
-						<textarea name="content" data-ng-model="project.numSamples" id="numSamples" class="form-control" cols="10" rows="1"  required></textarea>
+						<textarea name="description" data-ng-model="project.description" id="description" class="form-control" cols="30" rows="5" required></textarea>
 					</div>
-					<div ng-show="submitted && projectForm.numSamples.$invalid" class="help-block">
-						<p ng-show="projectForm.numSamples.$error.required" class="text-danger">Required*</p>
+					<div ng-show="submitted && projectForm.description.$invalid" class="help-block">
+						<p ng-show="projectForm.description.$error.required" class="text-danger">Required*</p>
 					</div>
-				</div>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
-					<label class="control-label" for="customerDescription">Customer Description</label>
-					<div class="controls">
-						<textarea name="customerDescription" data-ng-model="project.customerDescription" id="customerDescription" class="form-control" cols="30" rows="1" placeholder="Content" required></textarea>
-					</div>
-					<div ng-show="submitted && projectForm.species.$invalid" class="help-block">
-						<p ng-show="projectForm.customerDescription.$error.required" class="text-danger">Required*</p>
-					</div>
-				</div>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
-					<label class="control-label" for="species">Species</label>
-					<div class="controls">
-						<textarea name="species" data-ng-model="project.species" id="species" class="form-control" cols="30" rows="1" placeholder="Description of Species" required></textarea>
-					</div>
-					<div ng-show="submitted && projectForm.species.$invalid" class="help-block">
-						<p ng-show="projectForm.species.$error.required" class="text-danger">Required*</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<input type="submit" value="Update" class="btn btn-default">
 				</div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-default">
+				</div>
+
 			</fieldset>
 		</form>
 	</div>
