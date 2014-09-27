@@ -28,33 +28,31 @@ var ProjectSchema = new Schema({
 		trim: true,
 		required: 'Project Code cannot be blank, always in format (ABC_010203)'
 	},
-	customerCode: {
-		type: String,
-		default: '',
-		required: 'Customer Code cannot be blank, always in format (ABC)'
+	customer: {
+		type: Schema.ObjectId,
+		ref: 'Customer',
+		required: 'A customer must be specified'
 	},
 	species: {
-		type: String,
-		default: '',
-		trim: true,
-		required: 'Species'
+		type: Schema.ObjectId,
+		ref: 'Species',
+		required: 'A species must be specified'
 	},
 	description: {
 		type: String,
 		default: '',
 		trim: true,
-		required: 'Customer Description'
+		required: 'Customer Description is required'
 	},
 	projectStatus: {
 		type: Boolean,
-		default: false,
+		default: false
 	},
 	user: {
 		type: Schema.ObjectId,
-		ref: 'User'
+		ref: 'User',
+		required: 'A user must be specified for the project'
 	},
-	speciesId: Number,	
-	customerId: Number	
 });
 
 mongoose.model('Project', ProjectSchema);

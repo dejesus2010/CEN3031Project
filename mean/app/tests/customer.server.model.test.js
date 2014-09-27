@@ -19,7 +19,8 @@ describe('Customer Model Unit Tests:', function() {
   beforeEach(function(done) {
     customer = new Customer({
       id: 123,
-      name: 'University of Florida'
+      name: 'University of Florida',
+      code: 'UFL'
     });
     done();
   });
@@ -43,6 +44,14 @@ describe('Customer Model Unit Tests:', function() {
 
     it('should be able to show an error when trying to save without a customer name', function(done) {
       customer.name = '';
+
+      return customer.save(function(err) {
+        should.exist(err);
+        done();
+      });
+    });
+    it('should be able to show an error when trying to save without a customer code', function(done) {
+      customer.code = '';
 
       return customer.save(function(err) {
         should.exist(err);

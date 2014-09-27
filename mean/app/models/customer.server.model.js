@@ -20,6 +20,11 @@ var CustomerSchema = new Schema({
     type: Number,
     default: 0,
     required: 'Customer id must be specified'
+  },
+  code: {
+    type: String,
+    default: '',
+    required: 'Customer code cannot be blank, always in format (ABC)'
   }
 });
 
