@@ -10,13 +10,13 @@ var mongoose = require('mongoose'),
  * Customer Schema
  */
 var CustomerSchema = new Schema({
-	name: {
+  name: {
     type: String,
     default: '',
     trim: true,
     required: 'Customer name must be specified'
   },
-	id: {
+  id: {
     type: Number,
     default: 0,
     required: 'Customer id must be specified'
