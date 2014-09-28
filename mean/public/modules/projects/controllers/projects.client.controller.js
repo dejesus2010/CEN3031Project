@@ -6,14 +6,14 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.create = function() {
 			var project = new Projects({
-				title: this.title,
-				content: this.content
+				projectCode: this.projectCode,
+				description: this.description
 			});
 			project.$save(function(response) {
 				$location.path('projects/' + response._id);
 
-				$scope.title = '';
-				$scope.content = '';
+				$scope.projectCode= '';
+				$scope.description = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

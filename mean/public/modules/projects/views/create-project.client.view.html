@@ -11,7 +11,7 @@
 						<input name="projectCode" type="text" data-ng-model="projectCode" id="projectCode" class="form-control" placeholder="i.e. ABC_010203" required>
 					</div>
 				</div>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
+				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.description.$invalid}">
 					<label class="control-label" for="description">Description</label>
 					<div class="controls">
 						<textarea name="description" data-ng-model="project.description" id="description" class="form-control" cols="30" rows="5" required></textarea>
