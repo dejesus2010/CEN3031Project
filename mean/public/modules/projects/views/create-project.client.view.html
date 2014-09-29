@@ -11,10 +11,22 @@
 						<input name="projectCode" type="text" data-ng-model="projectCode" id="projectCode" class="form-control" placeholder="i.e. ABC_010203" required>
 					</div>
 				</div>
-				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.description.$invalid}">
+				<div class="form-group" ng-class="{ 'has-error': projectForm.customerName.$dirty && projectForm.customerName.$invalid }">
+					<label class="control-label" for="customerName">Customer Name</label>
+					<div class="controls">
+						<input name="customerName" type="text" data-ng-model="customerName" id="customerName" class="form-control" placeholder="Customer Name" required>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error': projectForm.speciesName.$dirty && projectForm.speciesName.$invalid }">
+					<label class="control-label" for="speciesName">Species Name</label>
+					<div class="controls">
+						<input name="speciesName" type="text" data-ng-model="speciesName" id="speciesName" class="form-control" placeholder="Species Name" required>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
 					<label class="control-label" for="description">Description</label>
 					<div class="controls">
-						<textarea name="description" data-ng-model="project.description" id="description" class="form-control" cols="30" rows="5" required></textarea>
+						<textarea name="description" data-ng-model="description" id="description" class="form-control" cols="30" rows="5" required></textarea>
 					</div>
 					<div ng-show="submitted && projectForm.description.$invalid" class="help-block">
 						<p ng-show="projectForm.description.$error.required" class="text-danger">Required*</p>
@@ -26,7 +38,6 @@
 				<div class="form-group">
 					<input type="submit" value="Create" class="btn btn-default">
 				</div>
-
 			</fieldset>
 		</form>
 	</div>

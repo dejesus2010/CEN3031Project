@@ -9,8 +9,8 @@ var users = require('../../app/controllers/users'),
 module.exports = function(app) {
 	// Project Routes
 	app.route('/projects')
-	.get(projects.list);
-		//.post(users.requiresLogin, projects.create);
+	.get(projects.list)
+	.post(users.requiresLogin, projects.create);
 
 	app.route('/projects/:projectId')
 		.get(projects.read)

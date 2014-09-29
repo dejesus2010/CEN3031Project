@@ -42,7 +42,7 @@ var ProjectSchema = new Schema({
 		type: String,
 		default: '',
 		trim: true,
-		required: 'Customer Description is required'
+		required: 'Project Description is required'
 	},
 	projectStatus: {
 		type: Boolean,
