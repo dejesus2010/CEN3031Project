@@ -53,8 +53,8 @@
 		it('$scope.find() should create an array with at least one project object fetched from XHR', inject(function(Projects) {
 			// Create sample project using the Projects service
 			var sampleProject = new Projects({
-				title: 'An Project about MEAN',
-				content: 'MEAN rocks!'
+				projectCode: 'ABC',
+				description: 'MEAN rocks!'
 			});
 
 			// Create a sample projects array that includes the new project
@@ -74,8 +74,8 @@
 		it('$scope.findOne() should create an array with one project object fetched from XHR using a projectId URL parameter', inject(function(Projects) {
 			// Define a sample project object
 			var sampleProject = new Projects({
-				title: 'An Project about MEAN',
-				content: 'MEAN rocks!'
+				projectcode: 'ABC',
+				description: 'MEAN rocks!'
 			});
 
 			// Set the URL parameter
@@ -95,19 +95,19 @@
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects) {
 			// Create a sample project object
 			var sampleProjectPostData = new Projects({
-				projectCode: 'An Project about MEAN',
+				projectCode: 'ABC',
 				description: 'MEAN rocks!'
 			});
 
 			// Create a sample project response
 			var sampleProjectResponse = new Projects({
 				_id: '525cf20451979dea2c000001',
-				projectCode: 'An Project about MEAN',
+				projectCode: 'ABC',
 				description: 'MEAN rocks!'
 			});
 
 			// Fixture mock form input values
-			scope.projectCode = 'An Project about MEAN';
+			scope.projectCode = 'ABC';
 			scope.description = 'MEAN rocks!';
 
 			// Set POST response
@@ -129,8 +129,8 @@
 			// Define a sample project put data
 			var sampleProjectPutData = new Projects({
 				_id: '525cf20451979dea2c000001',
-				title: 'An Project about MEAN',
-				content: 'MEAN Rocks!'
+				projectcode: 'ABC',
+				description: 'MEAN Rocks!'
 			});
 
 			// Mock project in scope
