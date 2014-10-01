@@ -16,7 +16,8 @@ var ProjectSchema = new Schema({
 	},
 	due: {
 		type: Date,
-		default: Date.now // We don't want this to be due 'Now', this is just a place holder
+		default: null, // We don't want this to be due 'Now', this is just a place holder
+		required: 'Projects must specify a due date'
 	},
 	lastEdited: {
 		type: Date,

@@ -22,6 +22,7 @@ describe('Project Model Unit Tests:', function() {
 	beforeEach(function(done) {
 		project = new Project({
 			projectCode: 'ABC_010203',
+			due: Date.now(),
 			customer: new Customer({id: 1, name: 'University of Florida', code: 'UFL'}),
 			species: new Species({id: 3, name: 'squirrel'}),
 			description: 'ABC has sent us squirrel dna.',
@@ -84,6 +85,15 @@ describe('Project Model Unit Tests:', function() {
 			project.user = null;
 
 			return project.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when trying to save without a due date', function(done) {
+			project.due = null;
+
+			return project.save(function(err){
 				should.exist(err);
 				done();
 			});
