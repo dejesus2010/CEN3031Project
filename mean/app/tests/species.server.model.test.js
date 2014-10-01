@@ -5,7 +5,7 @@
  */
 var should = require('should'),
 	mongoose = require('mongoose'),
-	Species = mongoose.model('Species')
+	Species = mongoose.model('Species');
 
 /**
  * Globals
@@ -19,7 +19,7 @@ describe('Species Model Unit Tests:', function() {
 	beforeEach(function(done) {
 		species = new Species({
 			id: 123,
-			name: "Red Panda"
+			name: 'Red Panda'
 		});
 		done();
 	});
