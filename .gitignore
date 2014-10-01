@@ -1,2 +1,11 @@
-mean/node_modules
+mean/.DS_Store
+mean/.nodemonignore
+mean/.sass-cache/
+mean/npm-debug.log
+mean/node_modules/
+mean/public/lib
+mean/app/tests/coverage/
+mean/.bower-*/
+mean/.idea/
 .idea/
+*.swp
