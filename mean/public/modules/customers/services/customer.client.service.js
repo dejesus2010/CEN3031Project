@@ -1,15 +1,14 @@
 'use strict';
 
-angular.module('customers').factory('Customer', [
-	function() {
-		// Customer service logic
-		// ...
-
-		// Public API
-		return {
-			someMethod: function() {
-				return true;
+//Customers service used for communicating with the customers REST endpoints
+angular.module('customers').factory('Customers', ['$resource',
+	function($resource) {
+		return $resource('customers/:customerId', {
+			customerId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
 			}
-		};
+		});
 	}
 ]);

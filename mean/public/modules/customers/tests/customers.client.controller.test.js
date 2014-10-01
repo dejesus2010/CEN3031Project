@@ -2,7 +2,7 @@
 
 (function() {
 	// Customers Controller Spec
-	describe('Customers Controller Tests', function() {
+	describe('CustomersController', function() {
 		// Initialize global variables
 		var CustomersController,
 			scope,
@@ -50,9 +50,128 @@
 			});
 		}));
 
-		it('Should do some controller test', inject(function() {
-			// The test logic
-			// ...
+		it('$scope.find() should create an array with at least one customer object fetched from XHR', inject(function(Customers) {
+			// Create sample customer using the Customers service
+			var sampleCustomer = new Customers({
+				name: 'University of Florida',
+				id: 1,
+				code: 'UFL'
+			});
+
+			// Create a sample customers array that includes the new customer
+			var sampleCustomers = [sampleCustomer];
+
+			// Set GET response
+			$httpBackend.expectGET('customers').respond(sampleCustomers);
+
+			// Run controller functionality
+			scope.find();
+			$httpBackend.flush();
+
+			// Test scope value
+			expect(scope.customers).toEqualData(sampleCustomers);
+		}));
+
+		it('$scope.findOne() should create an array with one customer object fetched from XHR using a customerId URL parameter', inject(function(Customers) {
+			// Define a sample customer object
+			var sampleCustomer = new Customers({
+				name: 'University of Florida',
+				id: 1,
+				code: 'UFL'
+			});
+
+			// Set the URL parameter
+			$stateParams.customerId = '525a8422f6d0f87f0e407a33';
+
+			// Set GET response
+			$httpBackend.expectGET(/customers\/([0-9a-fA-F]{24})$/).respond(sampleCustomer);
+
+			// Run controller functionality
+			scope.findOne();
+			$httpBackend.flush();
+
+			// Test scope value
+			expect(scope.customer).toEqualData(sampleCustomer);
+		}));
+
+		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Customers) {
+			// Create a sample customer object
+			var sampleCustomerPostData = new Customers({
+				name: 'University of Florida',
+				id: 1,
+				code: 'UFL'
+			});
+
+			// Create a sample customer response
+			var sampleCustomerResponse = new Customers({
+				_id: '525cf20451979dea2c000001',
+				name: 'University of Florida',
+				id: 1,
+				code: 'UFL'
+			});
+
+			// Fixture mock form input values
+			scope.name = 'University of Florida';
+			scope.id = 1;
+			scope.code = 'UFL';
+
+			// Set POST response
+			$httpBackend.expectPOST('customers', sampleCustomerPostData).respond(sampleCustomerResponse);
+
+			// Run controller functionality
+			scope.create();
+			$httpBackend.flush();
+
+			// Test form inputs are reset
+			expect(scope.name).toEqual('');
+			expect(scope.id).toEqual(0);
+			expect(scope.code).toEqual('');
+
+			// Test URL redirection after the customer was created
+			expect($location.path()).toBe('/customers/' + sampleCustomerResponse._id);
+		}));
+
+		it('$scope.update() should update a valid customer', inject(function(Customers) {
+			// Define a sample customer put data
+			var sampleCustomerPutData = new Customers({
+				_id: '525cf20451979dea2c000001',
+				name: 'University of Florida',
+				id: 1,
+				code: 'UFL'
+			});
+
+			// Mock customer in scope
+			scope.customer = sampleCustomerPutData;
+
+			// Set PUT response
+			$httpBackend.expectPUT(/customers\/([0-9a-fA-F]{24})$/).respond();
+
+			// Run controller functionality
+			scope.update();
+			$httpBackend.flush();
+
+			// Test URL location to new object
+			expect($location.path()).toBe('/customers/' + sampleCustomerPutData._id);
+		}));
+
+		it('$scope.remove() should send a DELETE request with a valid customerId and remove the customer from the scope', inject(function(Customers) {
+			// Create new customer object
+			var sampleCustomer = new Customers({
+				_id: '525a8422f6d0f87f0e407a33'
+			});
+
+			// Create new customers array and include the customer
+			scope.customers = [sampleCustomer];
+
+			// Set expected DELETE response
+			$httpBackend.expectDELETE(/customers\/([0-9a-fA-F]{24})$/).respond(204);
+
+			// Run controller functionality
+			scope.remove(sampleCustomer);
+			$httpBackend.flush();
+
+			// Test array after successful delete
+			expect(scope.customers.length).toBe(0);
 		}));
 	});
 }());
