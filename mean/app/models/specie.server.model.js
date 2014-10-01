@@ -9,18 +9,18 @@ var mongoose = require('mongoose'),
 /**
  * Species Schema
  */
-var SpeciesSchema = new Schema({
+var SpecieSchema = new Schema({
   id: {
     type: Number,
     default: 0,
-    required: 'Species id must be specified'
+    required: 'Specie id must be specified'
   },
   name: {
     type: String,
     default: '',
     trim: true,
-    required: 'Species name must not be blank'
+    required: 'Specie name must not be blank'
   }
 });
 
-mongoose.model('Species', SpeciesSchema);
+mongoose.model('Specie', SpecieSchema);

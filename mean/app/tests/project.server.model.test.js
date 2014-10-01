@@ -6,7 +6,7 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	Project = mongoose.model('Project'),
-	Species = mongoose.model('Species'),
+	Species = mongoose.model('Specie'),
 	Customer = mongoose.model('Customer'),
 	User = mongoose.model('User');
 
