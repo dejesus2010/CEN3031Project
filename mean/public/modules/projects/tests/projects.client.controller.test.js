@@ -95,20 +95,20 @@
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects) {
 			// Create a sample project object
 			var sampleProjectPostData = new Projects({
-				title: 'An Project about MEAN',
-				content: 'MEAN rocks!'
+				projectCode: 'An Project about MEAN',
+				description: 'MEAN rocks!'
 			});
 
 			// Create a sample project response
 			var sampleProjectResponse = new Projects({
 				_id: '525cf20451979dea2c000001',
-				title: 'An Project about MEAN',
-				content: 'MEAN rocks!'
+				projectCode: 'An Project about MEAN',
+				description: 'MEAN rocks!'
 			});
 
 			// Fixture mock form input values
-			scope.title = 'An Project about MEAN';
-			scope.content = 'MEAN rocks!';
+			scope.projectCode = 'An Project about MEAN';
+			scope.description = 'MEAN rocks!';
 
 			// Set POST response
 			$httpBackend.expectPOST('projects', sampleProjectPostData).respond(sampleProjectResponse);
@@ -118,8 +118,8 @@
 			$httpBackend.flush();
 
 			// Test form inputs are reset
-			expect(scope.title).toEqual('');
-			expect(scope.content).toEqual('');
+			expect(scope.projectCode).toEqual('');
+			expect(scope.description).toEqual('');
 
 			// Test URL redirection after the project was created
 			expect($location.path()).toBe('/projects/' + sampleProjectResponse._id);
