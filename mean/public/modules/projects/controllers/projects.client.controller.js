@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects',
-	function($scope, $stateParams, $location, Authentication, Projects) {
+angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Customers',
+	function($scope, $stateParams, $location, Authentication, Projects, Customers) {
+
 		$scope.authentication = Authentication;
+		$scope.customers = Customers.query();
 
 		$scope.create = function() {
 			var project = new Projects({
@@ -16,7 +18,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				$scope.description = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
-			});
+			}); 
 		};
 
 		$scope.remove = function(project) {

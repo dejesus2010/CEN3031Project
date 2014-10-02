@@ -25,7 +25,12 @@ var CustomerSchema = new Schema({
     type: String,
     default: '',
     required: 'Customer code cannot be blank, always in format (ABC)'
-  }
+  },
+  projects: [{
+	type: Schema.Types.ObjectId,
+    	ref: 'Project'
+  }]
+
 });
 
 mongoose.model('Customer', CustomerSchema);
