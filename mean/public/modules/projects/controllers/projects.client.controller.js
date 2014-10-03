@@ -1,10 +1,11 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Customers',
-	function($scope, $stateParams, $location, Authentication, Projects, Customers) {
+angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Customers', 'Species',
+	function($scope, $stateParams, $location, Authentication, Projects, Customers, Species) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
+        $scope.species = Species.query();
 
 		$scope.create = function() {
 			var project = new Projects({

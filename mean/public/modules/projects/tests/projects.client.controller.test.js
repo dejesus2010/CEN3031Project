@@ -63,6 +63,9 @@
 			// Account for the Customers query
 			$httpBackend.expectGET('customers').respond();
 
+            // Account for the Species query
+            $httpBackend.expectGET('species').respond();
+
 			// Set GET response
 			$httpBackend.expectGET('projects').respond(sampleProjects);
 
@@ -86,6 +89,9 @@
 
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();
+
+            // Account for the Species query
+            $httpBackend.expectGET('species').respond();
 
 			// Set GET response
 			$httpBackend.expectGET(/projects\/([0-9a-fA-F]{24})$/).respond(sampleProject);
@@ -116,8 +122,11 @@
 			scope.projectCode = 'ABC';
 			scope.description = 'MEAN rocks!';
 
-			// Account for customers query
-			$httpBackend.expectGET('customers').respond();
+            // Account for customers query
+            $httpBackend.expectGET('customers').respond();
+
+            // Account for species query
+            $httpBackend.expectGET('species').respond();
 
 			// Set POST response
 			$httpBackend.expectPOST('projects', sampleProjectPostData).respond(sampleProjectResponse);
@@ -148,7 +157,10 @@
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();
 
-			// Set PUT response
+            // Account for the Species query
+            $httpBackend.expectGET('species').respond();
+
+            // Set PUT response
 			$httpBackend.expectPUT(/projects\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
@@ -171,7 +183,10 @@
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();
 
-			// Set expected DELETE response
+            // Account for the Species query
+            $httpBackend.expectGET('species').respond();
+
+            // Set expected DELETE response
 			$httpBackend.expectDELETE(/projects\/([0-9a-fA-F]{24})$/).respond(204);
 
 			// Run controller functionality
