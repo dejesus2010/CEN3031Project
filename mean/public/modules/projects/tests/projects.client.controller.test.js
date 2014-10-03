@@ -60,6 +60,9 @@
 			// Create a sample projects array that includes the new project
 			var sampleProjects = [sampleProject];
 
+			// Account for the Customers query
+			$httpBackend.expectGET('customers').respond();
+
 			// Set GET response
 			$httpBackend.expectGET('projects').respond(sampleProjects);
 
@@ -74,12 +77,15 @@
 		it('$scope.findOne() should create an array with one project object fetched from XHR using a projectId URL parameter', inject(function(Projects) {
 			// Define a sample project object
 			var sampleProject = new Projects({
-				projectcode: 'ABC',
+				projectCode: 'ABC',
 				description: 'MEAN rocks!'
 			});
 
 			// Set the URL parameter
 			$stateParams.projectId = '525a8422f6d0f87f0e407a33';
+
+			// Account for the Customer query
+			$httpBackend.expectGET('customers').respond();
 
 			// Set GET response
 			$httpBackend.expectGET(/projects\/([0-9a-fA-F]{24})$/).respond(sampleProject);
@@ -110,6 +116,9 @@
 			scope.projectCode = 'ABC';
 			scope.description = 'MEAN rocks!';
 
+			// Account for customers query
+			$httpBackend.expectGET('customers').respond();
+
 			// Set POST response
 			$httpBackend.expectPOST('projects', sampleProjectPostData).respond(sampleProjectResponse);
 
@@ -136,6 +145,9 @@
 			// Mock project in scope
 			scope.project = sampleProjectPutData;
 
+			// Account for the Customer query
+			$httpBackend.expectGET('customers').respond();
+
 			// Set PUT response
 			$httpBackend.expectPUT(/projects\/([0-9a-fA-F]{24})$/).respond();
 
@@ -155,6 +167,9 @@
 
 			// Create new projects array and include the project
 			scope.projects = [sampleProject];
+
+			// Account for the Customer query
+			$httpBackend.expectGET('customers').respond();
 
 			// Set expected DELETE response
 			$httpBackend.expectDELETE(/projects\/([0-9a-fA-F]{24})$/).respond(204);
