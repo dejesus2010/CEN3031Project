@@ -66,7 +66,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 
 //Not sure if this is where this should belong... ***??***
-angular.module('projects').controller('DatePicker', function ($scope) {
+angular.module('projects').controller('DatePicker', ['$scope', function ($scope) {
     $scope.today = function() {
         $scope.dt = new Date();
     };
@@ -96,4 +96,4 @@ angular.module('projects').controller('DatePicker', function ($scope) {
 
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];
-});
+}]);
