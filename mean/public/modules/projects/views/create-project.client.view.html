@@ -8,7 +8,7 @@
 				<div class="form-group" ng-class="{ 'has-error': projectForm.projectCode.$dirty && projectForm.projectCode.$invalid }">
 					<label class="control-label" for="projectCode">Project Code</label>
 					<div class="controls">
-						<input name="projectCode" type="text" data-ng-model="projectCode" id="projectCode" class="form-control" placeholder="i.e. ABC_010203" required>
+						<input name="projectCode" type="text" data-ng-model="projectCode" id="projectCode" class="form-control" placeholder="ABC_010203" required>
 					</div>
 				</div>
                 <div class="form-group">
@@ -40,6 +40,20 @@
                     </ui-select>
                     </ui-select>
                     <a href="/#!/species/create">Add a species...</a>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Due Date</label>
+                    <div ng-controller="DatePicker">
+                            <div class="col-md-6">
+                                <p class="input-group">
+                                      <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="due" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                      <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                      </span>
+                                </p>
+                            </div>
+                        <pre>Selected date is: <em>{{due | date:'fullDate' }}</em></pre>
+                    </div>
                 </div>
 				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
 					<label class="control-label" for="description">Description</label>
