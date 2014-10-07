@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Species</label>
-                    <ui-select ng-model="species.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
+                    <ui-select ng-model="specie.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
                         <ui-select-match placeholder="Select a species...">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="specie in species | filter: {name: $select.search}">
                             <div ng-bind-html="species.name | highlight: $select.search"></div>
@@ -46,7 +46,7 @@
                     <div ng-controller="DatePicker">
                             <div class="col-md-6">
                                 <p class="input-group">
-                                      <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="due" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                      <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="$parent.due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                                       <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                       </span>

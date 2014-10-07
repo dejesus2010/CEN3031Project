@@ -7,14 +7,16 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.customers = Customers.query();
         $scope.species = Species.query();
 
+        $scope.customer = {};
+        $scope.specie = {};
+
 		$scope.create = function() {
-            console.log(this.projectCode + ":" + this.description + ":" + this.due);
 			var project = new Projects({
 				projectCode: this.projectCode,
 				description: this.description,
-                //customer: new Customers({id: 1, name: 'University of Florida', code: 'UFL'}),
-                //species: new Species({id: 3, name: 'squirrel'}),
-                due: this.due //WHY THE FUCK WON'T "this.due" work!?
+                customer: $scope.customer.selected._id,
+                species: $scope.specie.selected._id,
+                due: this.due
 			});
 			project.$save(function(response) {
 				$location.path('projects/' + response._id);
