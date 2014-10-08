@@ -43,16 +43,13 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Due Date</label>
-                    <div ng-controller="DatePicker">
-                            <div class="col-md-6">
-                                <p class="input-group">
-                                      <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="$parent.due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                                      <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                      </span>
-                                </p>
-                            </div>
-                        <pre>Selected date is: <em>{{due | date:'fullDate' }}</em></pre>
+                    <div class="col-md-6">
+                        <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                        </p>
                     </div>
                 </div>
 				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">

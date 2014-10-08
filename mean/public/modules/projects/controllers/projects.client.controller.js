@@ -63,39 +63,38 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				projectId: $stateParams.projectId
 			});
 		};
+
+        ///////////////////////////////
+        // date picker control logic //
+        ///////////////////////////////
+        $scope.today = function() {
+            $scope.dt = new Date();
+        };
+
+        $scope.today();
+
+        $scope.clear = function () {
+            $scope.due = null;
+        };
+
+        $scope.toggleMin = function() {
+            $scope.minDate = $scope.minDate ? null : new Date();
+        };
+        $scope.toggleMin();
+
+        $scope.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $scope.opened = true;
+        };
+
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
 	}
 ]);
-
-
-//Not sure if this is where this should belong... ***??***
-angular.module('projects').controller('DatePicker', ['$scope', function ($scope) {
-    $scope.today = function() {
-        $scope.dt = new Date();
-    };
-
-    $scope.today();
-
-    $scope.clear = function () {
-        $scope.due = null;
-    };
-
-    $scope.toggleMin = function() {
-        $scope.minDate = $scope.minDate ? null : new Date();
-    };
-    $scope.toggleMin();
-
-    $scope.open = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.opened = true;
-    };
-
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-    };
-
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-}]);
