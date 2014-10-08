@@ -5,18 +5,18 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
-        $scope.species = Species.query();
+		$scope.species = Species.query();
 
-        $scope.customer = {};
-        $scope.specie = {};
+		$scope.customer = {};
+		$scope.specie = {};
 
 		$scope.create = function() {
 			var project = new Projects({
 				projectCode: this.projectCode,
 				description: this.description,
-                customer: $scope.customer.selected._id,
-                species: $scope.specie.selected._id,
-                due: this.due
+				customer: $scope.customer.selected._id,
+				species: $scope.specie.selected._id,
+				due: this.due
 			});
 			project.$save(function(response) {
 				$location.path('projects/' + response._id);
