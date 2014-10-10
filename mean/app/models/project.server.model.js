@@ -21,7 +21,7 @@ var ProjectSchema = new Schema({
 	},
 	lastEdited: {
 		type: Date,
-		default: Date.now 
+		default: Date.now
 	},
 	projectCode: {
 		type: String,
@@ -36,7 +36,7 @@ var ProjectSchema = new Schema({
 	},
 	species: {
 		type: Schema.ObjectId,
-		ref: 'Species',
+		ref: 'Specie',
 		required: 'A species must be specified'
 	},
 	description: {

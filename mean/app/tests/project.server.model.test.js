@@ -28,11 +28,11 @@ describe('Project Model Unit Tests:', function() {
 
         customer.save(function(err, doc){
             customerID = doc._id;
-            species.save(function(err, doc){
-                speciesID = doc._id;
-                done();
-            });
         });
+        species.save(function(err, doc){
+            speciesID = doc._id;
+        });
+        done();
     });
 
 	beforeEach(function(done) {
@@ -74,12 +74,8 @@ describe('Project Model Unit Tests:', function() {
 
         it('project should contain a species object equal to the Species document with the same objectID', function(done){
             return project.save(function(err){
-                Project.findOne({species: speciesID}).populate('specie').exec(function(err, projectDoc){
+                Project.findOne({species: speciesID}).populate('species').exec(function(err, projectDoc){
                     Species.findOne({_id: speciesID}).exec(function(err, speciesDoc){
-                        console.log('projectDoc');
-                        console.log(projectDoc);
-                        console.log('speciesDoc');
-                        console.log(speciesDoc);
                         JSON.stringify(speciesDoc).should.equal(JSON.stringify(projectDoc.species));
                         done();
                     });
@@ -104,7 +100,7 @@ describe('Project Model Unit Tests:', function() {
 				done();
 			});
 		});
-		
+
 		it('should be able to show an error when trying to save without a species', function(done) {
 			project.species = null;
 
