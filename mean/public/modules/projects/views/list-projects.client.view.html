@@ -1,9 +1,14 @@
 <section data-ng-controller="ProjectsController" data-ng-init="find()">
 	<div class="page-header">
 		<h1>All Projects</h1>
+		<div class="form-group">
+			<h4>Sort By</h4>
+			<button class="btn btn-default" ng-click="sortBy('projectCode')">Project Code</button>
+			<button class="btn btn-default" ng-click="sortBy('due')">Due Date</button>
+		</div>
 	</div>
 	<div class="list-group">
-		<a data-ng-repeat="project in projects" data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
+		<a data-ng-repeat="project in projects | orderBy:sortExpr:reverseSort" data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Due on
 				<span data-ng-bind="project.due | date:'mediumDate'"></span>

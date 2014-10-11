@@ -56,6 +56,8 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.find = function() {
 			$scope.projects = Projects.query();
+			$scope.sortBy('code');
+			$scope.reverseSort = false;
 		};
 
 		$scope.findOne = function() {
@@ -96,5 +98,14 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 		$scope.format = $scope.formats[0];
+
+		// Project Sorting
+		$scope.sortBy = function(sortExpr) {
+			if ($scope.sortExpr === sortExpr){
+				$scope.reverseSort = !$scope.reverseSort;
+			} else {
+				$scope.sortExpr = sortExpr;
+			}
+		};
 	}
 ]);
