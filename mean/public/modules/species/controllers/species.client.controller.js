@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('species').controller('SpeciesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Species',
-  function($scope, $stateParams, $location, Authentication, Species) {
+angular.module('species').controller('SpeciesController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Species',
+  function($scope, $stateParams, $location, $window, Authentication, Species) {
     $scope.authentication = Authentication;
 
     $scope.create = function() {
@@ -10,10 +10,9 @@ angular.module('species').controller('SpeciesController', ['$scope', '$statePara
         id: this.id,
       });
       specie.$save(function(response) {
-        $location.path('species/' + response._id);
-
         $scope.name = '';
         $scope.id = 0;
+        $window.history.back();
       }, function(errorResponse) {
         $scope.error = errorResponse.data.message;
       });

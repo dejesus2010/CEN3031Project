@@ -25,7 +25,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				$scope.description = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
-			}); 
+			});
 		};
 
 		$scope.remove = function(project) {

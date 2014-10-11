@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('customers').controller('CustomersController', ['$scope', '$stateParams', '$location', 'Authentication', 'Customers',
+angular.module('customers').controller('CustomersController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Customers',
   function($scope, $stateParams, $location, Authentication, Customers) {
     $scope.authentication = Authentication;
 
@@ -11,11 +11,10 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
         code: this.code
       });
       customer.$save(function(response) {
-        $location.path('customers/' + response._id);
-
         $scope.name = '';
         $scope.id = 0;
         $scope.code = '';
+        $window.history.back();
       }, function(errorResponse) {
         $scope.error = errorResponse.data.message;
       });
