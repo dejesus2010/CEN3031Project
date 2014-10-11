@@ -64,37 +64,37 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 			});
 		};
 
-        ///////////////////////////////
-        // date picker control logic //
-        ///////////////////////////////
-        $scope.today = function() {
-            $scope.dt = new Date();
-        };
+		///////////////////////////////
+		// date picker control logic //
+		///////////////////////////////
+		$scope.today = function() {
+				$scope.dt = new Date();
+		};
 
-        $scope.today();
+		$scope.today();
 
-        $scope.clear = function () {
-            $scope.due = null;
-        };
+		$scope.clear = function () {
+				$scope.due = null;
+		};
 
-        $scope.toggleMin = function() {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+		$scope.toggleMin = function() {
+				$scope.minDate = $scope.minDate ? null : new Date();
+		};
+		$scope.toggleMin();
 
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+		$scope.open = function($event) {
+				$event.preventDefault();
+				$event.stopPropagation();
 
-            $scope.opened = true;
-        };
+				$scope.opened = true;
+		};
 
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
-        };
+		$scope.dateOptions = {
+				formatYear: 'yy',
+				startingDay: 1
+		};
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
+		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+		$scope.format = $scope.formats[0];
 	}
 ]);

@@ -63,8 +63,8 @@
 			// Account for the Customers query
 			$httpBackend.expectGET('customers').respond();
 
-            // Account for the Species query
-            $httpBackend.expectGET('species').respond();
+			// Account for the Species query
+			$httpBackend.expectGET('species').respond();
 
 			// Set GET response
 			$httpBackend.expectGET('projects').respond(sampleProjects);
@@ -90,8 +90,8 @@
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();
 
-            // Account for the Species query
-            $httpBackend.expectGET('species').respond();
+			// Account for the Species query
+			$httpBackend.expectGET('species').respond();
 
 			// Set GET response
 			$httpBackend.expectGET(/projects\/([0-9a-fA-F]{24})$/).respond(sampleProject);
@@ -104,29 +104,54 @@
 			expect(scope.project).toEqualData(sampleProject);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects) {
+
+		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects, Customers, Species) {
+			// Create a sample customer object
+			var sampleCustomer = new Customers({
+			  _id: '525cf20451979dea2c000002',
+			  name: 'University of Florida',
+			  id: 37,
+			  code: 'UFL'
+			});
+
+			// Create a sample specie object
+			var sampleSpecie = new Species({
+			  _id: '525cf20451979dea2c000003',
+			  id: 1,
+			  name: 'Burrito'
+			});
+
 			// Create a sample project object
 			var sampleProjectPostData = new Projects({
-				projectCode: 'ABC',
-				description: 'MEAN rocks!'
+			  projectCode: 'ABC',
+			  description: 'MEAN rocks!',
+			  customer: sampleCustomer._id,
+			  species: sampleSpecie._id
 			});
 
 			// Create a sample project response
 			var sampleProjectResponse = new Projects({
-				_id: '525cf20451979dea2c000001',
-				projectCode: 'ABC',
-				description: 'MEAN rocks!'
+			  _id: '525cf20451979dea2c000001',
+			  projectCode: 'ABC',
+			  description: 'MEAN rocks!'
 			});
+
+
+			// Create specie and customer responses
+			var customerResponse = [sampleCustomer];
+			var specieResponse = [sampleSpecie];
+			scope.customer.selected = sampleCustomer;
+			scope.specie.selected = sampleSpecie;
 
 			// Fixture mock form input values
 			scope.projectCode = 'ABC';
 			scope.description = 'MEAN rocks!';
 
-            // Account for customers query
-            $httpBackend.expectGET('customers').respond();
+			// Account for customers query
+			$httpBackend.expectGET('customers').respond(customerResponse);
 
-            // Account for species query
-            $httpBackend.expectGET('species').respond();
+			// Account for species query
+			$httpBackend.expectGET('species').respond(specieResponse);
 
 			// Set POST response
 			$httpBackend.expectPOST('projects', sampleProjectPostData).respond(sampleProjectResponse);
@@ -157,10 +182,10 @@
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();
 
-            // Account for the Species query
-            $httpBackend.expectGET('species').respond();
+			// Account for the Species query
+			$httpBackend.expectGET('species').respond();
 
-            // Set PUT response
+			// Set PUT response
 			$httpBackend.expectPUT(/projects\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
@@ -183,10 +208,10 @@
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();
 
-            // Account for the Species query
-            $httpBackend.expectGET('species').respond();
+			// Account for the Species query
+			$httpBackend.expectGET('species').respond();
 
-            // Set expected DELETE response
+			// Set expected DELETE response
 			$httpBackend.expectDELETE(/projects\/([0-9a-fA-F]{24})$/).respond(204);
 
 			// Run controller functionality
