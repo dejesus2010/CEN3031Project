@@ -15,5 +15,8 @@
     "angular-sanitize": "~1.2.26",
     "select2": "~3.4.5"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "angular": "1.2.26"
+  }
 }
