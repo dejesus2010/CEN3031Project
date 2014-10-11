@@ -221,5 +221,18 @@
 			// Test array after successful delete
 			expect(scope.projects.length).toBe(0);
 		}));
+
+		it('$scope.sortBy() should set $scope.sortExpr correctly', inject(function(Projects) {
+			scope.sortBy('due');
+			expect(scope.reverseSort).toBeFalsy();
+			expect(scope.sortExpr).toBe('due');
+		}));
+
+		it('$scope.sortBy() should reverse the sort order if sortBy is called a second time', inject(function(Projects) {
+			scope.sortBy('due');
+			scope.sortBy('due');
+			expect(scope.reverseSort).toBeTruthy();
+			expect(scope.sortExpr).toBe('due');
+		}));
 	});
 }());
