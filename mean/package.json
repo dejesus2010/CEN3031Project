@@ -15,7 +15,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false --force-latest"
+    "postinstall": "bower install --config.interactive=false"
   },
   "dependencies": {
     "express": "~4.7.2",
