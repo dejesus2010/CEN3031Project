@@ -18,3 +18,17 @@ angular.element(document).ready(function() {
 	//Then init the app
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
+
+// Directive for back-button <a href back-button></a>
+angular.module(ApplicationConfiguration.applicationModuleName).directive('backButton', function(){
+  return {
+    restrict: 'A',
+
+    link: function(scope, element, attrs) {
+      element.bind('click', function () {
+        window.history.back();
+        scope.$apply();
+      });
+    }
+  }
+});
