@@ -8,7 +8,8 @@
 			scope,
 			$httpBackend,
 			$stateParams,
-			$location;
+			$location,
+			$window;
 
 		// The $resource service augments the response object with methods for updating and deleting the resource.
 		// If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -35,7 +36,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _$window_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -43,6 +44,10 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			$window = _$window_;
+
+			// Set spy on $window
+			spyOn($window.history, 'back');
 
 			// Initialize the Species controller.
 			SpeciesController = $controller('SpeciesController', {
@@ -92,7 +97,7 @@
 			expect(scope.specie).toEqualData(sampleSpecie);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Species) {
+		it('$scope.create() with valid form data should send a POST request with the form input values and then return to previous page', inject(function(Species) {
 			// Create a sample specie object
 			var sampleSpeciePostData = new Species({
 				name: 'University of Florida',
@@ -121,8 +126,8 @@
 			expect(scope.name).toEqual('');
 			expect(scope.id).toEqual(0);
 
-			// Test URL redirection after the specie was created
-			expect($location.path()).toBe('/species/' + sampleSpecieResponse._id);
+			// Test redirect to previous page once done
+			expect($window.history.back).toHaveBeenCalled();
 		}));
 
 		it('$scope.update() should update a valid specie', inject(function(Species) {

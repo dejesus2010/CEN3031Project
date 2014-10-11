@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('customers').controller('CustomersController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Customers',
-  function($scope, $stateParams, $location, Authentication, Customers) {
+  function($scope, $stateParams, $location, $window, Authentication, Customers) {
     $scope.authentication = Authentication;
 
     $scope.create = function() {
