@@ -49,6 +49,9 @@
 			// Set spy on $window
 			spyOn($window.history, 'back');
 
+			// Expect new specie id request
+			$httpBackend.expectGET('species').respond([]);
+
 			// Initialize the Species controller.
 			SpeciesController = $controller('SpeciesController', {
 				$scope: scope
@@ -170,6 +173,41 @@
 
 			// Test array after successful delete
 			expect(scope.species.length).toBe(0);
+		}));
+
+		it('$scope.newSpecieId() should retrieve a list of all species and set the correct id', inject(function(Species) {
+			// Create new species objects
+			var sampleSpecie0 = new Species({
+				_id: '525a8422f6d0f87f0e407a34',
+				id: 4
+			});
+
+			var sampleSpecie1 = new Species({
+				_id: '525a8422f6d0f87f0e407a35',
+				id: 6
+			});
+
+			// Create new customers array and include our sample customers
+			var sampleSpecies = [sampleSpecie0, sampleSpecie1];
+
+			// Set expected GET response
+			$httpBackend.expectGET('species').respond(sampleSpecies);
+
+			// Find a new customer id
+			scope.species = Species.query();
+			$httpBackend.flush();
+
+			expect(scope.newSpecieId()).toBe(7);
+		}));
+
+		it('$scope.newCustomerId() should set the id to 1 if no existing customers are found', inject(function(Species) {
+			// Set expected GET response
+			$httpBackend.expectGET('species').respond([]);
+
+			// Find a new customer id
+			scope.species = Species.query();
+			$httpBackend.flush();
+			expect(scope.newSpecieId()).toBe(1);
 		}));
 	});
 }());

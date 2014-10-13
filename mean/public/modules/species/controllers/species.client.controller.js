@@ -47,11 +47,17 @@ angular.module('species').controller('SpeciesController', ['$scope', '$statePara
     $scope.find = function() {
       $scope.species = Species.query();
     };
+    $scope.find();
 
     $scope.findOne = function() {
       $scope.specie = Species.get({
         specieId: $stateParams.specieId
       });
+    };
+
+    $scope.newSpecieId = function() {
+      $scope.id = $scope.species.length === 0 ? 1 : Math.max.apply(Math, $scope.species.map(function(obj){return obj.id;})) + 1;
+      return $scope.id;
     };
   }
 ]);
