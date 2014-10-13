@@ -49,11 +49,17 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
     $scope.find = function() {
       $scope.customers = Customers.query();
     };
+    $scope.find();
 
     $scope.findOne = function() {
       $scope.customer = Customers.get({
         customerId: $stateParams.customerId
       });
+    };
+
+    $scope.newCustomerId = function() {
+      $scope.id = $scope.customers.length === 0 ? 1 : Math.max.apply(Math, $scope.customers.map(function(obj){return obj.id;})) + 1;
+      return $scope.id;
     };
   }
 ]);

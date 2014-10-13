@@ -49,6 +49,9 @@
 			// Set spy on $window
 			spyOn($window.history, 'back');
 
+			// Expect getCustomerId
+			$httpBackend.expectGET('customers').respond([]);
+
 			// Initialize the Customers controller.
 			CustomersController = $controller('CustomersController', {
 				$scope: scope
@@ -177,6 +180,41 @@
 
 			// Test array after successful delete
 			expect(scope.customers.length).toBe(0);
+		}));
+
+		it('$scope.newCustomerId() should retrieve a list of all customers and set the correct id', inject(function(Customers) {
+			// Create new customer objects
+			var sampleCustomer0 = new Customers({
+				_id: '525a8422f6d0f87f0e407a34',
+				id: 4
+			});
+
+			var sampleCustomer1 = new Customers({
+				_id: '525a8422f6d0f87f0e407a35',
+				id: 6
+			});
+
+			// Create new customers array and include our sample customers
+			var sampleCustomers = [sampleCustomer0, sampleCustomer1];
+
+			// Set expected GET response
+			$httpBackend.expectGET('customers').respond(sampleCustomers);
+
+			// Find a new customer id
+			scope.customers = Customers.query();
+			$httpBackend.flush();
+
+			expect(scope.newCustomerId()).toBe(7);
+		}));
+
+		it('$scope.newCustomerId() should set the id to 1 if no existing customers are found', inject(function(Customers) {
+			// Set expected GET response
+			$httpBackend.expectGET('customers').respond([]);
+
+			// Find a new customer id
+			scope.customers = Customers.query();
+			$httpBackend.flush();
+			expect(scope.newCustomerId()).toBe(1);
 		}));
 	});
 }());

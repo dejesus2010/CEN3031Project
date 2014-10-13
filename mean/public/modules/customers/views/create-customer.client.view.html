@@ -12,15 +12,15 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="id">ID</label>
-					<div class="controls">
-						<input name="id" data-ng-model="id" id="id" class="form-control" cols="30" rows="10" placeholder="id"></input>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label" for="code">Code</label>
 					<div class="controls">
 						<input name="code" data-ng-model="code" id="code" class="form-control" cols="30" rows="10" placeholder="code"></input>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="id">ID</label>
+					<div class="controls">
+						<div name="id" data-ng-bind="newCustomerId()" id="id" class="form-control" cols="30" rows="10" placeholder="id" ng-readOnly="true"></div>
 					</div>
 				</div>
 				<div class="form-group">
