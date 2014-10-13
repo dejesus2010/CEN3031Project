@@ -28,11 +28,11 @@ describe('Project Model Unit Tests:', function() {
 
         customer.save(function(err, doc){
             customerID = doc._id;
+            species.save(function(err, doc){
+                speciesID = doc._id;
+                done();
+            });
         });
-        species.save(function(err, doc){
-            speciesID = doc._id;
-        });
-        done();
     });
 
 	beforeEach(function(done) {
