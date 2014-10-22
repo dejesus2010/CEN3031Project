@@ -13,7 +13,9 @@
     "angular-ui-router": "~0.2.10",
     "angular-ui-select": "~0.7.0",
     "angular-sanitize": "~1.2.26",
-    "select2": "~3.4.5"
+    "select2": "~3.4.5",
+    "ngReactGrid": "~0.6.5",
+    "react": "~0.11.2"
   },
   "devDependencies": {}
 }
