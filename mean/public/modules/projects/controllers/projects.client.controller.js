@@ -113,6 +113,11 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.grid = {
 			data: [],
+			rowClick: function(row) {
+				$scope.$apply(function() {
+					$location.path('projects/' + row._id);
+				});
+			},
 			columnDefs: [{
 				field: 'projectCode',
 				displayName: 'Project Code'

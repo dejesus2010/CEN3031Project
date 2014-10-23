@@ -228,7 +228,7 @@
 			expect(scope.gridReady).toBeTruthy();
 		}));
 
-		it('$scope.initReactGrid() should set $scope.grid.data equal scope.projects modified', inject(function(Projects) {
+		it('$scope.initReactGrid() should set $scope.grid.data equal to scope.projects modified', inject(function(Projects) {
 			var sampleProject = new Projects({
 				_id: '525a8422f6d0f87f0e407a33',
 				due: '2014-10-30'
@@ -257,6 +257,28 @@
 			scope.initReactGrid();
 
 			expect(scope.grid.data[0].due).toEqual('2014-10-30');
+		}));
+
+		it('$scope.initReactGrid() should correctly set projectStatus', inject(function(Projects) {
+			var sampleProject = new Projects({
+				_id: '525a8422f6d0f87f0e407a33',
+				due: '2014-10-30T04:00:00.000Z',
+				projectStatus: false
+			});
+
+			var sampleProject2 = new Projects({
+				_id: '525a8422f6d0f87f0e407a33',
+				due: '2014-10-30T04:00:00.000Z',
+				projectStatus: true
+			});
+
+			// Create new projects array and include the project
+			scope.projects = [sampleProject, sampleProject2];
+
+			scope.initReactGrid();
+
+			expect(scope.grid.data[0].projectStatus).toEqual('In Progress');
+			expect(scope.grid.data[1].projectStatus).toEqual('Completed');
 		}));
 	});
 }());
