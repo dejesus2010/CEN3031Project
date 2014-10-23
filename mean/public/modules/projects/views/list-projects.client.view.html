@@ -1,22 +1,9 @@
-<section data-ng-controller="ProjectsController" data-ng-init="find()">
+<section data-ng-controller="ProjectsController" data-ng-init="init()">
 	<div class="page-header">
 		<h1>All Projects</h1>
-		<div class="form-group">
-			<h4>Sort By</h4>
-			<button class="btn btn-default" ng-click="sortBy('projectCode')">Project Code</button>
-			<button class="btn btn-default" ng-click="sortBy('due')">Due Date</button>
-		</div>
 	</div>
-	<div class="list-group">
-		<a data-ng-repeat="project in projects | orderBy:sortExpr:reverseSort" data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Due on
-				<span data-ng-bind="project.due | date:'mediumDate'"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="project.projectCode"></h4>
-			<p class="list-group-item-text" data-ng-bind="project.description"></p>
-            <p class="list-group-item-text" data-ng-bind="project.customer.name"></p>
-		</a>
+	<div ng-if="gridReady">
+		<ng-react-grid grid="grid"></ng-react-grid>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="projects.$resolved && !projects.length">
 		No projects yet, why don't you <a href="/#!/projects/create">create one</a>?

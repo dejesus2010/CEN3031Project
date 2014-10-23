@@ -6,6 +6,8 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
 		$scope.species = Species.query();
+		$scope.projects = [];
+		$scope.gridReady = false;
 
 		$scope.customer = {};
 		$scope.specie = {};
@@ -54,10 +56,10 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 			});
 		};
 
-		$scope.find = function() {
-			$scope.projects = Projects.query();
-			$scope.sortBy('code');
-			$scope.reverseSort = false;
+		$scope.init = function() {
+			$scope.projects = Projects.query(function(err, res) {
+				$scope.initReactGrid();
+			});
 		};
 
 		$scope.findOne = function() {
@@ -99,13 +101,34 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 		$scope.format = $scope.formats[0];
 
-		// Project Sorting
-		$scope.sortBy = function(sortExpr) {
-			if ($scope.sortExpr === sortExpr){
-				$scope.reverseSort = !$scope.reverseSort;
-			} else {
-				$scope.sortExpr = sortExpr;
-			}
+		$scope.initReactGrid = function() {
+				$scope.grid.data = JSON.parse(JSON.stringify($scope.projects));
+				for (var project = 0; project < $scope.grid.data.length; ++project) {
+					// Make dates and project status human readable
+					$scope.grid.data[project].due = new Date(Date.parse($scope.grid.data[project].due)).toISOString().slice(0,10);
+					$scope.grid.data[project].projectStatus = $scope.grid.data[project].projectStatus ? 'Completed' : 'In Progress';
+				}
+				$scope.gridReady = true;
+		};
+
+		$scope.grid = {
+			data: [],
+			columnDefs: [{
+				field: 'projectCode',
+				displayName: 'Project Code'
+			}, {
+				field: 'species.name',
+				displayName: 'Species'
+			}, {
+				field: 'customer.name',
+				displayName: 'Customer'
+			}, {
+				field: 'due',
+				displayName: 'Due Date'
+			}, {
+				field: 'projectStatus',
+				displayName: 'Project Status'
+			}]
 		};
 	}
 ]);

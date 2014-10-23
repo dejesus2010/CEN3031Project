@@ -50,11 +50,12 @@
 			});
 		}));
 
-		it('$scope.find() should create an array with at least one project object fetched from XHR', inject(function(Projects) {
+		it('$scope.init() should create an array with at least one project object fetched from XHR', inject(function(Projects) {
 			// Create sample project using the Projects service
 			var sampleProject = new Projects({
 				projectCode: 'ABC',
-				description: 'MEAN rocks!'
+				description: 'MEAN rocks!',
+				due: '2014-10-30'
 			});
 
 			// Create a sample projects array that includes the new project
@@ -70,7 +71,7 @@
 			$httpBackend.expectGET('projects').respond(sampleProjects);
 
 			// Run controller functionality
-			scope.find();
+			scope.init();
 			$httpBackend.flush();
 
 			// Test scope value
@@ -222,17 +223,40 @@
 			expect(scope.projects.length).toBe(0);
 		}));
 
-		it('$scope.sortBy() should set $scope.sortExpr correctly', inject(function(Projects) {
-			scope.sortBy('due');
-			expect(scope.reverseSort).toBeFalsy();
-			expect(scope.sortExpr).toBe('due');
+		it('$scope.initReactGrid() should set gridReady equal to true when done', inject(function(Projects) {
+			scope.initReactGrid();
+			expect(scope.gridReady).toBeTruthy();
 		}));
 
-		it('$scope.sortBy() should reverse the sort order if sortBy is called a second time', inject(function(Projects) {
-			scope.sortBy('due');
-			scope.sortBy('due');
-			expect(scope.reverseSort).toBeTruthy();
-			expect(scope.sortExpr).toBe('due');
+		it('$scope.initReactGrid() should set $scope.grid.data equal scope.projects modified', inject(function(Projects) {
+			var sampleProject = new Projects({
+				_id: '525a8422f6d0f87f0e407a33',
+				due: '2014-10-30'
+			});
+
+			// Create new projects array and include the project
+			scope.projects = [sampleProject];
+
+			scope.initReactGrid();
+
+			// Modify sampleProject
+			sampleProject.projectStatus = 'In Progress';
+
+			expect(scope.grid.data).toEqualData([sampleProject]);
+		}));
+
+		it('$scope.initReactGrid() should convert the due date to yyyy-mm-dd', inject(function(Projects) {
+			var sampleProject = new Projects({
+				_id: '525a8422f6d0f87f0e407a33',
+				due: '2014-10-30T04:00:00.000Z'
+			});
+
+			// Create new projects array and include the project
+			scope.projects = [sampleProject];
+
+			scope.initReactGrid();
+
+			expect(scope.grid.data[0].due).toEqual('2014-10-30');
 		}));
 	});
 }());
