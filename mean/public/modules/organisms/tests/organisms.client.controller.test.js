@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-	// Species Controller Spec
+	// Organisms Controller Spec
 	describe('SpeciesController', function() {
 		// Initialize global variables
 		var SpeciesController,
@@ -49,39 +49,39 @@
 			// Set spy on $window
 			spyOn($window.history, 'back');
 
-			// Expect new specie id request
-			$httpBackend.expectGET('species').respond([]);
+			// Expect new organism id request
+			$httpBackend.expectGET('organisms').respond([]);
 
-			// Initialize the Species controller.
+			// Initialize the Organisms controller.
 			SpeciesController = $controller('SpeciesController', {
 				$scope: scope
 			});
 		}));
 
-		it('$scope.find() should create an array with at least one specie object fetched from XHR', inject(function(Species) {
-			// Create sample specie using the Species service
-			var sampleSpecie = new Species({
+		it('$scope.find() should create an array with at least one organism object fetched from XHR', inject(function(Organisms) {
+			// Create sample organism using the Organisms service
+			var sampleSpecie = new Organisms({
 				name: 'University of Florida',
 				id: 1,
 			});
 
-			// Create a sample species array that includes the new specie
+			// Create a sample organisms array that includes the new organism
 			var sampleSpecies = [sampleSpecie];
 
 			// Set GET response
-			$httpBackend.expectGET('species').respond(sampleSpecies);
+			$httpBackend.expectGET('organisms').respond(sampleSpecies);
 
 			// Run controller functionality
 			scope.find();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.species).toEqualData(sampleSpecies);
+			expect(scope.organisms).toEqualData(sampleSpecies);
 		}));
 
-		it('$scope.findOne() should create an array with one specie object fetched from XHR using a specieId URL parameter', inject(function(Species) {
-			// Define a sample specie object
-			var sampleSpecie = new Species({
+		it('$scope.findOne() should create an array with one organism object fetched from XHR using a specieId URL parameter', inject(function(Organisms) {
+			// Define a sample organism object
+			var sampleSpecie = new Organisms({
 				name: 'University of Florida',
 				id: 1,
 			});
@@ -90,25 +90,25 @@
 			$stateParams.specieId = '525a8422f6d0f87f0e407a33';
 
 			// Set GET response
-			$httpBackend.expectGET(/species\/([0-9a-fA-F]{24})$/).respond(sampleSpecie);
+			$httpBackend.expectGET(/organisms\/([0-9a-fA-F]{24})$/).respond(sampleSpecie);
 
 			// Run controller functionality
 			scope.findOne();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.specie).toEqualData(sampleSpecie);
+			expect(scope.organism).toEqualData(sampleSpecie);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then return to previous page', inject(function(Species) {
-			// Create a sample specie object
-			var sampleSpeciePostData = new Species({
+		it('$scope.create() with valid form data should send a POST request with the form input values and then return to previous page', inject(function(Organisms) {
+			// Create a sample organism object
+			var sampleSpeciePostData = new Organisms({
 				name: 'University of Florida',
 				id: 1,
 			});
 
-			// Create a sample specie response
-			var sampleSpecieResponse = new Species({
+			// Create a sample organism response
+			var sampleSpecieResponse = new Organisms({
 				_id: '525cf20451979dea2c000001',
 				name: 'University of Florida',
 				id: 1,
@@ -119,7 +119,7 @@
 			scope.id = 1;
 
 			// Set POST response
-			$httpBackend.expectPOST('species', sampleSpeciePostData).respond(sampleSpecieResponse);
+			$httpBackend.expectPOST('organisms', sampleSpeciePostData).respond(sampleSpecieResponse);
 
 			// Run controller functionality
 			scope.create();
@@ -133,56 +133,56 @@
 			expect($window.history.back).toHaveBeenCalled();
 		}));
 
-		it('$scope.update() should update a valid specie', inject(function(Species) {
-			// Define a sample specie put data
-			var sampleSpeciePutData = new Species({
+		it('$scope.update() should update a valid organism', inject(function(Organisms) {
+			// Define a sample organism put data
+			var sampleSpeciePutData = new Organisms({
 				_id: '525cf20451979dea2c000001',
 				name: 'University of Florida',
 				id: 1,
 			});
 
-			// Mock specie in scope
-			scope.specie = sampleSpeciePutData;
+			// Mock organism in scope
+			scope.organism = sampleSpeciePutData;
 
 			// Set PUT response
-			$httpBackend.expectPUT(/species\/([0-9a-fA-F]{24})$/).respond();
+			$httpBackend.expectPUT(/organisms\/([0-9a-fA-F]{24})$/).respond();
 
 			// Run controller functionality
 			scope.update();
 			$httpBackend.flush();
 
 			// Test URL location to new object
-			expect($location.path()).toBe('/species/' + sampleSpeciePutData._id);
+			expect($location.path()).toBe('/organisms/' + sampleSpeciePutData._id);
 		}));
 
-		it('$scope.remove() should send a DELETE request with a valid specieId and remove the specie from the scope', inject(function(Species) {
-			// Create new specie object
-			var sampleSpecie = new Species({
+		it('$scope.remove() should send a DELETE request with a valid specieId and remove the organism from the scope', inject(function(Organisms) {
+			// Create new organism object
+			var sampleSpecie = new Organisms({
 				_id: '525a8422f6d0f87f0e407a33'
 			});
 
-			// Create new species array and include the specie
-			scope.species = [sampleSpecie];
+			// Create new organisms array and include the organism
+			scope.organisms = [sampleSpecie];
 
 			// Set expected DELETE response
-			$httpBackend.expectDELETE(/species\/([0-9a-fA-F]{24})$/).respond(204);
+			$httpBackend.expectDELETE(/organisms\/([0-9a-fA-F]{24})$/).respond(204);
 
 			// Run controller functionality
 			scope.remove(sampleSpecie);
 			$httpBackend.flush();
 
 			// Test array after successful delete
-			expect(scope.species.length).toBe(0);
+			expect(scope.organisms.length).toBe(0);
 		}));
 
-		it('$scope.newSpecieId() should retrieve a list of all species and set the correct id', inject(function(Species) {
-			// Create new species objects
-			var sampleSpecie0 = new Species({
+		it('$scope.newSpecieId() should retrieve a list of all organisms and set the correct id', inject(function(Organisms) {
+			// Create new organisms objects
+			var sampleSpecie0 = new Organisms({
 				_id: '525a8422f6d0f87f0e407a34',
 				id: 4
 			});
 
-			var sampleSpecie1 = new Species({
+			var sampleSpecie1 = new Organisms({
 				_id: '525a8422f6d0f87f0e407a35',
 				id: 6
 			});
@@ -191,21 +191,21 @@
 			var sampleSpecies = [sampleSpecie0, sampleSpecie1];
 
 			// Set expected GET response
-			$httpBackend.expectGET('species').respond(sampleSpecies);
+			$httpBackend.expectGET('organisms').respond(sampleSpecies);
 
 			// Find a new customer id
-			scope.species = Species.query();
+			scope.organisms = Organisms.query();
 			$httpBackend.flush();
 
 			expect(scope.newSpecieId()).toBe(7);
 		}));
 
-		it('$scope.newCustomerId() should set the id to 1 if no existing customers are found', inject(function(Species) {
+		it('$scope.newCustomerId() should set the id to 1 if no existing customers are found', inject(function(Organisms) {
 			// Set expected GET response
-			$httpBackend.expectGET('species').respond([]);
+			$httpBackend.expectGET('organisms').respond([]);
 
 			// Find a new customer id
-			scope.species = Species.query();
+			scope.organisms = Organisms.query();
 			$httpBackend.flush();
 			expect(scope.newSpecieId()).toBe(1);
 		}));

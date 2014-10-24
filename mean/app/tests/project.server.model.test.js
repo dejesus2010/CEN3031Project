@@ -6,7 +6,7 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	Project = mongoose.model('Project'),
-	Species = mongoose.model('Specie'),
+	Organisms = mongoose.model('Organism'),
 	Customer = mongoose.model('Customer'),
 	User = mongoose.model('User');
 
@@ -24,11 +24,11 @@ describe('Project Model Unit Tests:', function() {
 
     before(function(done){
         var customer = new Customer({id:1, name: 'University of Florida', code: 'UFL'});
-        var species = new Species({id: 3, name: 'squirrel'});
+        var organisms = new Organisms({id: 3, name: 'squirrel'});
 
         customer.save(function(err, doc){
             customerID = doc._id;
-            species.save(function(err, doc){
+            organisms.save(function(err, doc){
                 speciesID = doc._id;
                 done();
             });
@@ -40,7 +40,7 @@ describe('Project Model Unit Tests:', function() {
 			projectCode: 'ABC_010203',
 			due: Date.now(),
 			customer: customerID,
-			species: speciesID,
+			organism: speciesID,
 			description: 'ABC has sent us squirrel dna.',
 			user: new User({
 				firstName: 'Tim',
@@ -72,11 +72,11 @@ describe('Project Model Unit Tests:', function() {
              });
         });
 
-        it('project should contain a species object equal to the Species document with the same objectID', function(done){
+        it('project should contain an organism object equal to the Organisms document with the same objectID', function(done){
             return project.save(function(err){
-                Project.findOne({species: speciesID}).populate('species').exec(function(err, projectDoc){
-                    Species.findOne({_id: speciesID}).exec(function(err, speciesDoc){
-                        JSON.stringify(speciesDoc).should.equal(JSON.stringify(projectDoc.species));
+                Project.findOne({organism: speciesID}).populate('organism').exec(function(err, projectDoc){
+                    Organisms.findOne({_id: speciesID}).exec(function(err, speciesDoc){
+                        JSON.stringify(speciesDoc).should.equal(JSON.stringify(projectDoc.organism));
                         done();
                     });
                 });
@@ -101,8 +101,8 @@ describe('Project Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error when trying to save without a species', function(done) {
-			project.species = null;
+		it('should be able to show an error when trying to save without an organism', function(done) {
+			project.organism = null;
 
 			return project.save(function(err) {
 				should.exist(err);
@@ -140,7 +140,7 @@ describe('Project Model Unit Tests:', function() {
 
     after(function(done){
         Customer.remove().exec();
-        Species.remove().exec();
+        Organisms.remove().exec();
         done();
     });
 

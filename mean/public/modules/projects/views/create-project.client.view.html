@@ -23,21 +23,21 @@
                             </small>
                             </ui-select-choices>
                     </ui-select>
-                    <a href="/#!/customers/create">Add a customer...</a>
+                    <a href="/#!/customers/create">Add a customer</a>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Species</label>
-                    <ui-select ng-model="specie.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
-                        <ui-select-match placeholder="Select a species...">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="specie in species | filter: {name: $select.search}">
-                            <div ng-bind-html="species.name | highlight: $select.search"></div>
+                    <label class="control-label">Organism</label>
+                    <ui-select ng-model="organism.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
+                        <ui-select-match placeholder="Select an organism...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="organism in organisms | filter: {name: $select.search}">
+                            <div ng-bind-html="organisms.name | highlight: $select.search"></div>
                             <small>
-                                {{specie.name}} --
-                                {{specie.id}}
+                                {{organism.name}} --
+                                {{organism.id}}
                             </small>
                         </ui-select-choices>
                     </ui-select>
-                    <a href="/#!/species/create">Add a species...</a>
+                    <a href="/#!/organisms/create">Add an organism</a>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Due Date</label>

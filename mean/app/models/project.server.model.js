@@ -34,10 +34,10 @@ var ProjectSchema = new Schema({
 		ref: 'Customer',
 		required: 'A customer must be specified'
 	},
-	species: {
+	organism: {
 		type: Schema.ObjectId,
-		ref: 'Specie',
-		required: 'A species must be specified'
+		ref: 'Organism',
+		required: 'An organism must be specified'
 	},
 	description: {
 		type: String,

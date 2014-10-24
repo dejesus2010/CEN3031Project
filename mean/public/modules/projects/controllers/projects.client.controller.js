@@ -1,23 +1,23 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Customers', 'Species',
-	function($scope, $stateParams, $location, Authentication, Projects, Customers, Species) {
+angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Customers', 'Organisms',
+	function($scope, $stateParams, $location, Authentication, Projects, Customers, Organisms) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
-		$scope.species = Species.query();
+		$scope.organisms = Organisms.query();
 		$scope.projects = [];
 		$scope.gridReady = false;
 
 		$scope.customer = {};
-		$scope.specie = {};
+		$scope.organism = {};
 
 		$scope.create = function() {
 			var project = new Projects({
 				projectCode: this.projectCode,
 				description: this.description,
 				customer: $scope.customer.selected._id,
-				species: $scope.specie.selected._id,
+				organism: $scope.organism.selected._id,
 				due: this.due
 			});
 			project.$save(function(response) {
@@ -122,8 +122,8 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				field: 'projectCode',
 				displayName: 'Project Code'
 			}, {
-				field: 'species.name',
-				displayName: 'Species'
+				field: 'organism.name',
+				displayName: 'Organism'
 			}, {
 				field: 'customer.name',
 				displayName: 'Customer'

@@ -5,102 +5,102 @@
  */
 var mongoose = require('mongoose'),
   errorHandler = require('./errors'),
-  Specie = mongoose.model('Specie'),
+  Organism = mongoose.model('Organism'),
   _ = require('lodash');
 
 /**
- * Create a specie
+ * Create an organism
  */
 exports.create = function(req, res) {
-  var specie = new Specie(req.body);
-  specie.user = req.user;
+  var organism = new Organism(req.body);
+  organism.user = req.user;
 
-  specie.save(function(err) {
+  organism.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(specie);
+      res.jsonp(organism);
     }
   });
 };
 
 /**
- * Show the current specie
+ * Show the current organism
  */
 exports.read = function(req, res) {
-  res.jsonp(req.specie);
+  res.jsonp(req.organism);
 };
 
 /**
- * Update a specie
+ * Update an organism
  */
 exports.update = function(req, res) {
-  var specie = req.specie;
+  var organism = req.organism;
 
-  specie = _.extend(specie, req.body);
+  organism = _.extend(organism, req.body);
 
-  specie.save(function(err) {
+  organism.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(specie);
+      res.jsonp(organism);
     }
   });
 };
 
 /**
- * Delete an specie
+ * Delete an organism
  */
 exports.delete = function(req, res) {
-  var specie = req.specie;
+  var organism = req.organism;
 
-  specie.remove(function(err) {
+  organism.remove(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(specie);
+      res.jsonp(organism);
     }
   });
 };
 
 /**
- * List of Species
+ * List of Organisms
  */
 exports.list = function(req, res) {
-  Specie.find().sort('-created').populate('user', 'displayName').exec(function(err, species) {
+  Organism.find().sort('-created').populate('user', 'displayName').exec(function(err, organisms) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(species);
+      res.jsonp(organisms);
     }
   });
 };
 
 /**
- * Specie middleware
+ * Organism middleware
  */
 exports.specieByID = function(req, res, next, id) {
-  Specie.findById(id).populate('user', 'displayName').exec(function(err, specie) {
+  Organism.findById(id).populate('user', 'displayName').exec(function(err, organism) {
     if (err) return next(err);
-    if (!specie) return next(new Error('Failed to load specie ' + id));
-    req.specie = specie;
+    if (!organism) return next(new Error('Failed to load organism ' + id));
+    req.organism = organism;
     next();
   });
 };
 
 /**
- * Specie authorization middleware
+ * Organism authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-  if (req.specie.user.id !== req.user.id) {
+  if (req.organism.user.id !== req.user.id) {
     return res.status(403).send({
       message: 'User is not authorized'
     });
