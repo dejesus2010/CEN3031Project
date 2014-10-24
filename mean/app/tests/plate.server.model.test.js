@@ -45,7 +45,7 @@ describe('Plates Model Unit Tests:', function() {
           project.save(function(err, doc) {
             projectID = doc._id;
             done();
-          })
+          });
         });
       });
     });

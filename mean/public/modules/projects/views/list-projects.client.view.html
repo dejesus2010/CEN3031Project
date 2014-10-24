@@ -2,7 +2,7 @@
 	<div class="page-header">
 		<h1>All Projects</h1>
 	</div>
-	<div ng-if="gridReady">
+	<div ng-if="gridReady && projects.length">
 		<ng-react-grid grid="grid"></ng-react-grid>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="projects.$resolved && !projects.length">
