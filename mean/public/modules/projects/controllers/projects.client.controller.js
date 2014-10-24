@@ -120,19 +120,22 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 			},
 			columnDefs: [{
 				field: 'projectCode',
-				displayName: 'Project Code'
+				displayName: 'Project Code',
+				width: '7%'
 			}, {
 				field: 'organism.name',
-				displayName: 'Organism'
+				displayName: 'Organism',
 			}, {
 				field: 'customer.name',
 				displayName: 'Customer'
 			}, {
 				field: 'due',
-				displayName: 'Due Date'
+				displayName: 'Due Date',
+				width: '6%'
 			}, {
 				field: 'projectStatus',
-				displayName: 'Project Status'
+				displayName: 'Project Status',
+				width: '7%'
 			}]
 		};
 	}
