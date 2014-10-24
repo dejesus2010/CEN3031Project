@@ -127,7 +127,7 @@
 			  projectCode: 'ABC',
 			  description: 'MEAN rocks!',
 			  customer: sampleCustomer._id,
-			  organisms: sampleSpecie._id
+			  organism: sampleSpecie._id
 			});
 
 			// Create a sample project response
