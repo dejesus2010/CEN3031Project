@@ -39,6 +39,10 @@ var ProjectSchema = new Schema({
 		ref: 'Organism',
 		required: 'An organism must be specified'
 	},
+	plates: [{
+		type: Schema.ObjectId,
+		ref: 'Plate',
+	}],
 	description: {
 		type: String,
 		default: '',

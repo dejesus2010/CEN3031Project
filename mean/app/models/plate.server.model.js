@@ -10,11 +10,19 @@ var mongoose = require('mongoose'),
  * Plate Schema
  */
 var PlateSchema = new Schema({
-  plateCode: Number,
-  stage: Number,
+  plateCode: {
+    type: String,
+    trim: true,
+    required: 'Plate code must be specified'
+  },
+  stage: {
+    type: Number,
+    default: 1
+  },
   project: {
     type: Schema.ObjectId,
-    ref: 'Project'
+    ref: 'Project',
+    required: 'Plate must belong to a project'
   },
   samples: [{
     type: Schema.Types.ObjectId,
