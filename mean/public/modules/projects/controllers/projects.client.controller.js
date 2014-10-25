@@ -48,6 +48,8 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.update = function() {
 			var project = $scope.project;
+			project.customer = $scope.selectedCustomer.selected;
+			project.organism = $scope.selectedOrganism.selected;
 
 			project.$update(function() {
 				$location.path('projects/' + project._id);
@@ -65,6 +67,10 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.findOne = function() {
 			$scope.project = Projects.get({
 				projectId: $stateParams.projectId
+			}, function(err, res) {
+				$scope.selectedCustomer = {selected: $scope.project.customer};
+				$scope.selectedOrganism = {selected: $scope.project.organism};
+				$scope.disabled = true;
 			});
 		};
 

@@ -116,7 +116,7 @@
 			});
 
 			// Create a sample organism object
-			var sampleSpecie = new Organisms({
+			var sampleOrganism = new Organisms({
 			  _id: '525cf20451979dea2c000003',
 			  id: 1,
 			  name: 'Burrito'
@@ -127,7 +127,7 @@
 			  projectCode: 'ABC',
 			  description: 'MEAN rocks!',
 			  customer: sampleCustomer._id,
-			  organism: sampleSpecie._id
+			  organism: sampleOrganism._id
 			});
 
 			// Create a sample project response
@@ -140,9 +140,9 @@
 
 			// Create organism and customer responses
 			var customerResponse = [sampleCustomer];
-			var specieResponse = [sampleSpecie];
+			var organismResponse = [sampleOrganism];
 			scope.customer.selected = sampleCustomer;
-			scope.organism.selected = sampleSpecie;
+			scope.organism.selected = sampleOrganism;
 
 			// Fixture mock form input values
 			scope.projectCode = 'ABC';
@@ -152,7 +152,7 @@
 			$httpBackend.expectGET('customers').respond(customerResponse);
 
 			// Account for organisms query
-			$httpBackend.expectGET('organisms').respond(specieResponse);
+			$httpBackend.expectGET('organisms').respond(organismResponse);
 
 			// Set POST response
 			$httpBackend.expectPOST('projects', sampleProjectPostData).respond(sampleProjectResponse);
@@ -169,7 +169,22 @@
 			expect($location.path()).toBe('/projects/' + sampleProjectResponse._id);
 		}));
 
-		it('$scope.update() should update a valid project', inject(function(Projects) {
+		it('$scope.update() should update a valid project', inject(function(Projects, Customers, Organisms) {
+			// Create a sample customer object
+			var sampleCustomer = new Customers({
+			  _id: '525cf20451979dea2c000002',
+			  name: 'University of Florida',
+			  id: 37,
+			  code: 'UFL'
+			});
+
+			// Create a sample organism object
+			var sampleOrganism = new Organisms({
+			  _id: '525cf20451979dea2c000003',
+			  id: 1,
+			  name: 'Burrito'
+			});
+
 			// Define a sample project put data
 			var sampleProjectPutData = new Projects({
 				_id: '525cf20451979dea2c000001',
@@ -179,6 +194,8 @@
 
 			// Mock project in scope
 			scope.project = sampleProjectPutData;
+			scope.selectedCustomer = {selected: sampleCustomer};
+			scope.selectedOrganism = {selected: sampleCustomer}
 
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();

@@ -1,16 +1,55 @@
-<section data-ng-controller="ProjectsController" data-ng-init="findOne()">
+<section data-ng-controller="ProjectsController" ng-init="findOne()">
 	<div class="page-header">
 		<h1>Edit Project</h1>
 	</div>
 	<div class="col-md-12">
-		<form name="projectForm" class="form-horizontal" data-ng-submit="update(projectForm.$valid)" novalidate>
+		<form name="projectForm" class="form-horizontal" data-ng-submit="update()" novalidate>
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': projectForm.projectCode.$dirty && projectForm.projectCode.$invalid }">
 					<label class="control-label" for="projectCode">Project Code</label>
 					<div class="controls">
-						<input name="projectCode" type="text" data-ng-model="projectCode" id="projectCode" class="form-control" placeholder="i.e. ABC_010203" required>
+						<input name="projectCode" type="text" data-ng-model="project.projectCode" id="projectCode" class="form-control" placeholder="ABC_010203" readOnly="true" required>
 					</div>
 				</div>
+                <div class="form-group">
+                    <label class="control-label">Customer</label>
+                    <ui-select ng-model="selectedCustomer.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
+                        <ui-select-match placeholder="Select a customer...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="customer in customers | filter: {name: $select.search}" value="{{customer}}" ng-selected="{{customer._id === selectedCustomer._id}}">
+                            <div ng-bind-html="customer.name | highlight: $select.search"></div>
+                            <small>
+                              {{customer.name}} --
+                              {{customer.id}}
+                            </small>
+                            </ui-select-choices>
+                    </ui-select>
+                    <!--<a href="/#!/customers/create">Add a customer</a>-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Organism</label>
+                    <ui-select ng-model="selectedOrganism.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
+                        <ui-select-match placeholder="Select an organism...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="organism in organisms | filter: {name: $select.search}" value="{{organism}}" ng-selected="{{organism._id === selectedOrganism._id}}">
+                            <div ng-bind-html="organisms.name | highlight: $select.search"></div>
+                            <small>
+                                {{organism.name}} --
+                                {{organism.id}}
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                    <!--<a href="/#!/organisms/create">Add an organism</a>-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Due Date</label>
+                    <div class="col-md-6">
+                        <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="project.due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                        </p>
+                    </div>
+                </div>
 				<div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
 					<label class="control-label" for="description">Description</label>
 					<div class="controls">
@@ -24,9 +63,9 @@
 					<strong data-ng-bind="error"></strong>
 				</div>
 				<div class="form-group">
-					<input type="submit" value="Create" class="btn btn-default">
+	        <input type="submit" class="btn btn-default">&nbsp
+	        <a href back-button class="btn btn-default">Cancel</a>
 				</div>
-
 			</fieldset>
 		</form>
 	</div>

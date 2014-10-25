@@ -88,7 +88,7 @@ exports.list = function(req, res) {
  * Project middleware
  */
 exports.projectByID = function(req, res, next, id) {
-	Project.findById(id).populate('user', 'displayName').exec(function(err, project) {
+	Project.findById(id).populate('user', 'displayName').populate('customer').populate('organism').exec(function(err, project) {
 		if (err) return next(err);
 		if (!project) return next(new Error('Failed to load project ' + id));
 		req.project = project;
