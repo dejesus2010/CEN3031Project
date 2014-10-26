@@ -17,7 +17,8 @@ module.exports = {
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
 				'public/lib/angular-ui-select/dist/select.min.css',
 				'public/lib/select2/select2.css',
-        'public/lib/ngReactGrid/build/css/ngReactGrid.css'
+        'public/lib/ngReactGrid/build/css/ngReactGrid.css',
+        'public/lib/ngDialog/css/ngDialog-theme-default.min.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -29,7 +30,8 @@ module.exports = {
 				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/lib/angular-sanitize/angular-sanitize.js',
         'public/lib/react/react.min.js',
-        'public/lib/ngReactGrid/build/js/ngReactGrid.min.js'
+        'public/lib/ngReactGrid/build/js/ngReactGrid.min.js',
+        'public/lib/ngDialog/js/ngDialog.min.js'
 			]
 		},
 		css: [
