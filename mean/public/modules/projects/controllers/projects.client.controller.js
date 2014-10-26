@@ -8,13 +8,21 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.organisms = Organisms.query();
 		$scope.projects = [];
 		$scope.gridReady = false;
+		$scope.projectIdent = '';
 
 		$scope.customer = {};
 		$scope.organism = {};
 
 		$scope.create = function() {
+			if ($scope.projectIdent.length !== 3) {
+				$scope.error = 'You must specify a 3 character project indentifier';
+				return;
+			} else if ($scope.customer.selected === undefined || $scope.organism.selected === undefined) {
+				$scope.error = 'Customer and Organism must be selected';
+				return;
+			}
 			var project = new Projects({
-				projectCode: this.projectCode,
+				projectCode: $scope.projectCode(),
 				description: this.description,
 				customer: $scope.customer.selected._id,
 				organism: $scope.organism.selected._id,
@@ -85,6 +93,37 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				$scope.selectedOrganism = {selected: $scope.project.organism};
 				$scope.disabled = true;
 			});
+		};
+
+		$scope.projectCode = function() {
+			// Populates the projectCode with the specified identifier and a unique project number.
+			var projectCode = $scope.projectIdent !== undefined ? $scope.projectIdent : '';
+			projectCode = projectCode + '_';
+			// Padding zeros
+			projectCode = projectCode.concat($scope.organism.selected !== undefined ? ('0' + $scope.organism.selected.id).slice(-2) : 'XX');
+			projectCode = projectCode.concat($scope.customer.selected !== undefined ? ('0' + $scope.customer.selected.id).slice(-2) : 'XX');
+			// Getting unique project number
+			if ($scope.organism.selected && $scope.customer.selected) {
+				var projectNumber = 0;
+				// Iterate through all current projects that match the customer and organism we've picked
+				for (var project = 0; project < $scope.projects.length; ++project) {
+					if ($scope.projects[project].projectCode.slice(4,8) === projectCode.slice(4)) {
+						projectNumber = parseInt($scope.projects[project].projectCode.slice(8)) > projectNumber ? parseInt($scope.projects[project].projectCode.slice(8)) : projectNumber;
+					}
+				}
+				++projectNumber;
+				// Again, padding zeros because of the project code format
+				projectCode = projectCode.concat(('0' + projectNumber).slice(-2));
+			} else {
+				projectCode = projectCode.concat('XX');
+			}
+			return projectCode;
+		};
+
+		$scope.validateChar = function() {
+			if ($scope.projectIdent !== undefined) {
+				$scope.projectIdent = $scope.projectIdent.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+			}
 		};
 
 		///////////////////////////////

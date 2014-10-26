@@ -145,7 +145,8 @@
 			scope.organism.selected = sampleOrganism;
 
 			// Fixture mock form input values
-			scope.projectCode = 'ABC';
+			scope.projectCode = function() { return 'ABC';};
+			scope.projectIdent = 'IDE';
 			scope.description = 'MEAN rocks!';
 
 			// Account for customers query
@@ -167,6 +168,17 @@
 
 			// Test URL redirection after the project was created
 			expect($location.path()).toBe('/projects/' + sampleProjectResponse._id);
+		}));
+
+		it('$scope.create() should throw an error if a valid project identifier hasn\'t been set' , inject(function(Projects, Customers, Organisms) {
+			scope.create();
+			expect(scope.error).toBe('You must specify a 3 character project indentifier');
+		}));
+
+		it('$scope.create() should throw an error if a customer or organism hasn\'t been selected' , inject(function(Projects, Customers, Organisms) {
+			scope.projectIdent = 'IDE';
+			scope.create();
+			expect(scope.error).toBe('Customer and Organism must be selected');
 		}));
 
 		it('$scope.update() should update a valid project', inject(function(Projects, Customers, Organisms) {
@@ -296,6 +308,73 @@
 
 			expect(scope.grid.data[0].projectStatus).toEqual('In Progress');
 			expect(scope.grid.data[1].projectStatus).toEqual('Completed');
+		}));
+
+		it('$scope.projectCode() should return a unique projectCode', inject(function(Projects) {
+
+			// Create a sample project object
+			var sampleProject = new Projects({
+			  projectCode: 'ABC_012345',
+			  description: 'MEAN rocks!',
+				due: '2014-10-30T04:00:00.000Z'
+			});
+			// Create a sample projects array that includes the new project
+			var sampleProjects = [sampleProject];
+
+			// Account for the Customers query
+			$httpBackend.expectGET('customers').respond();
+
+			// Account for the Organisms query
+			$httpBackend.expectGET('organisms').respond();
+
+			// Set GET response
+			$httpBackend.expectGET('projects').respond(sampleProjects);
+
+			// Run controller functionality
+			scope.init();
+			$httpBackend.flush();
+
+			scope.organism = {selected: {id: 1}};
+			scope.customer = {selected: {id: 23}};
+			scope.projectIdent = 'ABC';
+
+			expect(scope.projectCode()).toBe('ABC_012346');
+		}));
+
+		it('$scope.projectCode() should use wildcards when a species or customer hasn\'t been selected yet', inject(function(Projects) {
+
+			// Create a sample project object
+			var sampleProject = new Projects({
+			  projectCode: 'ABC_012345',
+			  description: 'MEAN rocks!',
+				due: '2014-10-30T04:00:00.000Z'
+			});
+			// Create a sample projects array that includes the new project
+			var sampleProjects = [sampleProject];
+
+			// Account for the Customers query
+			$httpBackend.expectGET('customers').respond();
+
+			// Account for the Organisms query
+			$httpBackend.expectGET('organisms').respond();
+
+			// Set GET response
+			$httpBackend.expectGET('projects').respond(sampleProjects);
+
+			// Run controller functionality
+			scope.init();
+			$httpBackend.flush();
+
+			scope.customer = {selected: {id: 23}};
+			scope.projectIdent = 'ABC';
+
+			expect(scope.projectCode()).toBe('ABC_XX23XX');
+		}));
+
+		it('$scope.validateChar() should delete invalid chars from $scope.projectIdent and capitalize all letters', inject(function() {
+			scope.projectIdent = '1%a';
+			scope.validateChar();
+			expect(scope.projectIdent).toBe('1A');
 		}));
 	});
 }());
