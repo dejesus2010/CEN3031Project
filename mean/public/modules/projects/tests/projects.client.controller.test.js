@@ -372,9 +372,9 @@
 		}));
 
 		it('$scope.validateChar() should delete invalid chars from $scope.projectIdent and capitalize all letters', inject(function() {
-			scope.projectIdent = '1%a';
+			scope.projectIdent = 'T%a';
 			scope.validateChar();
-			expect(scope.projectIdent).toBe('1A');
+			expect(scope.projectIdent).toBe('TA');
 		}));
 	});
 }());

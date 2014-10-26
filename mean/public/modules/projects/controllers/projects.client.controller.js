@@ -122,7 +122,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.validateChar = function() {
 			if ($scope.projectIdent !== undefined) {
-				$scope.projectIdent = $scope.projectIdent.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+				$scope.projectIdent = $scope.projectIdent.replace(/[^a-zA-Z]/g, '').toUpperCase();
 			}
 		};
 
