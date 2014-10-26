@@ -195,7 +195,7 @@
 			// Mock project in scope
 			scope.project = sampleProjectPutData;
 			scope.selectedCustomer = {selected: sampleCustomer};
-			scope.selectedOrganism = {selected: sampleCustomer}
+			scope.selectedOrganism = {selected: sampleCustomer};
 
 			// Account for the Customer query
 			$httpBackend.expectGET('customers').respond();

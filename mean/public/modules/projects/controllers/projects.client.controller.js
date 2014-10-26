@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Customers', 'Organisms',
-	function($scope, $stateParams, $location, Authentication, Projects, Customers, Organisms) {
+angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
+	function($scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
@@ -31,6 +31,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		};
 
 		$scope.remove = function(project) {
+			$scope.closeDialog();
 			if (project) {
 				project.$remove();
 
@@ -44,6 +45,18 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 					$location.path('projects');
 				});
 			}
+		};
+
+		$scope.confirmRemove = function() {
+			ngDialog.open({
+				template: 'deleteConfirmDialog',
+				className: 'ngdialog-theme-default',
+				scope: $scope
+			});
+		};
+
+		$scope.closeDialog = function() {
+			ngDialog.closeAll();
 		};
 
 		$scope.update = function() {
