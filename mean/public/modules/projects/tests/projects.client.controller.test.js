@@ -170,13 +170,7 @@
 			expect($location.path()).toBe('/projects/' + sampleProjectResponse._id);
 		}));
 
-		it('$scope.create() should throw an error if a valid project identifier hasn\'t been set' , inject(function(Projects, Customers, Organisms) {
-			scope.create();
-			expect(scope.error).toBe('You must specify a 3 character project indentifier');
-		}));
-
 		it('$scope.create() should throw an error if a customer or organism hasn\'t been selected' , inject(function(Projects, Customers, Organisms) {
-			scope.projectIdent = 'IDE';
 			scope.create();
 			expect(scope.error).toBe('Customer and Organism must be selected');
 		}));
@@ -335,7 +329,7 @@
 			$httpBackend.flush();
 
 			scope.organism = {selected: {id: 1}};
-			scope.customer = {selected: {id: 23}};
+			scope.customer = {selected: {id: 23, code: 'ABC'}};
 			scope.projectIdent = 'ABC';
 
 			expect(scope.projectCode()).toBe('ABC_012346');
@@ -365,16 +359,10 @@
 			scope.init();
 			$httpBackend.flush();
 
-			scope.customer = {selected: {id: 23}};
+			scope.customer = {selected: {id: 23, code: 'ABC'}};
 			scope.projectIdent = 'ABC';
 
 			expect(scope.projectCode()).toBe('ABC_XX23XX');
-		}));
-
-		it('$scope.validateChar() should delete invalid chars from $scope.projectIdent and capitalize all letters', inject(function() {
-			scope.projectIdent = 'T%a';
-			scope.validateChar();
-			expect(scope.projectIdent).toBe('TA');
 		}));
 	});
 }());

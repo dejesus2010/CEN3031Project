@@ -14,10 +14,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.organism = {};
 
 		$scope.create = function() {
-			if ($scope.projectIdent.length !== 3) {
-				$scope.error = 'You must specify a 3 character project indentifier';
-				return;
-			} else if ($scope.customer.selected === undefined || $scope.organism.selected === undefined) {
+			if ($scope.customer.selected === undefined || $scope.organism.selected === undefined) {
 				$scope.error = 'Customer and Organism must be selected';
 				return;
 			}
@@ -97,7 +94,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.projectCode = function() {
 			// Populates the projectCode with the specified identifier and a unique project number.
-			var projectCode = $scope.projectIdent !== undefined ? $scope.projectIdent : '';
+			var projectCode = $scope.customer.selected !== undefined ? $scope.customer.selected.code : 'XXX';
 			projectCode = projectCode + '_';
 			// Padding zeros
 			projectCode = projectCode.concat($scope.organism.selected !== undefined ? ('0' + $scope.organism.selected.id).slice(-2) : 'XX');
@@ -118,12 +115,6 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				projectCode = projectCode.concat('XX');
 			}
 			return projectCode;
-		};
-
-		$scope.validateChar = function() {
-			if ($scope.projectIdent !== undefined) {
-				$scope.projectIdent = $scope.projectIdent.replace(/[^a-zA-Z]/g, '').toUpperCase();
-			}
 		};
 
 		///////////////////////////////

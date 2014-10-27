@@ -5,6 +5,10 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
     $scope.authentication = Authentication;
 
     $scope.create = function() {
+      if ($scope.code === undefined || $scope.code.length !== 3) {
+        $scope.error = 'You must specify a 3 character indentifier';
+        return;
+      }
       var customer = new Customers({
         name: this.name,
         id: this.id,
@@ -55,6 +59,12 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
       $scope.customer = Customers.get({
         customerId: $stateParams.customerId
       });
+    };
+
+    $scope.validateCode = function() {
+      if ($scope.code !== undefined) {
+        $scope.code = $scope.code.replace(/[^a-zA-Z]/g, '').toUpperCase();
+      }
     };
 
     $scope.newCustomerId = function() {

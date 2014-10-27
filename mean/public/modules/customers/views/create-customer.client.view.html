@@ -12,9 +12,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="code">Code</label>
+					<label class="control-label" for="code">3 Character Identifier</label>
 					<div class="controls">
-						<input name="code" data-ng-model="code" id="code" class="form-control" cols="30" rows="10" placeholder="code"></input>
+            <input name="code" type="text" maxlength="3" data-ng-model="code" ng-change="validateCode()" id="code" class="form-control" placeholder="ABC" required>
 					</div>
 				</div>
 				<div class="form-group">

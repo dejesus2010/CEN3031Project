@@ -139,6 +139,11 @@
 			expect($window.history.back).toHaveBeenCalled();
 		}));
 
+		it('$scope.create() should throw an error if a valid identifier hasn\'t been set' , inject(function(Projects, Customers, Organisms) {
+			scope.create();
+			expect(scope.error).toBe('You must specify a 3 character indentifier');
+		}));
+
 		it('$scope.update() should update a valid customer', inject(function(Customers) {
 			// Define a sample customer put data
 			var sampleCustomerPutData = new Customers({
@@ -215,6 +220,12 @@
 			scope.customers = Customers.query();
 			$httpBackend.flush();
 			expect(scope.newCustomerId()).toBe(1);
+		}));
+
+		it('$scope.validateCode() should delete invalid chars from $scope.code and capitalize all letters', inject(function() {
+			scope.code = 'T%a';
+			scope.validateCode();
+			expect(scope.code).toBe('TA');
 		}));
 	});
 }());
