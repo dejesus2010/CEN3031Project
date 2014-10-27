@@ -1,4 +1,4 @@
-<section data-ng-controller="ProjectsController" ng-init="findOne()">
+<section data-ng-controller="ProjectsController" ng-init="findOne(); init(); editing();">
 	<div class="page-header">
 		<h1>Edit Project</h1>
 	</div>
@@ -8,12 +8,12 @@
 				<div class="form-group" ng-class="{ 'has-error': projectForm.projectCode.$dirty && projectForm.projectCode.$invalid }">
 					<label class="control-label" for="projectCode">Project Code</label>
 					<div class="controls">
-						<input name="projectCode" type="text" data-ng-model="project.projectCode" id="projectCode" class="form-control" placeholder="ABC_010203" readOnly="true" required>
+                        <input name="projectCode" type="text" readOnly="true" data-ng-value="projectCode()" id="projectCode" class="form-control" placeholder="XXX_XXXXXX">
 					</div>
 				</div>
                 <div class="form-group">
                     <label class="control-label">Customer</label>
-                    <ui-select ng-model="selectedCustomer.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
+                    <ui-select ng-model="selectedCustomer.selected" theme="select2" style="min-width: 300px;" rows=2>
                         <ui-select-match placeholder="Select a customer...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="customer in customers | filter: {name: $select.search}" value="{{customer}}" ng-selected="{{customer._id === selectedCustomer._id}}">
                             <div ng-bind-html="customer.name | highlight: $select.search"></div>
@@ -23,11 +23,11 @@
                             </small>
                             </ui-select-choices>
                     </ui-select>
-                    <!--<a href="/#!/customers/create">Add a customer</a>-->
+                    <a href="/#!/customers/create">Add a customer</a>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Organism</label>
-                    <ui-select ng-model="selectedOrganism.selected" theme="select2" ng-disabled="disabled"  style="min-width: 300px;" rows=2>
+                    <ui-select ng-model="selectedOrganism.selected" theme="select2" style="min-width: 300px;" rows=2>
                         <ui-select-match placeholder="Select an organism...">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="organism in organisms | filter: {name: $select.search}" value="{{organism}}" ng-selected="{{organism._id === selectedOrganism._id}}">
                             <div ng-bind-html="organisms.name | highlight: $select.search"></div>
@@ -37,7 +37,7 @@
                             </small>
                         </ui-select-choices>
                     </ui-select>
-                    <!--<a href="/#!/organisms/create">Add an organism</a>-->
+                    <a href="/#!/organisms/create">Add an organism</a>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Due Date</label>

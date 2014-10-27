@@ -146,7 +146,6 @@
 
 			// Fixture mock form input values
 			scope.projectCode = function() { return 'ABC';};
-			scope.projectIdent = 'IDE';
 			scope.description = 'MEAN rocks!';
 
 			// Account for customers query
@@ -330,9 +329,46 @@
 
 			scope.organism = {selected: {id: 1}};
 			scope.customer = {selected: {id: 23, code: 'ABC'}};
-			scope.projectIdent = 'ABC';
 
 			expect(scope.projectCode()).toBe('ABC_012346');
+		}));
+
+		it('$scope.projectCode() should return the current project code if species and customer haven\'t been changed in edit mode', inject(function(Projects) {
+
+			// Create a sample project object
+			var sampleProject = new Projects({
+			  projectCode: 'ABC_012345',
+			  description: 'MEAN rocks!',
+				due: '2014-10-30T04:00:00.000Z',
+				customer: {
+					_id: '12345'
+				},
+				organism: {
+					_id: '54321'
+				}
+			});
+			// Create a sample projects array that includes the new project
+			var sampleProjects = [sampleProject];
+
+			// Account for the Customers query
+			$httpBackend.expectGET('customers').respond();
+
+			// Account for the Organisms query
+			$httpBackend.expectGET('organisms').respond();
+
+			// Set GET response
+			$httpBackend.expectGET('projects').respond(sampleProjects);
+
+			// Run controller functionality
+			scope.editing();
+			scope.init();
+			$httpBackend.flush();
+
+			scope.project = sampleProject;
+			scope.organism = {selected: {id: 1, _id: '54321'}};
+			scope.customer = {selected: {id: 23, _id: '12345', code: 'ABC'}};
+
+			expect(scope.projectCode()).toBe('ABC_012345');
 		}));
 
 		it('$scope.projectCode() should use wildcards when a species or customer hasn\'t been selected yet', inject(function(Projects) {
@@ -360,7 +396,6 @@
 			$httpBackend.flush();
 
 			scope.customer = {selected: {id: 23, code: 'ABC'}};
-			scope.projectIdent = 'ABC';
 
 			expect(scope.projectCode()).toBe('ABC_XX23XX');
 		}));

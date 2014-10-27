@@ -66,8 +66,11 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 
 		$scope.update = function() {
 			var project = $scope.project;
+			project.projectCode = $scope.projectCode();
+			project.description = $scope.description;
 			project.customer = $scope.selectedCustomer.selected;
 			project.organism = $scope.selectedOrganism.selected;
+			project.due = $scope.due;
 
 			project.$update(function() {
 				$location.path('projects/' + project._id);
@@ -92,8 +95,26 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 			});
 		};
 
+		$scope.editing = function() {
+			$scope.isEdit = true;
+		};
+
 		$scope.projectCode = function() {
 			// Populates the projectCode with the specified identifier and a unique project number.
+			if ($scope.isEdit) {
+				if ($scope.selectedCustomer !== undefined) {
+					$scope.customer.selected = JSON.parse(JSON.stringify($scope.selectedCustomer.selected));
+				}
+				if ($scope.selectedOrganism !== undefined) {
+					$scope.organism.selected = JSON.parse(JSON.stringify($scope.selectedOrganism.selected));
+				}
+				// If we aren't changing the customer or species of a project, don't bother generating a new project id
+				if ($scope.project !== undefined && $scope.customer.selected !== undefined && $scope.organism.selected !== undefined) {
+					if ($scope.project.customer._id === $scope.customer.selected._id && $scope.project.organism._id === $scope.organism.selected._id) {
+						return $scope.project.projectCode;
+					}
+				}
+			}
 			var projectCode = $scope.customer.selected !== undefined ? $scope.customer.selected.code : 'XXX';
 			projectCode = projectCode + '_';
 			// Padding zeros
