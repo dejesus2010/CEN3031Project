@@ -1,32 +1,50 @@
 <section data-ng-controller="ProjectsController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="project.projectCode"></h1>
-	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == project.user._id">
-		<a class="btn btn-primary" href="/#!/projects/{{project._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="confirmRemove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">
-			Last modified by: 	
-			<span data-ng-bind="project.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="project.user.displayName"></span>
-		</em>
-	</small>
-	<p class="lead" data-ng-bind="project.description"></p>
+    <div class="page-header"">
+    <h2 class="text-center">Manage Project</h2>
+    </div>
+
+    <div class="bs-callout" >
+        <dl class="field-listing">
+            <dt>Project Code:</dt>
+            <dd>{{project.projectCode}}</dd>
+            <dt>Customer:</dt>
+            <dd>{{project.customer.name}}</dd>
+            <dt>Due Date:</dt>
+            <dd>{{project.due | date}}</dd>
+            <dt>Last Modified:</dt>
+            <dd>{{project.lastEdited | date}}</dd>
+            <dt>Organism:</dt>
+            <dd>{{project.organism.name}}</dd>
+            <dt>Plates:</dt>
+            <dd>{{project.plates.length}}</dd>
+            <dt>Description:</dt>
+            <dd>{{project.description}}</dd>
+        </dl>
+        <div class="text-center" data-ng-show="authentication.user._id == project.user._id">
+            <hr>
+            <a class="btn btn-primary" href="/#!/projects/{{project._id}}/edit">
+                <i class="glyphicon glyphicon-edit">Edit</i>
+            </a>
+            <a class="btn btn-primary" data-ng-click="confirmRemove();">
+                <i class="glyphicon glyphicon-trash">Delete</i>
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="text-center">
+        || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
+    </div>
+
+
 </section>
+
 <script type="text/ng-template" id="deleteConfirmDialog">
-	<div class="ngdialog-message">
-		<h2>Continue?</h2>
-		<h5>This project will be permanently deleted</h5>
-	</div>
-	<div class="ngdialog-buttons">
-		<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="remove()">Delete Project</button>
-		<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeDialog()">Cancel</button>
-	</div>
+    <div class="ngdialog-message">
+        <h2>Continue?</h2>
+        <h5>This project will be permanently deleted</h5>
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="remove()">Delete Project</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeDialog()">Cancel</button>
+    </div>
 </script>

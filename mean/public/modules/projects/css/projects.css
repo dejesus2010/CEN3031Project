@@ -1,3 +1,32 @@
 .ngReactGrid .ngReactGridSearch input {
     height: 25px !important;
 }
+.bs-callout {
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin:auto;
+    width:700px;
+}
+.col-md-1{
+
+}
+@media (min-width: 768px) {
+    .field-listing dt {
+        float: left;
+        clear: left;
+        text-align: left;
+        white-space: nowrap;
+    }
+    .field-listing dd {
+        display: block;
+        padding-left: 120px;
+        max-width: 400px;
+    }
+}
+dl {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
