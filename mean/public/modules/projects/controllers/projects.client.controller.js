@@ -67,10 +67,8 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 		$scope.update = function() {
 			var project = $scope.project;
 			project.projectCode = $scope.projectCode();
-			project.description = $scope.description;
 			project.customer = $scope.selectedCustomer.selected;
 			project.organism = $scope.selectedOrganism.selected;
-			project.due = $scope.due;
 
 			project.$update(function() {
 				$location.path('projects/' + project._id);
