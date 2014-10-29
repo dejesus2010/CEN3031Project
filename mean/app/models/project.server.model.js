@@ -39,6 +39,11 @@ var ProjectSchema = new Schema({
 		ref: 'Organism',
 		required: 'An organism must be specified'
 	},
+	sequencingMethod: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	plates: [{
 		type: Schema.ObjectId,
 		ref: 'Plate',
