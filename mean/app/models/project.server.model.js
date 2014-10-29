@@ -23,6 +23,10 @@ var ProjectSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	lastEditor: {
+		type: Schema.ObjectId,
+		ref: 'User',
+	},
 	projectCode: {
 		type: String,
 		default: '',

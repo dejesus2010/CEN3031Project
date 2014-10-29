@@ -13,9 +13,9 @@
 	<small>
 		<em class="text-muted">
 			Last modified by: 	
-			<span data-ng-bind="project.created | date:'mediumDate'"></span>
+			<span data-ng-bind="project.lastEdited | date:'mediumDate'"></span>
 			by
-			<span data-ng-bind="project.user.displayName"></span>
+			<span data-ng-bind="project.lastEditor.displayName"></span>
 		</em>
 	</small>
 	<p class="lead" data-ng-bind="project.description"></p>
