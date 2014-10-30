@@ -14,6 +14,8 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var project = new Project(req.body);
 	project.user = req.user;
+	project.lastEditor = req.user;
+	project.lastEdited = Date.now();
 
 	project.save(function(err) {
 		if (err) {
@@ -40,6 +42,8 @@ exports.update = function(req, res) {
 	var project = req.project;
 
 	project = _.extend(project, req.body);
+	project.lastEditor = req.user;
+	project.lastEdited = Date.now();
 
 	project.save(function(err) {
 		if (err) {
@@ -73,7 +77,7 @@ exports.delete = function(req, res) {
  * List of Projects
  */
 exports.list = function(req, res) {
-	Project.find().populate('customer').populate('organism').sort('-created').exec(function(err, projects) {
+	Project.find().populate('customer').populate('organism').populate('lastEditor').sort('-created').exec(function(err, projects) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -88,7 +92,7 @@ exports.list = function(req, res) {
  * Project middleware
  */
 exports.projectByID = function(req, res, next, id) {
-	Project.findById(id).populate('user', 'displayName').populate('customer').populate('organism').exec(function(err, project) {
+	Project.findById(id).populate('user', 'displayName').populate('lastEditor').populate('customer').populate('organism').exec(function(err, project) {
 		if (err) return next(err);
 		if (!project) return next(new Error('Failed to load project ' + id));
 		req.project = project;

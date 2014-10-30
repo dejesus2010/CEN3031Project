@@ -23,10 +23,13 @@
         <div class="text-center" data-ng-show="authentication.user._id == project.user._id">
             <hr>
             <a class="btn btn-primary" href="/#!/projects/{{project._id}}/edit">
-                <i class="glyphicon glyphicon-edit">Edit</i>
+                Edit
+                <i class="glyphicon glyphicon-edit"></i>
             </a>
+            &nbsp
             <a class="btn btn-primary" data-ng-click="confirmRemove();">
-                <i class="glyphicon glyphicon-trash">Delete</i>
+                Delete
+                <i class="glyphicon glyphicon-trash"></i>
             </a>
         </div>
     </div>
@@ -34,7 +37,6 @@
     <div class="text-center">
         || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
     </div>
-
 
 </section>
 
