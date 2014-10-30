@@ -67,6 +67,10 @@ var ProjectSchema = new Schema({
 		ref: 'User',
 		required: 'A user must be specified for the project'
 	},
+	logs: [{
+		type: Schema.ObjectId,
+		ref: 'Log'
+	}]
 });
 
 mongoose.model('Project', ProjectSchema);

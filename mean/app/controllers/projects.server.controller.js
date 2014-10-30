@@ -6,26 +6,44 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Project = mongoose.model('Project'),
+	Log = mongoose.model('Log'),
 	_ = require('lodash');
 
 /**
  * Create a project
  */
 exports.create = function(req, res) {
+	var log = new Log({
+		user: req.user,
+		timestamp: Date.now()
+	});
+
 	var project = new Project(req.body);
 	project.user = req.user;
 	project.lastEditor = req.user;
 	project.lastEdited = Date.now();
 
-	project.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(project);
-		}
-	});
+  log.save(function(err, doc) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        log._id = doc._id;
+        project.logs = [log._id];
+        project.save(function(err) {
+          if (err) {
+            log.remove(function(err) {
+              return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+              });
+            });
+          } else {
+            res.jsonp(project);
+          }
+        });
+      }
+  });
 };
 
 /**
@@ -45,15 +63,32 @@ exports.update = function(req, res) {
 	project.lastEditor = req.user;
 	project.lastEdited = Date.now();
 
-	project.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(project);
-		}
+	var log = new Log({
+		user: req.user,
+		timestamp: Date.now()
 	});
+
+  log.save(function(err, doc) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        log._id = doc._id;
+        project.logs.push(log._id);
+        project.save(function(err) {
+          if (err) {
+            log.remove(function(err) {
+              return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+              });
+            });
+          } else {
+            res.jsonp(project);
+          }
+        });
+      }
+  });
 };
 
 /**
