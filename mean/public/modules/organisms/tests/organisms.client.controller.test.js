@@ -66,17 +66,17 @@
 			});
 
 			// Create a sample organisms array that includes the new organism
-			var sampleOrganism = [sampleOrganism];
+			var sampleOrganismArr = [sampleOrganism];
 
 			// Set GET response
-			$httpBackend.expectGET('organisms').respond(sampleOrganism);
+			$httpBackend.expectGET('organisms').respond(sampleOrganismArr);
 
 			// Run controller functionality
 			scope.find();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.organisms).toEqualData(sampleOrganism);
+			expect(scope.organisms).toEqualData(sampleOrganismArr);
 		}));
 
 		it('$scope.findOne() should create an array with one organism object fetched from XHR using a organismId URL parameter', inject(function(Organisms) {
