@@ -20,7 +20,7 @@ var project;
  */
 describe('Project Model Unit Tests:', function() {
     var customerID;
-    var speciesID;
+    var organismID;
 
     before(function(done){
         var customer = new Customer({id:1, name: 'University of Florida', code: 'UFL'});
@@ -29,7 +29,7 @@ describe('Project Model Unit Tests:', function() {
         customer.save(function(err, doc){
             customerID = doc._id;
             organisms.save(function(err, doc){
-                speciesID = doc._id;
+                organismID = doc._id;
                 done();
             });
         });
@@ -40,7 +40,7 @@ describe('Project Model Unit Tests:', function() {
 			projectCode: 'ABC_010203',
 			due: Date.now(),
 			customer: customerID,
-			organism: speciesID,
+			organism: organismID,
 			description: 'ABC has sent us squirrel dna.',
 			user: new User({
 				firstName: 'Tim',
@@ -74,9 +74,9 @@ describe('Project Model Unit Tests:', function() {
 
         it('project should contain an organism object equal to the Organisms document with the same objectID', function(done){
             return project.save(function(err){
-                Project.findOne({organism: speciesID}).populate('organism').exec(function(err, projectDoc){
-                    Organisms.findOne({_id: speciesID}).exec(function(err, speciesDoc){
-                        JSON.stringify(speciesDoc).should.equal(JSON.stringify(projectDoc.organism));
+                Project.findOne({organism: organismID}).populate('organism').exec(function(err, projectDoc){
+                    Organisms.findOne({_id: organismID}).exec(function(err, organismDoc){
+                        JSON.stringify(organismDoc).should.equal(JSON.stringify(projectDoc.organism));
                         done();
                     });
                 });

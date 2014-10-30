@@ -12,11 +12,11 @@ module.exports = function(app) {
   .get(organisms.list)
   .post(users.requiresLogin, organisms.create);
 
-  app.route('/organisms/:specieId')
+  app.route('/organisms/:organismId')
     .get(organisms.read)
     .put(users.requiresLogin, organisms.hasAuthorization, organisms.update)
     .delete(users.requiresLogin, organisms.hasAuthorization, organisms.delete);
 
   // Finish by binding the organism middleware
-  app.param('specieId', organisms.specieByID);
+  app.param('organismId', organisms.organismByID);
 };

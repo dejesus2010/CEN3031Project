@@ -9,7 +9,7 @@ angular.module('organisms').config(['$stateProvider',
 			url: '/organisms',
 			templateUrl: 'modules/organisms/views/organisms.client.view.html'
 		}).
-		state('createSpecie', {
+		state('createOrganism', {
 			url: '/organisms/create',
 			templateUrl: 'modules/organisms/views/create-organism.client.view.html'
 		});

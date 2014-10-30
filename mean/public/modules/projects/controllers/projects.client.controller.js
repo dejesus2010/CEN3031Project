@@ -106,7 +106,7 @@ angular.module('projects').controller('ProjectsController', ['$scope', '$statePa
 				if ($scope.selectedOrganism !== undefined) {
 					$scope.organism.selected = JSON.parse(JSON.stringify($scope.selectedOrganism.selected));
 				}
-				// If we aren't changing the customer or species of a project, don't bother generating a new project id
+				// If we aren't changing the customer or organism of a project, don't bother generating a new project id
 				if ($scope.project !== undefined && $scope.customer.selected !== undefined && $scope.organism.selected !== undefined) {
 					if ($scope.project.customer._id === $scope.customer.selected._id && $scope.project.organism._id === $scope.organism.selected._id) {
 						return $scope.project.projectCode;

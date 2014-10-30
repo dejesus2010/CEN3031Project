@@ -333,7 +333,7 @@
 			expect(scope.projectCode()).toBe('ABC_012346');
 		}));
 
-		it('$scope.projectCode() should return the current project code if species and customer haven\'t been changed in edit mode', inject(function(Projects) {
+		it('$scope.projectCode() should return the current project code if organism and customer haven\'t been changed in edit mode', inject(function(Projects) {
 
 			// Create a sample project object
 			var sampleProject = new Projects({
@@ -371,7 +371,7 @@
 			expect(scope.projectCode()).toBe('ABC_012345');
 		}));
 
-		it('$scope.projectCode() should use wildcards when a species or customer hasn\'t been selected yet', inject(function(Projects) {
+		it('$scope.projectCode() should use wildcards when an organism or customer hasn\'t been selected yet', inject(function(Projects) {
 
 			// Create a sample project object
 			var sampleProject = new Projects({

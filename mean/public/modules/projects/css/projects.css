@@ -6,7 +6,7 @@
     border: 1px solid #eee;
     border-radius: 5px;
     margin:auto;
-    width:700px;
+    width:600px;
 }
 .col-md-1{
 
@@ -17,11 +17,14 @@
         clear: left;
         text-align: left;
         white-space: nowrap;
+        padding-top: 3px;
+        padding-bottom: 3px;
     }
     .field-listing dd {
         display: block;
         padding-left: 120px;
-        max-width: 400px;
+        padding-top: 3px;
+        padding-bottom: 3px;
     }
 }
 dl {

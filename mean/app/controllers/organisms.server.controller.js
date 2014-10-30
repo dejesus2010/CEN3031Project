@@ -87,7 +87,7 @@ exports.list = function(req, res) {
 /**
  * Organism middleware
  */
-exports.specieByID = function(req, res, next, id) {
+exports.organismByID = function(req, res, next, id) {
   Organism.findById(id).populate('user', 'displayName').exec(function(err, organism) {
     if (err) return next(err);
     if (!organism) return next(new Error('Failed to load organism ' + id));

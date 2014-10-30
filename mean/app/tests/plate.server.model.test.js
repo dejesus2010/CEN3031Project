@@ -27,12 +27,12 @@ describe('Plates Model Unit Tests:', function() {
       customer.save(function(err, doc){
         var customerID = doc._id;
         organisms.save(function(err, doc){
-          var speciesID = doc._id;
+          var organismID = doc._id;
           var project = new Project({
             projectCode: 'ABC_010203',
             due: Date.now(),
             customer: customerID,
-            organism: speciesID,
+            organism: organismID,
             description: 'ABC has sent us squirrel dna.',
             user: new User({
               firstName: 'Tim',

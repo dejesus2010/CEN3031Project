@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 /**
  * Organisms Schema
  */
-var SpecieSchema = new Schema({
+var OrganismSchema = new Schema({
   id: {
     type: Number,
     default: 0,
@@ -23,4 +23,4 @@ var SpecieSchema = new Schema({
   }
 });
 
-mongoose.model('Organism', SpecieSchema);
+mongoose.model('Organism', OrganismSchema);

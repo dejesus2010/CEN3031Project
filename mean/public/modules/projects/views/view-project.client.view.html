@@ -5,19 +5,19 @@
 
     <div class="bs-callout" >
         <dl class="field-listing">
-            <dt>Project Code:</dt>
+            <dt>Project Code</dt>
             <dd>{{project.projectCode}}</dd>
-            <dt>Customer:</dt>
+            <dt>Customer</dt>
             <dd>{{project.customer.name}}</dd>
-            <dt>Due Date:</dt>
+            <dt>Due Date</dt>
             <dd>{{project.due | date}}</dd>
-            <dt>Last Modified:</dt>
+            <dt>Last Modified</dt>
             <dd>{{project.lastEdited | date}}</dd>
-            <dt>Organism:</dt>
+            <dt>Organism</dt>
             <dd>{{project.organism.name}}</dd>
-            <dt>Plates:</dt>
+            <dt>Plates</dt>
             <dd>{{project.plates.length}}</dd>
-            <dt>Description:</dt>
+            <dt>Description</dt>
             <dd>{{project.description}}</dd>
         </dl>
         <div class="text-center" data-ng-show="authentication.user._id == project.user._id">

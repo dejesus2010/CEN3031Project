@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('organisms').controller('SpeciesController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Organisms',
+angular.module('organisms').controller('OrganismController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Organisms',
   function($scope, $stateParams, $location, $window, Authentication, Organisms) {
     $scope.authentication = Authentication;
 
@@ -51,11 +51,11 @@ angular.module('organisms').controller('SpeciesController', ['$scope', '$statePa
 
     $scope.findOne = function() {
       $scope.organism = Organisms.get({
-        specieId: $stateParams.specieId
+        organismId: $stateParams.organismId
       });
     };
 
-    $scope.newSpecieId = function() {
+    $scope.newOrganismId = function() {
       $scope.id = $scope.organisms.length === 0 ? 1 : Math.max.apply(Math, $scope.organisms.map(function(obj){return obj.id;})) + 1;
       return $scope.id;
     };
