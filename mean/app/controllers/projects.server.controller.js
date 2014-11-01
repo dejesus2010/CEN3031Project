@@ -46,6 +46,11 @@ exports.create = function(req, res) {
   });
 };
 
+exports.generatePlateTemplate = function(req){
+    var project = req.project;
+    console.log('Plate layout for ' + project.projectCode);
+};
+
 /**
  * Show the current project
  */

@@ -9,13 +9,16 @@ var users = require('../../app/controllers/users'),
 module.exports = function(app) {
 	// Project Routes
 	app.route('/projects')
-	.get(projects.list)
-	.post(users.requiresLogin, projects.create);
+	    .get(projects.list)
+	    .post(users.requiresLogin, projects.create);
 
 	app.route('/projects/:projectId')
 		.get(projects.read)
 		.put(users.requiresLogin, projects.hasAuthorization, projects.update)
 		.delete(users.requiresLogin, projects.hasAuthorization, projects.delete);
+
+    app.route('/projects/:projectId/GeneratePlateTemplate')
+        .post(users.requiresLogin, projects.generatePlateTemplate);
 
 	// Finish by binding the project middleware
 	app.param('projectId', projects.projectByID);
