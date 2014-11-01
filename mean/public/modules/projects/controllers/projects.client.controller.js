@@ -2,7 +2,6 @@
 
 angular.module('projects').controller('ProjectsController', ['$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
 	function($scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
-
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
 		$scope.organisms = Organisms.query();

@@ -7,11 +7,19 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Project = mongoose.model('Project'),
 	Log = mongoose.model('Log'),
-	_ = require('lodash');
+	_ = require('lodash'),
+	java = require('java'), 
+	path = require('path'), 
+	fs = require('fs');
+
+	/* This is here (outside any function), so that we don't repeatedly add this jar to 
+	 * the classpath. */
+	java.classpath.push(path.join(__dirname, '../bin/PrepareSummarySpreadsheet.jar'));
 
 /**
  * Create a project
  */
+
 exports.create = function(req, res) {
 	var log = new Log({
 		user: req.user,
@@ -21,8 +29,9 @@ exports.create = function(req, res) {
 	var project = new Project(req.body);
 	project.user = req.user;
 	project.lastEditor = req.user;
-	project.lastEdited = Date.now();
-
+	console.log('Project code : ' + project.projectCode);
+	var newArray = java.newArray('java.lang.String', [project.projectCode, './temp/plate_layouts', project.description, '96']);
+	java.callStaticMethodSync('com.rapidgenomics.GUIPrepareSpreadsheetWriter', 'main', newArray);
   log.save(function(err, doc) {
       if (err) {
         return res.status(400).send({
