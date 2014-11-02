@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
     Sample = mongoose.model('Sample'),
 	_ = require('lodash'),
     xlsx = require('xlsx'),
-	java = require('java'), 
+	java = require('java'),
 	path = require('path'), 
 	fs = require('fs');
 
@@ -103,7 +103,7 @@ exports.generatePlates = function(req){
                 console.log(curPlate);
                 console.log(errorHandler.getErrorMessage(err));
             }
-        })
+        });
         project.plates.push(curPlate);
     }
     project.save(function(err){
