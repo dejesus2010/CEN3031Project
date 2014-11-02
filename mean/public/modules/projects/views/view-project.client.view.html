@@ -32,13 +32,30 @@
                 <i class="glyphicon glyphicon-trash"></i>
             </a>
         </div>
+	<hr>
     </div>
     <br>
+<<<<<<< HEAD
     <div class="text-center">
         <a class="btn btn-primary" data-ng-click="generatePlateTemplate()">
             Generate Plate Template
             <i class="glyphicon glyphicon-edit"></i>
         </a>
+    <div class="bs-callout" >
+	    <div class="row">
+		<div class="col-xs-4">
+			<label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
+		</div>
+		<div class="col-xs-3">
+			<input data-ng-model="numberOfSamples" name="numberOfSamples" type="text" id="numberOfSamples" class="form-control"/>
+		</div>
+		<div class="col-xs-3">
+			<a class="btn btn-primary " data-ng-click="generatePlateTemplate()">
+				Generate Plate Template
+				<i class="glyphicon glyphicon-edit"></i>
+			</a>
+		</div>
+	    </div>
     </div>
     <br>
     <div class="text-center">
@@ -52,9 +69,12 @@
         || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
     </div>
     <br>
-    <div ng-if="gridReady && project.plates.length">
-        <ng-react-grid grid="grid"></ng-react-grid>
+    <div class="bs-callout">
+        <div ng-if="gridReady && project.plates.length">
+            <ng-react-grid grid="grid"></ng-react-grid>
+        </div>
     </div>
+
 </section>
 
 <script type="text/ng-template" id="deleteConfirmDialog">

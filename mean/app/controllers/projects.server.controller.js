@@ -10,11 +10,19 @@ var mongoose = require('mongoose'),
     Plate = mongoose.model('Plate'),
     Sample = mongoose.model('Sample'),
 	_ = require('lodash'),
-    xlsx = require('xlsx');
+    xlsx = require('xlsx'),
+	java = require('java'), 
+	path = require('path'), 
+	fs = require('fs');
+
+	/* This is here (outside any function), so that we don't repeatedly add this jar to 
+	 * the classpath. */
+	java.classpath.push(path.join(__dirname, '../bin/PrepareSummarySpreadsheet.jar'));
 
 /**
  * Create a project
  */
+
 exports.create = function(req, res) {
 	var log = new Log({
 		user: req.user,
@@ -24,8 +32,6 @@ exports.create = function(req, res) {
 	var project = new Project(req.body);
 	project.user = req.user;
 	project.lastEditor = req.user;
-	project.lastEdited = Date.now();
-
   log.save(function(err, doc) {
       if (err) {
         return res.status(400).send({
@@ -50,8 +56,12 @@ exports.create = function(req, res) {
 };
 
 exports.generatePlateTemplate = function(req){
-    var project = req.project;
-    console.log('Plate layout for ' + project.projectCode);
+	var project = req.project;
+	var numberOfSamples = req.query.numberOfSamples;
+	console.log('Plate layout for ' + project.projectCode);
+	console.log('EXPRESS: number of samples: ' + numberOfSamples);
+	var newArray = java.newArray('java.lang.String', [project.projectCode, './temp/plate_layouts', project.description, numberOfSamples]);
+	java.callStaticMethodSync('com.rapidgenomics.GUIPrepareSpreadsheetWriter', 'main', newArray);
 };
 
 exports.generatePlates = function(req){

@@ -10,6 +10,7 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 		$scope.gridReady = false;
 		$scope.projectIdent = '';
 
+		$scope.numberOfSamples = 0;
 		$scope.customer = {};
 		$scope.organism = {};
 
@@ -52,9 +53,9 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 			}
 		};
 
-        $scope.generatePlateTemplate = function(){
-            $http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate');
-        };
+		$scope.generatePlateTemplate = function(){
+			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
+		};
 
         $scope.generatePlates = function(){
           $http.post('projects/' + $scope.project._id + '/GeneratePlates');
@@ -186,7 +187,6 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 					$scope.grid.data[project].projectStatus = $scope.grid.data[project].projectStatus ? 'Completed' : 'In Progress';
 				}
 				$scope.gridReady = true;
-            console.log('test');
 		};
 
 		$scope.grid = {
@@ -218,7 +218,6 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 		};
 
         $scope.initReactPlateGrid = function() {
-            console.log($scope.project.plates);
             $scope.grid = {
                 data: JSON.parse(JSON.stringify($scope.project.plates)),
                 /*rowClick: function(row) {

@@ -8,3 +8,7 @@ app/tests/coverage/
 .bower-*/
 .idea/
 *.swp
+app/bin
+temp/plate_layout/*
+*.orig
+.project

@@ -82,7 +82,8 @@
 			// Define a sample project object
 			var sampleProject = new Projects({
 				projectCode: 'ABC',
-				description: 'MEAN rocks!'
+				description: 'MEAN rocks!',
+                plates: []
 			});
 
 			// Set the URL parameter
