@@ -10,6 +10,7 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 		$scope.gridReady = false;
 		$scope.projectIdent = '';
 
+		$scope.numberOfSamples = 0;
 		$scope.customer = {};
 		$scope.organism = {};
 
@@ -52,9 +53,10 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 			}
 		};
 
-        $scope.generatePlateTemplate = function(){
-            $http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate');
-        };
+		$scope.generatePlateTemplate = function(){
+			console.log('Number of samples: ' + $scope.numberOfSamples);
+			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
+		};
 
 		$scope.confirmRemove = function() {
 			ngDialog.open({

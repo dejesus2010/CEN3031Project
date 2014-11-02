@@ -33,16 +33,23 @@
             </a>
         </div>
 	<hr>
-	<a class="btn btn-primary" href="">
-		Generate Plate Layout
-	</a>
     </div>
     <br>
-    <div class="text-center">
-        <a class="btn btn-primary " data-ng-click="generatePlateTemplate()">
-            Generate Plate Template
-            <i class="glyphicon glyphicon-edit"></i>
-        </a>
+    <div class="bs-callout" >
+	    <div class="row">
+		<div class="col-xs-4">
+			<label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
+		</div>
+		<div class="col-xs-3">
+			<input data-ng-model="numberOfSamples" name="numberOfSamples" type="text" id="numberOfSamples" class="form-control"/>
+		</div>
+		<div class="col-xs-3">
+			<a class="btn btn-primary " data-ng-click="generatePlateTemplate()">
+				Generate Plate Template
+				<i class="glyphicon glyphicon-edit"></i>
+			</a>
+		</div>
+	    </div>
     </div>
     <br>
     <div class="text-center">

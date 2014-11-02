@@ -29,9 +29,6 @@ exports.create = function(req, res) {
 	var project = new Project(req.body);
 	project.user = req.user;
 	project.lastEditor = req.user;
-	console.log('Project code : ' + project.projectCode);
-	var newArray = java.newArray('java.lang.String', [project.projectCode, './temp/plate_layouts', project.description, '96']);
-	java.callStaticMethodSync('com.rapidgenomics.GUIPrepareSpreadsheetWriter', 'main', newArray);
   log.save(function(err, doc) {
       if (err) {
         return res.status(400).send({
@@ -56,8 +53,12 @@ exports.create = function(req, res) {
 };
 
 exports.generatePlateTemplate = function(req){
-    var project = req.project;
-    console.log('Plate layout for ' + project.projectCode);
+	var project = req.project;
+	var numberOfSamples = req.query.numberOfSamples;
+	console.log('Plate layout for ' + project.projectCode);
+	console.log('EXPRESS: number of samples: ' + numberOfSamples);
+	var newArray = java.newArray('java.lang.String', [project.projectCode, './temp/plate_layouts', project.description, numberOfSamples]);
+	java.callStaticMethodSync('com.rapidgenomics.GUIPrepareSpreadsheetWriter', 'main', newArray);
 };
 
 /**
