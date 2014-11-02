@@ -56,6 +56,10 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
             $http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate');
         };
 
+        $scope.generatePlates = function(){
+          $http.post('projects/' + $scope.project._id + '/GeneratePlates');
+        };
+
 		$scope.confirmRemove = function() {
 			ngDialog.open({
 				template: 'deleteConfirmDialog',
@@ -88,13 +92,14 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 		};
 
 		$scope.findOne = function() {
-			$scope.project = Projects.get({
-				projectId: $stateParams.projectId
-			}, function(err, res) {
-				$scope.selectedCustomer = {selected: $scope.project.customer};
-				$scope.selectedOrganism = {selected: $scope.project.organism};
-				$scope.disabled = true;
-			});
+            $scope.project = Projects.get({
+                projectId: $stateParams.projectId
+            }, function(err, res) {
+                $scope.selectedCustomer = {selected: $scope.project.customer};
+                $scope.selectedOrganism = {selected: $scope.project.organism};
+                $scope.disabled = true;
+                $scope.initReactPlateGrid();
+            });
 		};
 
 		$scope.editing = function() {
@@ -181,6 +186,7 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 					$scope.grid.data[project].projectStatus = $scope.grid.data[project].projectStatus ? 'Completed' : 'In Progress';
 				}
 				$scope.gridReady = true;
+            console.log('test');
 		};
 
 		$scope.grid = {
@@ -210,5 +216,29 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 				width: '7%'
 			}]
 		};
+
+        $scope.initReactPlateGrid = function() {
+            console.log($scope.project.plates);
+            $scope.grid = {
+                data: JSON.parse(JSON.stringify($scope.project.plates)),
+                /*rowClick: function(row) {
+                 $scope.$apply(function() {
+                 $location.path('projects/' + row._id);
+                 });
+                 },*/
+                columnDefs: [{
+                    field: 'plateCode',
+                    displayName: 'Plate Code',
+                    width: '7%'
+                }, {
+                    field: 'stage',
+                    displayName: 'Latest Step'
+                }, {
+                    field: 'samples.length',
+                    displayName: 'Number of Samples'
+                }]
+            };
+            $scope.gridReady = true;
+        };
 	}
 ]);

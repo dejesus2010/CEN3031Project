@@ -35,8 +35,15 @@
     </div>
     <br>
     <div class="text-center">
-        <a class="btn btn-primary " data-ng-click="generatePlateTemplate()">
+        <a class="btn btn-primary" data-ng-click="generatePlateTemplate()">
             Generate Plate Template
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+    </div>
+    <br>
+    <div class="text-center">
+        <a class="btn btn-primary" data-ng-click="generatePlates()">
+            Generate Plates From Excel
             <i class="glyphicon glyphicon-edit"></i>
         </a>
     </div>
@@ -44,7 +51,10 @@
     <div class="text-center">
         || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
     </div>
-
+    <br>
+    <div ng-if="gridReady && project.plates.length">
+        <ng-react-grid grid="grid"></ng-react-grid>
+    </div>
 </section>
 
 <script type="text/ng-template" id="deleteConfirmDialog">

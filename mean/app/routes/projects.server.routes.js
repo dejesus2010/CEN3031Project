@@ -20,6 +20,9 @@ module.exports = function(app) {
     app.route('/projects/:projectId/GeneratePlateTemplate')
         .post(users.requiresLogin, projects.generatePlateTemplate);
 
+    app.route('/projects/:projectId/GeneratePlates')
+        .post(users.requiresLogin, projects.generatePlates);
+
 	// Finish by binding the project middleware
 	app.param('projectId', projects.projectByID);
 };

@@ -7,7 +7,10 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Project = mongoose.model('Project'),
 	Log = mongoose.model('Log'),
-	_ = require('lodash');
+    Plate = mongoose.model('Plate'),
+    Sample = mongoose.model('Sample'),
+	_ = require('lodash'),
+    xlsx = require('xlsx');
 
 /**
  * Create a project
@@ -49,6 +52,56 @@ exports.create = function(req, res) {
 exports.generatePlateTemplate = function(req){
     var project = req.project;
     console.log('Plate layout for ' + project.projectCode);
+};
+
+exports.generatePlates = function(req){
+    var project = req.project;
+    var plateWorkbook = xlsx.readFile('app/tmp/AMN_246903_Plate_Layout.xlsx');
+    var workSheet = plateWorkbook.Sheets[plateWorkbook.SheetNames[0]];
+    var data = xlsx.utils.sheet_to_json(workSheet);
+    var index = 0;
+    while(index < data.length){
+        var curPlate = new Plate();
+        curPlate.plateCode = project.projectCode + '_P' + (index + 1); //bug if <= 9 for format
+        curPlate.project = project;
+        for(var i = 0; i < 96 && index < data.length; ++i){
+            ++index;
+            var propNum = 1;
+            var row = data[index];
+            var curSample = new Sample();
+            curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + (parseInt(i%12,10) + 1); //bug if <= 9 for format
+            for(var key in row){
+                if(propNum === 6){ //volume
+                    curSample.volume = row[key];
+                } else if(propNum === 8){ //concentration
+                    curSample.concentration = row[key];
+                } else if(propNum === 9) { //DNA
+                    curSample.totalDNA = row[key].replace(',','');
+                }
+                ++propNum;
+            }
+            curSample.save(function(err) {
+                if (err) {
+                    console.log(curSample);
+                    console.log(errorHandler.getErrorMessage(err));
+                }
+            });
+            curPlate.samples.push(curSample);
+        }
+        curPlate.save(function(err){
+            if(err){
+                console.log(curPlate);
+                console.log(errorHandler.getErrorMessage(err));
+            }
+        })
+        project.plates.push(curPlate);
+    }
+    project.save(function(err){
+        if(err){
+            console.log(project);
+            console.log(errorHandler.getErrorMessage(err));
+        }
+    });
 };
 
 /**
@@ -132,7 +185,7 @@ exports.list = function(req, res) {
  * Project middleware
  */
 exports.projectByID = function(req, res, next, id) {
-	Project.findById(id).populate('user', 'displayName').populate('lastEditor').populate('customer').populate('organism').exec(function(err, project) {
+	Project.findById(id).populate('user', 'displayName').populate('lastEditor').populate('customer').populate('organism').populate('plates').exec(function(err, project) {
 		if (err) return next(err);
 		if (!project) return next(new Error('Failed to load project ' + id));
 		req.project = project;
