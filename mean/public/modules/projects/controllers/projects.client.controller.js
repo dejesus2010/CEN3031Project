@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
-	function($http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
+angular.module('projects').controller('ProjectsController', ['$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
+	function($window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
@@ -59,6 +59,7 @@ angular.module('projects').controller('ProjectsController', ['$http', '$scope', 
 
         $scope.generatePlates = function(){
           $http.post('projects/' + $scope.project._id + '/GeneratePlates');
+          $window.location.reload();
         };
 
 		$scope.confirmRemove = function() {

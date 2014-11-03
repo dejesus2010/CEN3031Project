@@ -66,16 +66,15 @@ exports.generatePlateTemplate = function(req){
 
 exports.generatePlates = function(req){
     var project = req.project;
-    var plateWorkbook = xlsx.readFile('app/tmp/AMN_246903_Plate_Layout.xlsx');
+    var plateWorkbook = xlsx.readFile('app/tmp/Sample_Layout_3.xlsx');
     var workSheet = plateWorkbook.Sheets[plateWorkbook.SheetNames[0]];
     var data = xlsx.utils.sheet_to_json(workSheet);
     var index = 0;
     while(index < data.length){
         var curPlate = new Plate();
-        curPlate.plateCode = project.projectCode + '_P' + (index + 1); //bug if <= 9 for format
+        curPlate.plateCode = project.projectCode + '_P' + (index/96 + 1); //bug if <= 9 for format
         curPlate.project = project;
         for(var i = 0; i < 96 && index < data.length; ++i){
-            ++index;
             var propNum = 1;
             var row = data[index];
             var curSample = new Sample();
@@ -97,6 +96,7 @@ exports.generatePlates = function(req){
                 }
             });
             curPlate.samples.push(curSample);
+            ++index;
         }
         curPlate.save(function(err){
             if(err){
