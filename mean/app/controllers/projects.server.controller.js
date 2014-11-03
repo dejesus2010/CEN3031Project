@@ -66,7 +66,14 @@ exports.generatePlateTemplate = function(req){
 
 exports.generatePlates = function(req){
     var project = req.project;
-    var plateWorkbook = xlsx.readFile('app/tmp/Sample_Layout_3.xlsx');
+    var fn = req.whichFile;
+    var plateWorkbook;
+    if(fn != undefined){
+        plateWorkbook = xlsx.readFile('app/tmp/' + fn);
+    }
+    else {
+        plateWorkbook = xlsx.readFile('app/tmp/Sample_Layout_3.xlsx');
+    }
     var workSheet = plateWorkbook.Sheets[plateWorkbook.SheetNames[0]];
     var data = xlsx.utils.sheet_to_json(workSheet);
     var index = 0;
