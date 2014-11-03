@@ -5,19 +5,19 @@
  */
 var should = require('should'),
 	mongoose = require('mongoose'),
-	Organisms = mongoose.model('Organism');
+	Organism = mongoose.model('Organism');
 
 /**
  * Globals
  */
-var organisms;
+var organism;
 
 /**
  * Unit tests
  */
 describe('Organisms Model Unit Tests:', function() {
 	beforeEach(function(done) {
-		organisms = new Organisms({
+		organism = new Organism({
 			id: 123,
 			name: 'Red Panda'
 		});
@@ -26,25 +26,25 @@ describe('Organisms Model Unit Tests:', function() {
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
-			return organisms.save(function(err) {
+			return organism.save(function(err) {
 				should.not.exist(err);
 				done();
 			});
 		});
 
 		it('should be able to show an error when trying to save without an organism\'s id', function(done) {
-			organisms.id = null;
+			organism.id = null;
 
-			return organisms.save(function(err) {
+			return organism.save(function(err) {
 				should.exist(err);
 				done();
 			});
 		});
 
 		it('should be able to show an error when trying to save without an organism\'s name', function(done) {
-			organisms.name = '';
+			organism.name = '';
 
-			return organisms.save(function(err) {
+			return organism.save(function(err) {
 				should.exist(err);
 				done();
 			});
@@ -52,7 +52,7 @@ describe('Organisms Model Unit Tests:', function() {
 	});
 
 	afterEach(function(done) {
-		Organisms.remove().exec();
+		Organism.remove().exec();
 		done();
 	});
 });
