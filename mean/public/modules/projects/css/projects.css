@@ -31,3 +31,10 @@ dl {
 }
 
 
+.ngReactGrid table tr:hover{
+    background: #dbdbdb;
+}
+
+.ngReactGrid table tr:nth-child(odd):hover td{
+    background: #dbdbdb;
+}
