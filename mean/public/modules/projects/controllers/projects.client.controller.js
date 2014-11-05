@@ -57,21 +57,24 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
 			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
 		};
 
-        $scope.generatePlates = function(){
-          $http.post('projects/' + $scope.project._id + '/GeneratePlates');
-          $window.location.reload();
-        };
+    $scope.generatePlates = function(){
+      $http.post('projects/' + $scope.project._id + '/GeneratePlates');
+      $window.location.reload();
+    };
 
 		$scope.confirmRemove = function() {
 			ngDialog.open({
 				template: 'deleteConfirmDialog',
 				className: 'ngdialog-theme-default',
-				scope: $scope
+				scope: $scope,
+				showClose: false
 			});
+			$scope.grayOut = true;
 		};
 
 		$scope.closeDialog = function() {
 			ngDialog.closeAll();
+			$scope.grayOut = false;
 		};
 
 		$scope.update = function() {
