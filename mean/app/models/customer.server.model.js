@@ -29,7 +29,13 @@ var CustomerSchema = new Schema({
   projects: [{
 	type: Schema.Types.ObjectId,
     	ref: 'Project'
-  }]
+  }],
+  email: {
+  	type: String,
+	default: '',
+	trim: true,
+	required: 'Customer must have a contact e-mail address'
+  }
 
 });
 
