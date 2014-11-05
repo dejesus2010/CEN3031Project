@@ -25,6 +25,7 @@
         padding-bottom: 3px;
     }
 }
+
 dl {
     margin-top: 0;
     margin-bottom: 0;
@@ -51,4 +52,16 @@ dl {
     margin-top: -9em;
     margin-left: -15em;
     z-index: 20;
+}
+
+.ngReactGridBody:hover{
+    cursor: pointer;
+}
+
+.ngReactGrid table tr:hover{
+    background: #dbdbdb;
+}
+
+.ngReactGrid table tr:nth-child(odd):hover td{
+    background: #dbdbdb;
 }
