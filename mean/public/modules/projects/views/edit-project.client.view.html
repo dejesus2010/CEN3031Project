@@ -9,13 +9,13 @@
                 <div class="form-group">
                     <label class="control-label col-xs-4" for="projectCode">Project Code</label>
                     <div class="col-xs-4" ng-class="{ 'has-error': projectForm.projectCode.$dirty && projectForm.projectCode.$invalid }">
-                        <input name="projectCode" type="text" readOnly="true" data-ng-value="projectCode()" id="projectCode" class="form-control text-center" placeholder="XXX_XXXXXX">
+                        <input name="projectCode" type="text" readOnly="true" data-ng-value="projectCode()" id="projectCode" class="form-control text-center dont-squish-me" placeholder="XXX_XXXXXX">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-xs-4">Customer</label>
                     <div class="form-control-static col-xs-4">
-                        <ui-select ng-model="selectedCustomer.selected" theme="select2" style="min-width: 360px;" rows=2>
+                        <ui-select class="bootstrap-col-size dont-squish-me" ng-model="selectedCustomer.selected" theme="select2" rows=2>
                             <ui-select-match placeholder="Select a customer...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="customer in customers | filter: {name: $select.search}" value="{{customer}}" ng-selected="{{customer._id === selectedCustomer._id}}">
                                 <div ng-bind-html="customer.name | highlight: $select.search"></div>
@@ -32,7 +32,7 @@
                 <div class="form-group row">
                     <label class="col-xs-4 control-label">Organism</label>
                     <div class="form-control-static col-xs-4">
-                        <ui-select ng-model="selectedOrganism.selected" theme="select2" style="min-width: 360px;" rows=2>
+                        <ui-select class="bootstrap-col-size dont-squish-me" ng-model="selectedOrganism.selected" theme="select2" rows=2>
                             <ui-select-match placeholder="Select an organism...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="organism in organisms | filter: {name: $select.search}" value="{{organism}}" ng-selected="{{organism._id === selectedOrganism._id}}">
                                 <div ng-bind-html="organisms.name | highlight: $select.search"></div>
@@ -40,7 +40,7 @@
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="form-control-static  col-xs-2">
+                    <div class="form-control-static col-xs-2">
                         <a class="btn btn-primary btn-xs" href="/#!/organisms/create">
                             <i class="glyphicon glyphicon-plus"></i>
                             Create an Organism
@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="control-label col-xs-4" for="datePickerControl">Due Date</label>
-                    <div class="input-group col-xs-4" style="padding-left: 16px; padding-right: 16px;">
+                    <div class="input-group col-xs-4 dont-squish-me" style="padding-left: 16px; padding-right: 16px;">
                         <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="project.due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" ng-required="true" close-text="Close" id="datePickerControl" />
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -59,7 +59,7 @@
                 <div class="form-group" ng-class="{ 'has-error' : submitted && projectForm.title.$invalid}">
                     <label class="control-label col-xs-4" for="description">Description</label>
                     <div class="controls col-xs-4">
-                        <textarea name="description" data-ng-model="project.description" id="description" class="form-control" cols="30" rows="5" required></textarea>
+                        <textarea name="description" data-ng-model="project.description" id="description" class="form-control dont-squish-me" cols="30" rows="5" required></textarea>
                     </div>
                     <div ng-show="submitted && projectForm.description.$invalid" class="help-block">
                         <p ng-show="projectForm.description.$error.required" class="text-danger">Required*</p>

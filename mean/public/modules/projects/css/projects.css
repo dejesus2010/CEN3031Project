@@ -9,21 +9,48 @@
     width:600px;
 }
 
-@media (min-width: 768px) {
-    .field-listing dt {
-        float: left;
-        clear: left;
-        text-align: left;
-        white-space: nowrap;
-        padding-top: 3px;
-        padding-bottom: 3px;
+.field-listing dt {
+    float: left;
+    clear: left;
+    text-align: left;
+    white-space: nowrap;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.field-listing dd {
+    display: block;
+    padding-left: 120px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+@media(max-width:767px){
+    .dont-squish-me{
+        min-width: 218px;
     }
-    .field-listing dd {
-        display: block;
-        padding-left: 120px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+}
+@media(min-width:768px){
+    .bootstrap-col-size{
+        min-width: 218px;
     }
+}
+@media(min-width:992px){
+    .bootstrap-col-size{
+        min-width: 294px;
+    }
+}
+@media(min-width:1200px){
+    .bootstrap-col-size{
+        min-width: 358px;
+    }
+}
+
+
+.control-label{
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
 }
 
 dl {
