@@ -63,7 +63,8 @@
 			var sampleCustomer = new Customers({
 				name: 'University of Florida',
 				id: 1,
-				code: 'UFL'
+				code: 'UFL',
+				email: 'test@example.com'
 			});
 
 			// Create a sample customers array that includes the new customer
@@ -85,7 +86,8 @@
 			var sampleCustomer = new Customers({
 				name: 'University of Florida',
 				id: 1,
-				code: 'UFL'
+				code: 'UFL',
+				email: 'test@example.com'
 			});
 
 			// Set the URL parameter
@@ -107,7 +109,8 @@
 			var sampleCustomerPostData = new Customers({
 				name: 'University of Florida',
 				id: 1,
-				code: 'UFL'
+				code: 'UFL',
+				email: 'test@example.com'
 			});
 
 			// Create a sample customer response
@@ -115,13 +118,15 @@
 				_id: '525cf20451979dea2c000001',
 				name: 'University of Florida',
 				id: 1,
-				code: 'UFL'
+				code: 'UFL',
+				email: 'test@example.com'
 			});
 
 			// Fixture mock form input values
 			scope.name = 'University of Florida';
 			scope.id = 1;
 			scope.code = 'UFL';
+			scope.email = 'test@example.com';
 
 			// Set POST response
 			$httpBackend.expectPOST('customers', sampleCustomerPostData).respond(sampleCustomerResponse);
@@ -134,6 +139,7 @@
 			expect(scope.name).toEqual('');
 			expect(scope.id).toEqual(0);
 			expect(scope.code).toEqual('');
+			expect(scope.email).toEqual('');
 
 			// Test redirect to previous page once done
 			expect($window.history.back).toHaveBeenCalled();
@@ -150,7 +156,8 @@
 				_id: '525cf20451979dea2c000001',
 				name: 'University of Florida',
 				id: 1,
-				code: 'UFL'
+				code: 'UFL',
+				email: 'test@example.com'
 			});
 
 			// Mock customer in scope

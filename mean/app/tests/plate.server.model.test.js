@@ -21,7 +21,7 @@ var plates, projectID;
  */
 describe('Plates Model Unit Tests:', function() {
     before(function(done){
-      var customer = new Customer({id:1, name: 'University of Florida', code: 'UFL'});
+      var customer = new Customer({id:1, name: 'University of Florida', code: 'UFL', email: 'test@example.com'});
       var organisms = new Organisms({id: 3, name: 'squirrel'});
 
       customer.save(function(err, doc){
