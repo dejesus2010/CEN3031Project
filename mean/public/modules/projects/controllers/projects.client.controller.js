@@ -224,11 +224,11 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
         $scope.initReactPlateGrid = function() {
             $scope.grid = {
                 data: JSON.parse(JSON.stringify($scope.project.plates)),
-                /*rowClick: function(row) {
-                 $scope.$apply(function() {
-                 $location.path('projects/' + row._id);
-                 });
-                 },*/
+                rowClick: function(row) {
+									$scope.$apply(function() {
+										$location.path('plates/' + row._id);
+									});
+                },
                 columnDefs: [{
                     field: 'plateCode',
                     displayName: 'Plate Code',
