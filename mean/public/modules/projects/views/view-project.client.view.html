@@ -1,77 +1,76 @@
 <section data-ng-controller="ProjectsController" data-ng-init="findOne()">
-    <div class="page-header">
-    <h2 class="text-center">Manage Project</h2>
-    </div>
-
-    <div class="bs-callout" >
-        <dl class="field-listing">
-            <dt>Project Code</dt>
-            <dd>{{project.projectCode}}</dd>
-            <dt>Customer</dt>
-            <dd>{{project.customer.name}}</dd>
-            <dt>Due Date</dt>
-            <dd>{{project.due | date}}</dd>
-            <dt>Last Modified</dt>
-            <dd>{{project.lastEdited | date}}</dd>
-            <dt>Organism</dt>
-            <dd>{{project.organism.name}}</dd>
-            <dt>Plates</dt>
-            <dd>{{project.plates.length}}</dd>
-            <dt>Description</dt>
-            <dd>{{project.description}}</dd>
-        </dl>
-        <div class="text-center" data-ng-show="authentication.user._id == project.user._id">
-            <hr>
-            <a class="btn btn-primary" href="/#!/projects/{{project._id}}/edit">
-                Edit
-                <i class="glyphicon glyphicon-edit"></i>
-            </a>
-            &nbsp
-            <a class="btn btn-primary" data-ng-click="confirmRemove();">
-                Delete
-                <i class="glyphicon glyphicon-trash"></i>
-            </a>
+    <div ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
+        <div class="page-header">
+            <h2 class="text-center">Manage Project</h2>
         </div>
-    </div>
-    <br>
-    <div class="bs-callout" >
-	    <div class="row">
-            <div class="col-xs-4">
-                <label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
-            </div>
-            <div class="col-xs-3">
-                <input data-ng-model="numberOfSamples" name="numberOfSamples" type="text" id="numberOfSamples" class="form-control"/>
-            </div>
-            <div class="col-xs-3">
-                <a class="btn btn-primary " data-ng-click="generatePlateTemplate()">
-                    Generate Plate Template
+        <div class="bs-callout" >
+            <dl class="field-listing">
+                <dt>Project Code</dt>
+                <dd>{{project.projectCode}}</dd>
+                <dt>Customer</dt>
+                <dd>{{project.customer.name}}</dd>
+                <dt>Due Date</dt>
+                <dd>{{project.due | date}}</dd>
+                <dt>Last Modified</dt>
+                <dd>{{project.lastEdited | date}}</dd>
+                <dt>Organism</dt>
+                <dd>{{project.organism.name}}</dd>
+                <dt>Plates</dt>
+                <dd>{{project.plates.length}}</dd>
+                <dt>Description</dt>
+                <dd>{{project.description}}</dd>
+            </dl>
+            <div class="text-center" data-ng-show="authentication.user._id == project.user._id">
+                <hr>
+                <a class="btn btn-primary" ng-disabled="grayOut" ng-href="/#!/projects/{{project._id}}/edit">
+                    Edit
                     <i class="glyphicon glyphicon-edit"></i>
                 </a>
+                &nbsp
+                <a class="btn btn-primary" data-ng-click="grayOut || confirmRemove();">
+                    Delete
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
             </div>
-	    </div>
+        </div>
         <br>
-        <div class="row">
-            <div class="text-center">
-                <a class="btn btn-primary" data-ng-click="generatePlates()">
-                    Generate Plates From Excel
-                    <i class="glyphicon glyphicon-edit"></i>
-                </a>
+        <div class="bs-callout" >
+    	    <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
+                </div>
+                <div class="col-xs-3">
+                    <input data-ng-model="numberOfSamples" name="numberOfSamples" type="text" id="numberOfSamples" class="form-control"/>
+                </div>
+                <div class="col-xs-3">
+                    <a class="btn btn-primary " data-ng-click="grayOut || generatePlateTemplate()">
+                        Generate Plate Template
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </div>
+    	    </div>
+            <br>
+            <div class="row">
+                <div class="text-center">
+                    <a class="btn btn-primary" data-ng-click="grayOut || generatePlates()">
+                        Generate Plates From Excel
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="text-center">
+            || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
+        </div>
+        <br>
+        <div class="bs-callout">
+            <div ng-if="gridReady && project.plates.length">
+                <ng-react-grid grid="grid"></ng-react-grid>
             </div>
         </div>
     </div>
-    <br>
-    <div class="text-center">
-        || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
-    </div>
-    <br>
-    <div class="bs-callout">
-        <div ng-if="gridReady && project.plates.length">
-            <ng-react-grid grid="grid"></ng-react-grid>
-        </div>
-    </div>
-
 </section>
-
 <script type="text/ng-template" id="deleteConfirmDialog">
     <div class="ngdialog-message">
         <h2>Continue?</h2>

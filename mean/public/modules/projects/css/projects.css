@@ -25,9 +25,43 @@
         padding-bottom: 3px;
     }
 }
+
 dl {
     margin-top: 0;
     margin-bottom: 0;
 }
 
+.gray-out {
+    background-color: white;
+    filter:alpha(opacity=50); /* IE */
+    opacity: 0.5; /* Safari, Opera */
+    -moz-opacity:0.50; /* FireFox */
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+    background-repeat:no-repeat;
+    background-position:center;
+}
 
+.ngdialog {
+    position:fixed;
+    top: 30%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em;
+    margin-left: -15em;
+    z-index: 20;
+}
+
+.ngReactGridBody:hover{
+    cursor: pointer;
+}
+
+.ngReactGrid table tr:hover{
+    background: #dbdbdb;
+}
+
+.ngReactGrid table tr:nth-child(odd):hover td{
+    background: #dbdbdb;
+}
