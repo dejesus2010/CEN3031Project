@@ -30,6 +30,10 @@ dl {
     margin-bottom: 0;
 }
 
+.ngReactGridBody:hover{
+    cursor: pointer;
+}
+
 
 .ngReactGrid table tr:hover{
     background: #dbdbdb;
