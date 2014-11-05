@@ -1,3 +1,11 @@
-<section data-ng-controller="PlatesController">
-	This is the Plates
+<section data-ng-controller="PlatesController" data-ng-init="init();">
+  <div class="page-header">
+      <h2 class="text-center">Plate code: {{plate.plateCode}}</h2>
+  </div>
+  <tabset>
+    <tab ng-repeat="step in steps" heading="{{step.title}}" active="step.active" disabled="step.disabled">
+      Example: The other tabs are disabled because this project has only made it to step 1. Once a project has advanced
+      to the next stage that new stage and any previous stages will be available to view.
+    </tab>
+  </tabset>
 </section>

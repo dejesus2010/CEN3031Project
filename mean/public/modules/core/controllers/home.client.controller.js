@@ -1,6 +1,5 @@
 'use strict';
 
-
 angular.module('core').controller('HomeController', ['$scope', '$location', 'Authentication',
 	function($scope, $location, Authentication) {
 		// This provides Authentication context.
@@ -13,6 +12,6 @@ angular.module('core').controller('HomeController', ['$scope', '$location', 'Aut
 			else{
 				$location.path('/signin');
 			}
-		}
+		};
 	}
 ]);

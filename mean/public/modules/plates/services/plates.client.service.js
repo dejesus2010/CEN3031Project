@@ -1,15 +1,14 @@
 'use strict';
 
-angular.module('plates').factory('Plates', [
-	function() {
-		// Plates service logic
-		// ...
-
-		// Public API
-		return {
-			someMethod: function() {
-				return true;
+//Plates service used for communicating with the plates REST endpoints
+angular.module('plates').factory('Plates', ['$resource',
+	function($resource) {
+		return $resource('plates/:plateId', {
+			plateId: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
 			}
-		};
+		});
 	}
 ]);

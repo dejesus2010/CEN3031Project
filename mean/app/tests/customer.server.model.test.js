@@ -20,7 +20,8 @@ describe('Customer Model Unit Tests:', function() {
     customer = new Customer({
       id: 123,
       name: 'University of Florida',
-      code: 'UFL'
+      code: 'UFL',
+      email: 'test@example.com'
     });
     done();
   });
@@ -52,6 +53,14 @@ describe('Customer Model Unit Tests:', function() {
     });
     it('should be able to show an error when trying to save without a customer code', function(done) {
       customer.code = '';
+
+      return customer.save(function(err) {
+        should.exist(err);
+        done();
+      });
+    });
+    it('should be able to show an error when trying to save without an e-mail address', function(done) {
+      customer.email = '';
 
       return customer.save(function(err) {
         should.exist(err);

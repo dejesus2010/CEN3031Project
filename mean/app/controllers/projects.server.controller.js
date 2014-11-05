@@ -7,13 +7,15 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Project = mongoose.model('Project'),
 	Log = mongoose.model('Log'),
-    Plate = mongoose.model('Plate'),
-    Sample = mongoose.model('Sample'),
+	Plate = mongoose.model('Plate'),
+    	Sample = mongoose.model('Sample'),
 	_ = require('lodash'),
-    xlsx = require('xlsx'),
+    	xlsx = require('xlsx'),
 	java = require('java'),
 	path = require('path'), 
-	fs = require('fs');
+	fs = require('fs'),
+	nodemailer=require('nodemailer');
+
 
 	/* This is here (outside any function), so that we don't repeatedly add this jar to 
 	 * the classpath. */
@@ -59,16 +61,45 @@ exports.generatePlateTemplate = function(req){
 	var project = req.project;
 	var numberOfSamples = req.query.numberOfSamples;
 	console.log('Plate layout for ' + project.projectCode);
-	console.log('EXPRESS: number of samples: ' + numberOfSamples);
+	console.log('Number of samples: ' + numberOfSamples);
 	var newArray = java.newArray('java.lang.String', [project.projectCode, './temp/plate_layouts', project.description, numberOfSamples]);
 	java.callStaticMethodSync('com.rapidgenomics.GUIPrepareSpreadsheetWriter', 'main', newArray);
+	var password = fs.readFileSync(path.join(__dirname, '../secure/password.txt'), 'utf8');
+	var transport = nodemailer.createTransport({
+		service: 'Gmail', 
+		auth: {
+			user: 'jliccini@rapid-genomics.com',
+			pass: password
+		}
+	});
+
+	console.log(project.customer.email);
+	var mailOptions = {
+		from: 'Joseph Liccini <jliccini@rapid-genomics.com>',
+		to: project.customer.email, 
+		subject: 'Your RAPiD Genomics Plate Layout is ready!',
+		text: 'Attached is your plate layout.',
+		attachments: [
+			{
+				path: path.join(__dirname, '../../temp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx')
+			}
+		]
+	};
+	transport.sendMail(mailOptions, function(error, info) {
+		if (error) {
+			console.log(error);
+		} else {
+			console.log('Message sent: ' + info.response);
+			fs.unlink(path.join(__dirname, '../../temp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx'));
+		}
+	});
 };
 
 exports.generatePlates = function(req){
     var project = req.project;
     var fn = req.whichFile;
     var plateWorkbook;
-    if(fn != undefined){
+    if(fn !== undefined){
         plateWorkbook = xlsx.readFile('app/tmp/' + fn);
     }
     else {

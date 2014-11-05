@@ -8,13 +8,19 @@
 				<div class="form-group" ng-class="{ 'has-error': customerForm.title.$dirty && customerForm.title.$invalid }">
 					<label class="control-label" for="name">Name</label>
 					<div class="controls">
-						<input name="name" type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+						<input name="name" type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label" for="code">3 Character Identifier</label>
 					<div class="controls">
-            <input name="code" type="text" maxlength="3" data-ng-model="code" ng-change="validateCode()" id="code" class="form-control" placeholder="ABC" required>
+					    <input name="code" type="text" maxlength="3" data-ng-model="code" ng-change="validateCode()" id="code" class="form-control" placeholder="ABC" required/>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error': customerForm.email.$dirty && customerForm.email.$invalid }">
+					<label class="control-label" for "email">E-Mail Address</label>
+					<div class="controls">
+						<input name="email" type="text" data-ng-model="email" id="email" class="form-control" placeholder="@example.com" required/>
 					</div>
 				</div>
 				<div class="form-group">

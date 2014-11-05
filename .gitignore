@@ -9,3 +9,4 @@ mean/.bower-*/
 mean/.idea/
 .idea/
 *.swp
+mean/app/secure/password.txt
