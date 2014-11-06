@@ -1,63 +1,53 @@
 <section data-ng-controller="ProjectsController" data-ng-init="findOne()" xmlns="http://www.w3.org/1999/html">
     <div ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
         <div class="page-header">
-            <h2 class="text-center">Manage Project</h2>
+            <h2 class="text-center" style="margin: 0 auto;">Manage Project</h2>
         </div>
         <div class="bs-callout" >
             <div class="row overview-row">
                 <div class="overview-col-left">
-                    <p>
-                            <span class="value-pair-left">Project Code</span>
-                            <span class="value-pair-right">{{project.projectCode}}</span>
-                    </p>
+                        <span class="value-pair-left">Project Code</span>
+                        <span class="value-pair-right">{{project.projectCode}}</span>
                 </div>
                 <div class="overview-col-right">
-                    <p>
-                            <span class="value-pair-left">Due Date</span>
-                            <span class="value-pair-right">{{project.due | date}}</span>
-                    </p>
+                        <span class="value-pair-left">Due Date</span>
+                        <span class="value-pair-right">{{project.due | date}}</span>
                 </div>
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
-                    <p>
-                        <span class="value-pair-left">Customer</span>
-                        <span class="value-pair-right">{{project.customer.name}}</span>
-                    </p>
+                    <span class="value-pair-left">Customer</span>
+                    <span class="value-pair-right">{{project.customer.name}}</span>
                 </div>
                 <div class="overview-col-right">
-                    <p>
-                        <span class="value-pair-left">Last Modified</span>
-                        <span class="value-pair-right">{{project.lastEdited | date}}</span>
-                    </p>
+                    <span class="value-pair-left">Last Modified</span>
+                    <span class="value-pair-right">{{project.lastEdited | date}}</span>
                 </div>
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
-                    <p>
-                        <span class="value-pair-left">Organism</span>
-                        <span class="value-pair-right">{{project.organism.name}}</span>
-                    </p>
+                    <span class="value-pair-left">Organism</span>
+                    <span class="value-pair-right">{{project.organism.name}}</span>
                 </div>
                 <div class="overview-col-right">
-                    <p>
                         <span class="value-pair-left">Status</span>
                         <span class="value-pair-right">{{project.projectStatus ? 'Completed':'In Progress'}}</span>
-                    </p>
                 </div>
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
-                    <p>
                         <span class="value-pair-left">Sequencing</span>
                         <span class="value-pair-right">{{project.sequencingMethod}}</span>
-                    </p>
                 </div>
                 <div class="overview-col-right">
-                    <p>
                         <span class="value-pair-left">Plates</span>
                         <span class="value-pair-right">{{project.plates.length}}</span>
-                    </p>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <span class="value-pair-left">Description</span>
+                    <span class="value-pair-right">{{project.description}}</span>
                 </div>
             </div>
             <div class="text-center"  data-ng-show="authentication.user._id == project.user._id">
