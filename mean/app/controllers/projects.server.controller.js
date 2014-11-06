@@ -112,6 +112,18 @@ exports.generatePlates = function(req){
     var workSheet = plateWorkbook.Sheets[plateWorkbook.SheetNames[0]];
     var data = xlsx.utils.sheet_to_json(workSheet);
     var index = 0;
+    var logSampleErr = function(err) {
+        if (err) {
+            console.log(curSample);
+            console.log(errorHandler.getErrorMessage(err));
+        }
+    };
+    var logPlateErr = function(err){
+        if(err){
+            console.log(curPlate);
+            console.log(errorHandler.getErrorMessage(err));
+        }
+    };
     while(index < data.length){
         var curPlate = new Plate();
         curPlate.plateCode = project.projectCode + '_P' + (index/96 + 1); //bug if <= 9 for format
@@ -131,21 +143,11 @@ exports.generatePlates = function(req){
                 }
                 ++propNum;
             }
-            curSample.save(function(err) {
-                if (err) {
-                    console.log(curSample);
-                    console.log(errorHandler.getErrorMessage(err));
-                }
-            });
+            curSample.save(logSampleErr);
             curPlate.samples.push(curSample);
             ++index;
         }
-        curPlate.save(function(err){
-            if(err){
-                console.log(curPlate);
-                console.log(errorHandler.getErrorMessage(err));
-            }
-        });
+        curPlate.save(logPlateErr);
         project.plates.push(curPlate);
     }
     project.save(function(err){
