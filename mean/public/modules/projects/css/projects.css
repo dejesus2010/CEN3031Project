@@ -6,23 +6,30 @@
     border: 1px solid #eee;
     border-radius: 5px;
     margin:auto;
-    width:600px;
+    width:800px;
 }
-
-.field-listing dt {
+.overview-row{
+    padding: 2px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+.overview-col-left{
     float: left;
-    clear: left;
-    text-align: left;
-    white-space: nowrap;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    width:300px;
+    padding-right: 15px
 }
-
-.field-listing dd {
-    display: block;
-    padding-left: 120px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+.overview-col-right{
+    float: right;
+    width:300px;
+    padding-left: 15px;
+}
+.value-pair-left {
+    float:left;
+    width: 100px;
+    font-weight: bold;
+}
+.value-pair-right {
+    float:right;
 }
 
 @media(max-width:767px){
@@ -51,11 +58,6 @@
     padding-top: 7px;
     margin-bottom: 0;
     text-align: right;
-}
-
-dl {
-    margin-top: 0;
-    margin-bottom: 0;
 }
 
 .gray-out {

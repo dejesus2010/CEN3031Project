@@ -1,27 +1,67 @@
-<section data-ng-controller="ProjectsController" data-ng-init="findOne()">
+<section data-ng-controller="ProjectsController" data-ng-init="findOne()" xmlns="http://www.w3.org/1999/html">
     <div ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
         <div class="page-header">
             <h2 class="text-center">Manage Project</h2>
         </div>
         <div class="bs-callout" >
-            <dl class="field-listing">
-                <dt>Project Code</dt>
-                <dd>{{project.projectCode}}</dd>
-                <dt>Customer</dt>
-                <dd>{{project.customer.name}}</dd>
-                <dt>Due Date</dt>
-                <dd>{{project.due | date}}</dd>
-                <dt>Last Modified</dt>
-                <dd>{{project.lastEdited | date}}</dd>
-                <dt>Organism</dt>
-                <dd>{{project.organism.name}}</dd>
-                <dt>Plates</dt>
-                <dd>{{project.plates.length}}</dd>
-                <dt>Description</dt>
-                <dd>{{project.description}}</dd>
-            </dl>
-            <div class="text-center" data-ng-show="authentication.user._id == project.user._id">
-                <hr>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <p>
+                            <span class="value-pair-left">Project Code</span>
+                            <span class="value-pair-right">{{project.projectCode}}</span>
+                    </p>
+                </div>
+                <div class="overview-col-right">
+                    <p>
+                            <span class="value-pair-left">Due Date</span>
+                            <span class="value-pair-right">{{project.due | date}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <p>
+                        <span class="value-pair-left">Customer</span>
+                        <span class="value-pair-right">{{project.customer.name}}</span>
+                    </p>
+                </div>
+                <div class="overview-col-right">
+                    <p>
+                        <span class="value-pair-left">Last Modified</span>
+                        <span class="value-pair-right">{{project.lastEdited | date}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <p>
+                        <span class="value-pair-left">Organism</span>
+                        <span class="value-pair-right">{{project.organism.name}}</span>
+                    </p>
+                </div>
+                <div class="overview-col-right">
+                    <p>
+                        <span class="value-pair-left">Status</span>
+                        <span class="value-pair-right">{{project.projectStatus ? 'Completed':'In Progress'}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <p>
+                        <span class="value-pair-left">Sequencing</span>
+                        <span class="value-pair-right">{{project.sequencingMethod}}</span>
+                    </p>
+                </div>
+                <div class="overview-col-right">
+                    <p>
+                        <span class="value-pair-left">Plates</span>
+                        <span class="value-pair-right">{{project.plates.length}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="text-center"  data-ng-show="authentication.user._id == project.user._id">
+                <hr style="margin: 15px">
                 <a class="btn btn-primary" ng-disabled="grayOut" ng-href="/#!/projects/{{project._id}}/edit">
                     Edit
                     <i class="glyphicon glyphicon-edit"></i>
@@ -34,7 +74,7 @@
             </div>
         </div>
         <br>
-        <div class="bs-callout" >
+         <div ng-if="project.plates.length === 0" class="bs-callout" >
     	    <div class="row">
                 <div class="col-xs-4">
                     <label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
@@ -59,14 +99,16 @@
                 </div>
             </div>
         </div>
-        <br>
-        <div class="text-center">
-            || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
-        </div>
-        <br>
-        <div class="bs-callout">
-            <div ng-if="gridReady && project.plates.length">
-                <ng-react-grid grid="grid"></ng-react-grid>
+        <div ng-if="project.plates.length != 0">
+            <div class="text-center">
+                || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
+            </div>
+            <br>
+            <div class="bs-callout">
+                <h3 class="text-center" style="margin: 2px">Plates</h3>
+                <div ng-if="gridReady && project.plates.length">
+                    <ng-react-grid grid="grid"></ng-react-grid>
+                </div>
             </div>
         </div>
     </div>
