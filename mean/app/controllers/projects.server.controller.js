@@ -8,23 +8,18 @@ var mongoose = require('mongoose'),
 	Project = mongoose.model('Project'),
 	Log = mongoose.model('Log'),
 	Plate = mongoose.model('Plate'),
-    	Sample = mongoose.model('Sample'),
+    Sample = mongoose.model('Sample'),
 	_ = require('lodash'),
-    	xlsx = require('xlsx'),
-	java = require('java'),
-	path = require('path'), 
+   	xlsx = require('xlsx'),
+	path = require('path'),
 	fs = require('fs'),
-	nodemailer=require('nodemailer');
-
-
-	/* This is here (outside any function), so that we don't repeatedly add this jar to 
-	 * the classpath. */
-	java.classpath.push(path.join(__dirname, '../bin/PrepareSummarySpreadsheet.jar'));
+	nodemailer=require('nodemailer'),
+    sys = require('sys'),
+    exec = require('child_process').exec;
 
 /**
  * Create a project
  */
-
 exports.create = function(req, res) {
 	var log = new Log({
 		user: req.user,
@@ -60,10 +55,19 @@ exports.create = function(req, res) {
 exports.generatePlateTemplate = function(req){
 	var project = req.project;
 	var numberOfSamples = req.query.numberOfSamples;
-	console.log('Plate layout for ' + project.projectCode);
-	console.log('Number of samples: ' + numberOfSamples);
-	var newArray = java.newArray('java.lang.String', [project.projectCode, './temp/plate_layouts', project.description, numberOfSamples]);
-	java.callStaticMethodSync('com.rapidgenomics.GUIPrepareSpreadsheetWriter', 'main', newArray);
+    var args = project.projectCode + ' app/tmp/plate_layouts description ' + numberOfSamples;
+    var command = 'java -jar app/bin/PrepareSummarySpreadsheet.jar ' + args;
+    exec(command, function(error, stdout, stderr){
+        if(error){
+            sys.puts('Encountered an error when trying to create plate layout for ' + project.projectCode + ' using: \n' + command);
+            sys.puts(stderr);
+            sys.puts(error);
+        }
+        else{
+            sys.puts('Successfully created ' + project.projectCode  + '.xlsx');
+        }
+    });
+
 	var password = fs.readFileSync(path.join(__dirname, '../secure/password.txt'), 'utf8');
 	var transport = nodemailer.createTransport({
 		service: 'Gmail', 
