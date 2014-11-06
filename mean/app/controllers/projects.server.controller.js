@@ -55,7 +55,7 @@ exports.create = function(req, res) {
 exports.generatePlateTemplate = function(req){
 	var project = req.project;
 	var numberOfSamples = req.query.numberOfSamples;
-    var args = project.projectCode + ' app/tmp/plate_layouts description ' + numberOfSamples;
+    var args = project.projectCode + ' app/tmp/plate_layouts \"' + project.description + '\" ' + numberOfSamples;
     var command = 'java -jar app/bin/PrepareSummarySpreadsheet.jar ' + args;
     exec(command, function(error, stdout, stderr){
         if(error){
