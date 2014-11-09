@@ -67,6 +67,14 @@ describe('Customer Model Unit Tests:', function() {
         done();
       });
     });
+    it('should be able to show an error when trying to save an invalid e-mail address', function(done) {
+      customer.email = 'test@gmail';
+
+      return customer.save(function(err) {
+        should.exist(err);
+        done();
+      });
+    });
   });
 
   afterEach(function(done) {

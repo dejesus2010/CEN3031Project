@@ -27,16 +27,16 @@ var CustomerSchema = new Schema({
     required: 'Customer code cannot be blank, always in format (ABC)'
   },
   projects: [{
-	type: Schema.Types.ObjectId,
-    	ref: 'Project'
+  	type: Schema.Types.ObjectId,
+    ref: 'Project'
   }],
   email: {
   	type: String,
-	default: '',
-	trim: true,
-	required: 'Customer must have a contact e-mail address'
+  	default: '',
+  	trim: true,
+    validate: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+  	required: 'Customer must have a contact e-mail address'
   }
-
 });
 
 mongoose.model('Customer', CustomerSchema);

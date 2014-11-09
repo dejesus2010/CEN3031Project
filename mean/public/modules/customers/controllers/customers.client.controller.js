@@ -5,7 +5,7 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
     $scope.authentication = Authentication;
 
     $scope.create = function() {
-      if ($scope.code === undefined || $scope.code.length !== 3 || $scope.email === undefined) {
+      if ($scope.code === undefined || $scope.code.length !== 3) {
         $scope.error = 'You must specify a 3 character indentifier';
         return;
       }
@@ -13,13 +13,13 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
         name: this.name,
         id: this.id,
         code: this.code,
-	email: this.email
+        email: this.email
       });
       customer.$save(function(response) {
         $scope.name = '';
         $scope.id = 0;
         $scope.code = '';
-	$scope.email = '';
+        $scope.email = '';
         $window.history.back();
       }, function(errorResponse) {
         $scope.error = errorResponse.data.message;
