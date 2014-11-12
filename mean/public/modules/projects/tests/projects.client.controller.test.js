@@ -106,6 +106,30 @@
 			expect(scope.project).toEqualData(sampleProject);
 		}));
 
+		it('$scope.numSamples() should return the total number of samples in a project', inject(function(Projects) {
+			// Create a sample project with a couple plates with samples inside
+			scope.project = new Projects({
+        plates: [{
+        	samples: ['sample0', 'sample1']
+        }, {
+        	samples: ['sample2', 'sample3', 'sample4']
+        }]
+			});
+
+			expect(scope.numSamples()).toBe(5);
+		}));
+
+		it('$scope.numSamples() should return 0 when $scope.project is undefined', inject(function() {
+			delete scope.project;
+
+			expect(scope.numSamples()).toBe(0);
+		}));
+
+		it('$scope.numSamples() should return 0 when $scope.project.plates is undefined', inject(function(Projects) {
+			scope.project = new Projects({});
+
+			expect(scope.numSamples()).toBe(0);
+		}));
 
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects, Customers, Organisms) {
 			// Create a sample customer object

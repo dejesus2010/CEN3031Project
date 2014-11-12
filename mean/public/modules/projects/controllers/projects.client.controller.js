@@ -107,6 +107,16 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
             });
 		};
 
+		$scope.numSamples = function() {
+			if ($scope.project === undefined || $scope.project.plates === undefined) {
+				return 0;
+			} else {
+				return $scope.project.plates.reduce(function(sum, plate) {
+					return sum + plate.samples.length;
+				}, 0);
+			}
+		};
+
 		$scope.editing = function() {
 			$scope.isEdit = true;
 		};
