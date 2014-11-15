@@ -424,5 +424,70 @@
 
 			expect(scope.projectCode()).toBe('ABC_XX23XX');
 		}));
+
+		describe('Retrieving projects by status', function(){
+
+			beforeEach(inject(function(Projects){
+				var sampleProject1 = new Projects({
+					projectCode: 'ABC_012345',
+					description: 'MEAN rocks!',
+					due: '2014-10-30T04:00:00.100Z',
+					projectStatus: true
+				});
+
+				var sampleProject2 = new Projects({
+					projectCode: 'ABC_012346',
+					description: 'MEAN is mean!',
+					due: '2014-10-30T04:00:00.020Z',
+					projectStatus: false
+				});
+
+				var sampleProject3 = new Projects({
+					projectCode: 'ABC_012347',
+					description: 'NEAM is MEAN spelled backwards!',
+					due: '2014-10-30T04:00:00.300Z',
+					projectStatus: true
+				});
+
+				var sampleProject4 = new Projects({
+					projectCode: 'ABC_012348',
+					description: 'MEAN, you mean nice!',
+					due: '2014-10-30T04:00:00.400Z',
+					projectStatus: false
+				});
+
+				scope.openProjects = [sampleProject2, sampleProject4];
+				scope.closedProjects = [sampleProject1, sampleProject3];
+			}));
+
+			it('should retrieve open projects', inject(function(){
+
+				$httpBackend.expectGET('customers').respond();
+				$httpBackend.expectGET('organisms').respond();
+				$httpBackend.expectGET('http://localhost:3000/projectsByStatus/false').respond(scope.openProjects);
+				scope.showProjectsByStatus(false, true, false);
+				$httpBackend.flush();
+
+				expect(scope.openProjectsActive).toBeTruthy();
+				expect(scope.closedProjectsActive).toBeFalsy();
+				expect(scope.projects).toEqualData(scope.openProjects);
+
+			}));
+
+			it('should retrieve closed projects', inject(function(){
+
+				$httpBackend.expectGET('customers').respond();
+				$httpBackend.expectGET('organisms').respond();
+				$httpBackend.expectGET('http://localhost:3000/projectsByStatus/true').respond(scope.closedProjects);
+				scope.showProjectsByStatus(true, false, true);
+				$httpBackend.flush();
+
+				expect(scope.openProjectsActive).toBeFalsy();
+				expect(scope.closedProjectsActive).toBeTruthy();
+				expect(scope.projects).toEqualData(scope.closedProjects);
+
+			}));
+		});
+
 	});
 }());
