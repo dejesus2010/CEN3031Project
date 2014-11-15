@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
-	function($window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
+angular.module('projects').controller('ProjectsController', ['$animate','$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
+	function($animate, $window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
@@ -13,6 +13,38 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
 		$scope.numberOfSamples = 0;
 		$scope.customer = {};
 		$scope.organism = {};
+
+		$scope.init = function() {
+			$scope.allProjectsActive = true;
+			$scope.openProjectsActive = false;
+			$scope.closedProjectsActive = false;
+
+			$scope.projects = Projects.query(function(err, res) {
+				$scope.initReactGrid();
+			});
+		};
+
+		$scope.showOpenProjects = function(){
+			console.log('hello');
+			$scope.allProjectsActive = false;
+			$scope.openProjectsActive = true;
+			$scope.closedProjectsActive = false;
+
+			$scope.projects = Projects.findOne({'projectStatus': 'false'}).exec(function(err, res) {
+				$scope.initReactGrid();
+			});
+		};
+
+		$scope.showClosedProjects = function(){
+			console.log('hello');
+			$scope.allProjectsActive = false;
+			$scope.openProjectsActive = false;
+			$scope.closedProjectsActive = true;
+
+			$scope.projects = Projects.find({projectStatus: true}).exec(function(err, res) {
+				$scope.initReactGrid();
+			});
+		};
 
 		$scope.create = function() {
 			if ($scope.customer.selected === undefined || $scope.organism.selected === undefined) {
@@ -87,12 +119,6 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
 				$location.path('projects/' + project._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		$scope.init = function() {
-			$scope.projects = Projects.query(function(err, res) {
-				$scope.initReactGrid();
 			});
 		};
 

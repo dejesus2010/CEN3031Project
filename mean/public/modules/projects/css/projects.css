@@ -94,3 +94,7 @@
 .ngReactGrid table tr:nth-child(odd):hover td{
     background: #dbdbdb;
 }
+
+.tab:hover{
+    cursor: pointer;
+}
