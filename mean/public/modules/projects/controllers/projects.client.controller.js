@@ -24,26 +24,22 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 			});
 		};
 
-		$scope.showOpenProjects = function(){
-			console.log('hello');
-			$scope.allProjectsActive = false;
-			$scope.openProjectsActive = true;
-			$scope.closedProjectsActive = false;
-
-			$scope.projects = Projects.findOne({'projectStatus': 'false'}).exec(function(err, res) {
-				$scope.initReactGrid();
-			});
+		$scope.showAllProjects = function(){
+			$scope.init();
 		};
 
-		$scope.showClosedProjects = function(){
-			console.log('hello');
+		$scope.showProjectsByStatus = function(status, openProjectsActive, closedProjectsActive){
 			$scope.allProjectsActive = false;
-			$scope.openProjectsActive = false;
-			$scope.closedProjectsActive = true;
+			$scope.openProjectsActive = openProjectsActive;
+			$scope.closedProjectsActive = closedProjectsActive;
 
-			$scope.projects = Projects.find({projectStatus: true}).exec(function(err, res) {
+			$http.get('http://localhost:3000/projectsByStatus/' + status).success(function(projects){
+
+				$scope.projects = projects;
 				$scope.initReactGrid();
+
 			});
+
 		};
 
 		$scope.create = function() {

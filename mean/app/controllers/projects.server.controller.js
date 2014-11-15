@@ -70,7 +70,7 @@ exports.generatePlateTemplate = function(req){
 
 	var password = fs.readFileSync(path.join(__dirname, '../secure/password.txt'), 'utf8');
 	var transport = nodemailer.createTransport({
-		service: 'Gmail', 
+		service: 'Gmail',
 		auth: {
 			user: 'jliccini@rapid-genomics.com',
 			pass: password
@@ -80,7 +80,7 @@ exports.generatePlateTemplate = function(req){
 	console.log(project.customer.email);
 	var mailOptions = {
 		from: 'Joseph Liccini <jliccini@rapid-genomics.com>',
-		to: project.customer.email, 
+		to: project.customer.email,
 		subject: 'Your RAPiD Genomics Plate Layout is ready!',
 		text: 'Attached is your plate layout.',
 		attachments: [
@@ -259,4 +259,16 @@ exports.hasAuthorization = function(req, res, next) {
 		});
 	}
 	next();
+};
+
+exports.listOfProjectsByStatus = function(req, res){
+    Project.find({'projectStatus': req.params.projectStatus}).populate('customer').populate('organism').populate('lastEditor').sort('-created').exec(function(err, projects) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(projects);
+        }
+    });
 };
