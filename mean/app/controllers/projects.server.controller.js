@@ -29,7 +29,7 @@ exports.create = function(req, res) {
 	var project = new Project(req.body);
 	project.user = req.user;
 	project.lastEditor = req.user;
-    log.save(function(err, doc) {
+  log.save(function(err, doc) {
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
@@ -147,8 +147,6 @@ exports.generatePlates = function(req){
             curPlate.samples.push(curSample);
             ++index;
         }
-        curPlate.user = req.user;
-        curPlate.users.push(req.user);
         curPlate.save(logPlateErr);
         project.plates.push(curPlate);
     }

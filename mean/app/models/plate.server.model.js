@@ -27,11 +27,7 @@ var PlateSchema = new Schema({
   samples: [{
     type: Schema.Types.ObjectId,
     ref: 'Sample'
-  }],
-  users: [{
-    type: Schema.ObjectId,
-    ref: 'User',
-  }],
+  }]
 });
 
 mongoose.model('Plate', PlateSchema);
