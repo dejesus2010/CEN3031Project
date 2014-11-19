@@ -65,39 +65,40 @@ exports.generatePlateTemplate = function(req){
         }
         else{
             sys.puts('Successfully created ' + project.projectCode  + '.xlsx');
+            exports.emailPlateLayout(req);
+            fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
         }
     });
+};
 
-	var password = fs.readFileSync(path.join(__dirname, '../secure/password.txt'), 'utf8');
-	var transport = nodemailer.createTransport({
-		service: 'Gmail',
-		auth: {
-			user: 'jliccini@rapid-genomics.com',
-			pass: password
-		}
-	});
-
-	console.log(project.customer.email);
-	var mailOptions = {
-		from: 'Joseph Liccini <jliccini@rapid-genomics.com>',
-		to: project.customer.email,
-		subject: 'Your RAPiD Genomics Plate Layout is ready!',
-		text: 'Attached is your plate layout.',
-		attachments: [
-			{
-				path: 'app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx'
-			}
-		]
-	};
-	transport.sendMail(mailOptions, function(error, info) {
-		if (error) {
-			console.log("this one:" + error);
-            fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
-		} else {
-			console.log('Message sent: ' + info.response);
-            fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
-		}
-	});
+exports.emailPlateLayout = function(req) {
+    var project = req.project;
+    var password = fs.readFileSync('app/secure/password.txt');
+    var transport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'jliccini@rapid-genomics.com',
+            pass: password
+        }
+    });
+    var mailOptions = {
+        from: 'Joseph Liccini <jliccini@rapid-genomics.com>',
+        to: project.customer.email,
+        subject: 'Your RAPiD Genomics Plate Layout is ready!',
+        text: 'Attached is your plate layout.',
+        attachments: [
+            {
+                path: 'app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx'
+            }
+        ]
+    };
+    transport.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log('Failed to send email to ' + project.customer.email + '.\n' + error);
+        } else {
+            console.log('Successfully sent email to ' + project.customer.email + '.\n' + info.response);
+        }
+    });
 };
 
 exports.generatePlates = function(req){
