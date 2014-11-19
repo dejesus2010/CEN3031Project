@@ -7,10 +7,18 @@ var users = require('../../app/controllers/users'),
   plates = require('../../app/controllers/plates');
 
 module.exports = function(app) {
-  // plate Routes
+  // List of all plates
   app.route('/plates')
     .get(plates.list)
     .post(users.requiresLogin, plates.create);
+
+  // List of all assigned plates
+  app.route('/plates/assigned')
+    .get(users.requiresLogin, plates.listAssigned);
+
+  // List of all unassigned plates
+  app.route('/plates/unassigned')
+    .get(users.requiresLogin, plates.listUnassigned);
 
   app.route('/plates/userPlates')
     .get(users.requiresLogin, plates.platesByUser);

@@ -104,6 +104,68 @@ exports.list = function(req, res) {
 };
 
 /**
+ * List of all plates which have a user assigned to them
+ */
+exports.listAssigned = function(req, res) {
+	Plate.find({isAssigned: true}).lean().sort({stage: 1}).populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+				Customer.populate(plates, {path: 'project.customer'}, function(err, doc) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					Organism.populate(doc, {path: 'project.organism'}, function(err, doc) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.jsonp(doc);
+						}
+					});
+				}
+			});
+		}
+	});
+};
+
+/**
+ * List of all plates which do not have a user assigned to them
+ */
+exports.listUnassigned = function(req, res) {
+	Plate.find({isAssigned: false}).lean().sort({stage: 1}).populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+				Customer.populate(plates, {path: 'project.customer'}, function(err, doc) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					Organism.populate(doc, {path: 'project.organism'}, function(err, doc) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.jsonp(doc);
+						}
+					});
+				}
+			});
+		}
+	});
+};
+
+/**
  * Assigns a specific plate to a user. If req.body.assignee is defined, the plate can be assigned
  * on behalf of a user given the request is done by an admin user.
  */
