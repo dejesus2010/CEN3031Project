@@ -84,6 +84,7 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 		$scope.generatePlateTemplate = function(){
 			console.log('angular num samples:  ' + $scope.numberOfSamples);
 			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
+			$window.location.reload();
 		};
 
 		$scope.generatePlates = function(){
