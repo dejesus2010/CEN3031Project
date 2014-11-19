@@ -28,10 +28,15 @@ var PlateSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Sample'
   }],
-  users: [{
+  assignee: {
     type: Schema.ObjectId,
     ref: 'User',
-  }],
+    default: null
+  },
+  isAssigned: {
+    type: Boolean,
+    default: false
+  }
 });
 
 mongoose.model('Plate', PlateSchema);

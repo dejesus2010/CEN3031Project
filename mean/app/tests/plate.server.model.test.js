@@ -53,20 +53,7 @@ describe('Plates Model Unit Tests:', function() {
   beforeEach(function(done) {
     plates = new Plates({
       plateCode: '4',
-      project: projectID,
-      users: [new User({
-        firstName: 'Tim',
-        lastName: 'Tebow',
-        email: 'tim@ufl.edu',
-        password: 'heismen',
-        provider: 'local'
-      }), new User({
-        firstName: 'Muffin',
-        lastName: 'Man',
-        email: 'muffinMan@muffin.com',
-        password: 'gumdrops',
-        provider: 'local'
-      })]
+      project: projectID
     });
     done();
   });

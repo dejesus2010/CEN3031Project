@@ -6,6 +6,9 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Plate = mongoose.model('Plate'),
+	Customer = mongoose.model('Customer'),
+	Organism = mongoose.model('Organism'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
 
 /**
@@ -13,9 +16,7 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var plate = new Plate(req.body);
-	// User is the creator, users are allowed access
 	plate.user = req.user;
-	plate.users.push(req.user);
 
 	plate.save(function(err) {
 		if (err) {
@@ -41,7 +42,7 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var plate = req.plate;
 
-	plate = _.extend(plate , req.body);
+	plate = _.extend(plate, req.body);
 
 	plate.save(function(err) {
 		if (err) {
@@ -58,7 +59,7 @@ exports.update = function(req, res) {
  * Delete an Plate
  */
 exports.delete = function(req, res) {
-	var plate = req.plate ;
+	var plate = req.plate;
 
 	plate.remove(function(err) {
 		if (err) {
@@ -72,15 +73,128 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Plates
+ * List of all plates
  */
-exports.list = function(req, res) { Plate.find().sort('-created').populate('user', 'displayName').exec(function(err, plates) {
+exports.list = function(req, res) {
+	Plate.find().lean().sort({stage: 1}).populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(plates);
+				Customer.populate(plates, {path: 'project.customer'}, function(err, doc) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					Organism.populate(doc, {path: 'project.organism'}, function(err, doc) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.jsonp(doc);
+						}
+					});
+				}
+			});
+		}
+	});
+};
+
+/**
+ * Assigns a specific plate to a user. If req.body.assignee is defined, the plate can be assigned
+ * on behalf of a user given the request is done by an admin user.
+ */
+exports.assignPlate = function(req, res) {
+	Plate.findOne({_id: req.body._id}).exec(function(err, plate) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		if(req.body.isAssigned) {
+			return res.status(409).send({
+				message: 'Plate is already assigned'
+			});
+		}
+		var assignee;
+		// Allows an admin to assign a plate to a user
+		if(req.body.assignee === undefined) {
+			assignee = req.user._id;
+		} else {
+			assignee = req.body.assignee._id;
+		}
+		plate.assignee = assignee;
+		plate.isAssigned = true;
+		plate.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.jsonp(plate);
+			}
+		});
+	});
+};
+
+exports.unassignPlate = function(req, res) {
+	Plate.findOne({_id: req.body._id}).exec(function(err, plate) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		}
+		if(!req.body.isAssigned) {
+			return res.status(409).send({
+				message: 'Plate is already unassigned'
+			});
+		}
+		plate.assignee = null;
+		plate.isAssigned = false;
+		plate.remove(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.jsonp(plate);
+			}
+		});
+	});
+};
+
+/**
+ * List of a user's assigned plates
+ */
+exports.platesByUser = function(req, res) {
+	var userId = req.user._id;
+
+	Plate.find({assignee: userId}).populate('samples').populate('project').exec(function(err, doc) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			Customer.populate(doc, {path: 'project.customer'}, function(err, doc) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					Organism.populate(doc, {path: 'project.organism'}, function(err, doc) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.jsonp(doc);
+						}
+					});
+				}
+			});
 		}
 	});
 };
@@ -88,10 +202,11 @@ exports.list = function(req, res) { Plate.find().sort('-created').populate('user
 /**
  * Plate middleware
  */
-exports.plateByID = function(req, res, next, id) { Plate.findById(id).populate('user', 'displayName').exec(function(err, plate) {
+exports.plateByID = function(req, res, next, id) {
+	Plate.findById(id).populate('user', 'displayName').exec(function(err, plate) {
 		if (err) return next(err);
-		if (! plate) return next(new Error('Failed to load Plate ' + id));
-		req.plate = plate ;
+		if (!plate) return next(new Error('Failed to load Plate ' + id));
+		req.plate = plate;
 		next();
 	});
 };
@@ -100,38 +215,12 @@ exports.plateByID = function(req, res, next, id) { Plate.findById(id).populate('
  * Plate authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.plate.users.indexOf(req.user.id) === -1) {
-		return res.status(403).send('User is not authorized');
-	}
-	next();
-};
-
-/**
- * Add user to plate
- */
-exports.addUser = function(req, res) {
-	var plate = req.plate;
-	var newUser = req.newUser;
-
-	plate.users.push(newUser);
-	res.jsonp(plate);
-};
-
-/**
- * Remove user from plate
- * note you can't remove the creator of the plate with this function
- */
-exports.removeUser = function(req, res) {
-	var plate = req.plate;
-	var removedUser = req.removedUser;
-
-	var index = plate.users.indexOf(removedUser);
-	if (index === -1) {
-		res.status(420).send('User "' + removedUser + '" was not authorized for plate ' + plate._id);
-	} else if (plate.user === removedUser) {
-		res.status(405).send('Can\'t remove creator from the list of users');
-	} else {
-		plate.users.splice(index, 1);
-		res.jsonp(plate);
-	}
+	User.findOne({_id: req.user.id}).exec(function(err, user) {
+		if (err) {
+			return next(err);
+		} else if (req.body.isAssigned && req.body.assigned.id !== req.user.id && user.roles !== 'admin') {
+			return res.status(403).send('User is not authorized');
+		}
+		next();
+	});
 };

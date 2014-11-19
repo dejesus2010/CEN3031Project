@@ -149,8 +149,6 @@ exports.generatePlates = function(req){
             curPlate.samples.push(curSample);
             ++index;
         }
-        curPlate.user = req.user;
-        curPlate.users.push(req.user);
         curPlate.save(logPlateErr);
         project.plates.push(curPlate);
     }
