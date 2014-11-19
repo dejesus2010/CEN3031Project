@@ -57,16 +57,18 @@
                     {{project.description}}
                 </div>
             </div>
-            <div class="text-center">
+           <div class="text-center">
                 <p><b>Plate Status</b></p>
-                <div class="progress center-block" style="width: 42%">
+                <div class="progress center-block noselect" style="width: 42%">
                     <div class="progress-bar progress-bar-striped" ng-repeat="count in latestStepCounts track by $index" style="width: 7.143%" ng-class="{'progress-bar-success': count === project.plates.length, 'progress-bar-warning': count > 0 && count < project.plates.length, 'progress-bar-danger': count === 0}">
-                    <div ng-if="count===project.plates.length && project.plates.length !== 0">
-                        &#x2713;
-                    </div>
-                    <div ng-if="count!==project.plates.length || project.plates.length === 0">
-                        {{project.plates.length - count}}
-                    </div>
+                     <span title="Step {{$index + 1}}" data-toggle="popover">
+                         <div ng-if="count===project.plates.length && project.plates.length !== 0">
+                            &#x2713;
+                         </div>
+                         <div ng-if="count!==project.plates.length || project.plates.length === 0">
+                            {{project.plates.length - count}}
+                         </div>
+                     </span>
                 </div>
 
             </div>
@@ -83,6 +85,7 @@
                 </a>
             </div>
         </div>
+    </div>
         <br>
          <div ng-if="project.plates.length === 0" class="bs-callout" >
     	    <div class="row">
