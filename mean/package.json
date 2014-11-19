@@ -40,7 +40,8 @@
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
     "xlsx": "^0.7.12",
-    "swig": "~1.4.1"
+    "swig": "~1.4.1",
+    "multiparty": "~4.0.0"
   },
   "devDependencies": {
     "supertest": "~0.13.0",
