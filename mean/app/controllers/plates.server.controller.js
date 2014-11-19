@@ -113,8 +113,11 @@ exports.assignPlate = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		}
-		if(req.body.isAssigned) {
+		} else if (plate === null) {
+			return res.status(404).send({
+				message: 'Plate not found'
+			});
+		} else if(req.body.isAssigned) {
 			return res.status(409).send({
 				message: 'Plate is already assigned'
 			});
