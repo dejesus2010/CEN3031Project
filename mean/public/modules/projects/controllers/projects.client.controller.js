@@ -82,13 +82,14 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 		};
 
 		$scope.generatePlateTemplate = function(){
+			console.log('angular num samples:  ' + $scope.numberOfSamples);
 			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
 		};
 
-    $scope.generatePlates = function(){
-      $http.post('projects/' + $scope.project._id + '/GeneratePlates');
-      $window.location.reload();
-    };
+		$scope.generatePlates = function(){
+			$http.post('projects/' + $scope.project._id + '/GeneratePlates');
+			$window.location.reload();
+		};
 
 		$scope.confirmRemove = function() {
 			ngDialog.open({
@@ -119,7 +120,7 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 		};
 
 		$scope.findOne = function() {
-            $scope.project = Projects.get({
+            	$scope.project = Projects.get({
                 projectId: $stateParams.projectId
             }, function(err, res) {
                 $scope.selectedCustomer = {selected: $scope.project.customer};

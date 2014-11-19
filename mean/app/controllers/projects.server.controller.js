@@ -8,14 +8,14 @@ var mongoose = require('mongoose'),
 	Project = mongoose.model('Project'),
 	Log = mongoose.model('Log'),
 	Plate = mongoose.model('Plate'),
-    Sample = mongoose.model('Sample'),
+	Sample = mongoose.model('Sample'),
 	_ = require('lodash'),
    	xlsx = require('xlsx'),
 	path = require('path'),
 	fs = require('fs'),
 	nodemailer=require('nodemailer'),
-    sys = require('sys'),
-    exec = require('child_process').exec;
+	sys = require('sys'),
+	exec = require('child_process').exec;
 
 /**
  * Create a project
@@ -55,21 +55,50 @@ exports.create = function(req, res) {
 exports.generatePlateTemplate = function(req){
 	var project = req.project;
 	var numberOfSamples = req.query.numberOfSamples;
-    var args = project.projectCode + ' app/tmp/plate_layouts \"' + project.description + '\" ' + numberOfSamples;
-    var command = 'java -jar app/bin/PrepareSummarySpreadsheet.jar ' + args;
-    exec(command, function(error, stdout, stderr){
-        if(error){
-            sys.puts('Encountered an error when trying to create plate layout for ' + project.projectCode + ' using: \n' + command);
-            sys.puts(stderr);
-            sys.puts(error);
-        }
-        else{
-            sys.puts('Successfully created ' + project.projectCode  + '.xlsx');
-            exports.emailPlateLayout(req);
-            fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
-        }
-    });
-};
+	var args = project.projectCode + ' app/tmp/plate_layouts \"' + project.description + '\" ' + numberOfSamples;
+    	var command = 'java -jar app/bin/PrepareSummarySpreadsheet.jar ' + args;
+    	exec(command, function(error, stdout, stderr){
+		if(error){
+		    sys.puts('Encountered an error when trying to create plate layout for ' + project.projectCode + ' using: \n' + command);
+		    sys.puts(stderr);
+		    sys.puts(error);
+		}
+		else{
+		    sys.puts('Successfully created ' + project.projectCode  + '.xlsx');
+		    exports.emailPlateLayout(req);
+		    fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
+		}
+	});
+
+	var logPlateErr = function(err){
+		if(err){
+		    console.log(errorHandler.getErrorMessage(err));
+		}
+	};
+
+	var numberOfPlates = parseInt(numberOfSamples / 96) + 1;
+	console.log('number of plates : ' + numberOfPlates);
+	for(var i = 1; i <= numberOfPlates; ++i) {
+		var plate = new Plate();
+		plate.user = req.user;
+		plate.users.push(req.user);
+		if (i < 10) {
+			plate.plateCode = project.projectCode + '_P0' + i;
+		}
+		else {
+			plate.plateCode = project.projectCode + '_P' + i; 
+		}
+		plate.project = project;
+		project.plates.push(plate);
+		plate.save(logPlateErr);
+	}
+	project.save(function(err){
+		if(err){
+		    console.log(project);
+		    console.log(errorHandler.getErrorMessage(err));
+		}
+	    });
+	};
 
 exports.emailPlateLayout = function(req) {
     var project = req.project;
@@ -126,15 +155,20 @@ exports.generatePlates = function(req){
             console.log(errorHandler.getErrorMessage(err));
         }
     };
+
+    var plateIndex = 0;
     while(index < data.length){
-        var curPlate = new Plate();
-        curPlate.plateCode = project.projectCode + '_P' + (index/96 + 1); //bug if <= 9 for format
-        curPlate.project = project;
+    	var curPlate = project.plates[plateIndex];
         for(var i = 0; i < 96 && index < data.length; ++i){
             var propNum = 1;
             var row = data[index];
             var curSample = new Sample();
-            curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + (parseInt(i%12,10) + 1); //bug if <= 9 for format
+	    if (i < 10) {
+		    curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + '0' + (parseInt(i%12,10) + 1); 
+	    }
+	    else {
+		    curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + (parseInt(i%12,10) + 1); 
+	    }
             for(var key in row){
                 if(propNum === 6){ //volume
                     curSample.volume = row[key];
@@ -149,11 +183,10 @@ exports.generatePlates = function(req){
             curPlate.samples.push(curSample);
             ++index;
         }
-        curPlate.user = req.user;
-        curPlate.users.push(req.user);
-        curPlate.save(logPlateErr);
-        project.plates.push(curPlate);
+	++plateIndex;
+	curPlate.save(logPlateErr);
     }
+
     project.save(function(err){
         if(err){
             console.log(project);

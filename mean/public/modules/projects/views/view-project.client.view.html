@@ -71,10 +71,10 @@
          <div ng-if="project.plates.length === 0" class="bs-callout" >
     	    <div class="row">
                 <div class="col-xs-4">
-                    <label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
+                    <label class="control-label">Enter Number of Samples </label>
                 </div>
                 <div class="col-xs-3">
-                    <input data-ng-model="numberOfSamples" name="numberOfSamples" type="text" id="numberOfSamples" class="form-control"/>
+                    <input data-ng-model="$parent.numberOfSamples" type="text" class="form-control"/>
                 </div>
                 <div class="col-xs-3">
                     <a class="btn btn-primary " data-ng-click="grayOut || generatePlateTemplate()">
@@ -83,19 +83,19 @@
                     </a>
                 </div>
     	    </div>
-            <br>
-            <div class="row">
-                <div class="text-center">
-                    <a class="btn btn-primary" data-ng-click="grayOut || generatePlates()">
-                        Generate Plates From Excel
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                </div>
-            </div>
         </div>
         <div ng-if="project.plates.length != 0">
             <div class="text-center">
                 || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
+            </div>
+	    <br>
+	    <div class="row">
+                <div class="text-center">
+                    <a class="btn btn-primary" data-ng-click="grayOut || generatePlates()">
+                        Read Plate Layout
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </div>
             </div>
             <br>
             <div class="bs-callout">
