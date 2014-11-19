@@ -85,18 +85,19 @@ exports.generatePlateTemplate = function(req){
 		text: 'Attached is your plate layout.',
 		attachments: [
 			{
-				path: path.join(__dirname, '../../temp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx')
+				path: 'app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx'
 			}
 		]
 	};
 	transport.sendMail(mailOptions, function(error, info) {
 		if (error) {
-			console.log(error);
+			console.log("this one:" + error);
+            fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
 		} else {
 			console.log('Message sent: ' + info.response);
+            fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
 		}
 	});
-    fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
 };
 
 exports.generatePlates = function(req){
