@@ -87,6 +87,12 @@
     cursor: pointer;
 }
 
+.well{
+    background-color: #fdfdfd;
+    background-image: none;
+    margin-top: 10px;
+}
+
 .ngReactGrid table tr:hover{
     background: #dbdbdb;
 }

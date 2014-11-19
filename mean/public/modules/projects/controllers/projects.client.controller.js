@@ -126,8 +126,28 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
                 $scope.selectedOrganism = {selected: $scope.project.organism};
                 $scope.disabled = true;
                 $scope.initReactPlateGrid();
+                $scope.getLatestStepCounts();
             });
 		};
+
+        $scope.getLatestStepCounts = function() {
+            //the array to return
+            //will have a count of # plates @ each index (each index = a step)
+            var latestStepCounts = [];
+            //create an empty array with as many slots as there are steps
+            //we will probably have to replace '14' with reading the number
+            //of steps associated with a sequencing method later
+            for(var i = 0; i < 14; ++i){
+                latestStepCounts.push(0);
+            }
+            for(var plateIndex in $scope.project.plates){
+                //for every plate in a step, increment the count for every step
+                //before it indicating how many plates have moved through that step
+                for(var j = 0; j < $scope.project.plates[plateIndex].stage; ++j)
+                    ++latestStepCounts[j];
+            }
+            $scope.latestStepCounts = latestStepCounts;
+        };
 
 		$scope.numSamples = function() {
 			if ($scope.project === undefined || $scope.project.plates === undefined) {
