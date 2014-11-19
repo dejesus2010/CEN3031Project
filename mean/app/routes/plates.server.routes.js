@@ -9,8 +9,17 @@ var users = require('../../app/controllers/users'),
 module.exports = function(app) {
   // plate Routes
   app.route('/plates')
-  .get(plates.list)
-  .post(users.requiresLogin, plates.create);
+    .get(plates.list)
+    .post(users.requiresLogin, plates.create);
+
+  app.route('/plates/userPlates')
+    .get(users.requiresLogin, plates.platesByUser);
+
+  app.route('/plates/assignPlate')
+    .post(plates.hasAuthorization, plates.assignPlate);
+
+  app.route('/plates/unassignPlate')
+    .post(plates.hasAuthorization, plates.unassignPlate);
 
   app.route('/plates/:plateId')
     .get(plates.read)
