@@ -82,23 +82,24 @@
 			$httpBackend.flush();
 		}));
 
-		it('$scope.addPlate() should not send an HTTP request if a plate hasn\'t been selected and close any dialogs that may be open', inject(function() {
+		it('$scope.addPlate() should not send an HTTP request if a plate hasn\'t been selected and open the error dialog', inject(function() {
 			scope.selectedPlate = null;
-			scope.grayOut = true;
+			scope.grayOut = false;
 
 			scope.addPlate();
-			expect(scope.grayOut).toBeFalsy();
+			expect(scope.grayOut).toBeTruthy();
 		}));
 
-		it('$scope.addPlate() should close the ngDialog if an HTTP error is returned', inject(function() {
+		it('$scope.addPlate() should open the errorDialog if an HTTP error is returned', inject(function() {
 			scope.selectedPlate = {};
-			scope.grayOut = true;
+			scope.grayOut = false;
 
-			$httpBackend.expectPOST('/plates/assignPlate').respond(400);
+			$httpBackend.expectPOST('/plates/assignPlate').respond(400, {message: 'hi'});
+			$httpBackend.expectGET('errorDialog').respond(200, '');
 			scope.addPlate();
 			$httpBackend.flush();
 
-			expect(scope.grayOut).toBeFalsy();
+			expect(scope.grayOut).toBeTruthy();
 		}));
 
 		it('$scope.confirmAdd should open the ngDialog', inject(function() {
@@ -112,52 +113,5 @@
 			scope.closeDialog();
 			expect(scope.grayOut).toBeFalsy();
 		}));
-
-/*
-		it('$scope.findOne() should create an array with one plate object fetched from XHR using a plateId URL parameter', inject(function(Plates) {
-			// Define a sample plate object
-			var samplePlate = new Plates({
-				plateCode: 'UFL_012345_P2',
-				stage: 2,
-				project: '545a4bac584211a726dedfcc',
-			});
-
-			// Set the URL parameter
-			$stateParams.plateId = '525a8422f6d0f87f0e407a33';
-
-			// Set GET response
-			$httpBackend.expectGET(/plates\/([0-9a-fA-F]{24})$/).respond(samplePlate);
-
-			// Run controller functionality
-			scope.findOne();
-			$httpBackend.flush();
-
-			// Test scope value
-			expect(scope.plate).toEqualData(samplePlate);
-		}));
-
-		it('$scope.update() should update a valid plate', inject(function(Plates) {
-			// Define a sample plate object
-			var samplePlatePutData = new Plates({
-				plateCode: 'UFL_012345_P2',
-				stage: 2,
-				project: '545a4bac584211a726dedfcc',
-				_id: '525a8422f6d0f87f0e407a33'
-			});
-
-			// Mock plate in scope
-			scope.plate = samplePlatePutData;
-
-			// Set PUT response
-			$httpBackend.expectPUT(/plates\/([0-9a-fA-F]{24})$/).respond();
-
-			// Run controller functionality
-			scope.update();
-			$httpBackend.flush();
-
-			// Test URL location to new object
-			expect($location.path()).toBe('/plates/' + samplePlatePutData._id);
-		}));
-*/
 	});
 }());

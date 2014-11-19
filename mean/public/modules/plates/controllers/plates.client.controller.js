@@ -16,7 +16,8 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
         $scope.plateList = response;
         $scope.initReactGrid();
       }).error(function(err) {
-        // Figure out what to do if listPlates fails
+        $scope.error = err.message;
+        $scope.errorDialog();
       });
     };
 
@@ -31,21 +32,34 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
 
     $scope.addPlate = function() {
       if ($scope.selectedPlate === null) {
-        $scope.closeDialog();
+        $scope.error = 'No plate is selected';
+        $scope.errorDialog();
       } else {
         $http.post('/plates/assignPlate', $scope.selectedPlate).success(function(response) {
           // Reload ngGrid
           $scope.init();
         }).error(function(err) {
-          // Figure out what to do
-          $scope.closeDialog();
+          $scope.error = err.message;
+          $scope.errorDialog();
         });
       }
     };
 
     $scope.confirmAdd = function() {
+      $scope.closeDialog();
       ngDialog.open({
         template: 'addConfirmDialog',
+        className: 'ngdialog-theme-default',
+        scope: $scope,
+        showClose: false
+      });
+      $scope.grayOut = true;
+    };
+
+    $scope.errorDialog = function() {
+      $scope.closeDialog();
+      ngDialog.open({
+        template: 'errorDialog',
         className: 'ngdialog-theme-default',
         scope: $scope,
         showClose: false
