@@ -1,7 +1,7 @@
 .boxed{
     position: relative;
     margin-top: 5px;
-    border: 1px solid blue;
+    border: 1px solid #A3A3A3;
 }
 
 .performButton{
@@ -19,3 +19,11 @@
     background: #dbdbdb;
 }
 
+h3{
+    margin-left: 5px;
+}
+
+td{
+    text-align: center;
+    horiz-align: center;
+}

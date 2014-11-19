@@ -121,7 +121,7 @@ exports.assignPlate = function(req, res) {
 		}
 		var assignee;
 		// Allows an admin to assign a plate to a user
-		if(req.body.assignee === undefined) {
+		if(req.body.assignee === null) {
 			assignee = req.user._id;
 		} else {
 			assignee = req.body.assignee._id;
