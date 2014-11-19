@@ -76,7 +76,7 @@ exports.delete = function(req, res) {
  * List of all plates
  */
 exports.list = function(req, res) {
-	Plate.find().lean().sort('-created').populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
+	Plate.find().lean().sort({stage: 1}).populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

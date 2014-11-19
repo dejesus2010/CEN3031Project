@@ -43,15 +43,15 @@
                         <span class="value-pair-left">Plates</span>
                         <span class="value-pair-right">{{project.plates.length}}</span>
                 </div>
-                <div class="overview-col-right">
-                        <span class="value-pair-left">Samples</span>
-                        <span class="value-pair-right" ng-bind="numSamples()"></span>
-                </div>
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
                     <span class="value-pair-left">Description</span>
                     <span class="value-pair-right">{{project.description}}</span>
+                </div>
+                <div class="overview-col-right">
+                    <span class="value-pair-left">Samples</span>
+                    <span class="value-pair-right" ng-bind="numSamples()"></span>
                 </div>
             </div>
             <div class="text-center"  data-ng-show="authentication.user._id == project.user._id">

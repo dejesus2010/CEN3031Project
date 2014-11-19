@@ -30,7 +30,8 @@ var PlateSchema = new Schema({
   }],
   assignee: {
     type: Schema.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: null
   },
   isAssigned: {
     type: Boolean,
