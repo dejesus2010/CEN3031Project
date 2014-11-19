@@ -1,0 +1,106 @@
+.ngReactGrid .ngReactGridSearch input {
+    height: 25px !important;
+}
+.bs-callout {
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin:auto;
+    width:800px;
+}
+.overview-row{
+    padding: 2px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+.overview-col-left{
+    float: left;
+    width:300px;
+    padding-right: 15px
+}
+.overview-col-right{
+    float: right;
+    width:300px;
+    padding-left: 15px;
+}
+.value-pair-left {
+    float:left;
+    width: 100px;
+    font-weight: bold;
+}
+.value-pair-right {
+    float:right;
+}
+
+@media(max-width:767px){
+    .dont-squish-me{
+        min-width: 218px;
+    }
+}
+@media(min-width:768px){
+    .bootstrap-col-size{
+        min-width: 218px;
+    }
+}
+@media(min-width:992px){
+    .bootstrap-col-size{
+        min-width: 294px;
+    }
+}
+@media(min-width:1200px){
+    .bootstrap-col-size{
+        min-width: 358px;
+    }
+}
+
+
+.control-label{
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+.gray-out {
+    background-color: white;
+    filter:alpha(opacity=50); /* IE */
+    opacity: 0.5; /* Safari, Opera */
+    -moz-opacity:0.50; /* FireFox */
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.ngdialog {
+    position:fixed;
+    top: 30%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em;
+    margin-left: -15em;
+    z-index: 20;
+}
+
+.ngReactGridBody:hover{
+    cursor: pointer;
+}
+
+.well{
+    background-color: #fdfdfd;
+    background-image: none;
+    margin-top: 10px;
+}
+
+.ngReactGrid table tr:hover{
+    background: #dbdbdb;
+}
+
+.ngReactGrid table tr:nth-child(odd):hover td{
+    background: #dbdbdb;
+}
+
+.tab:hover{
+    cursor: pointer;
+}
