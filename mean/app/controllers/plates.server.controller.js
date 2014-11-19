@@ -218,7 +218,7 @@ exports.hasAuthorization = function(req, res, next) {
 	User.findOne({_id: req.user.id}).exec(function(err, user) {
 		if (err) {
 			return next(err);
-		} else if (req.body.isAssigned && req.body.assigned.id !== req.user.id && user.roles !== 'admin') {
+		} else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee._id !== req.user.id && user.roles !== 'admin') {
 			return res.status(403).send('User is not authorized');
 		}
 		next();
