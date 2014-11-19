@@ -25,35 +25,35 @@ var mongoose = require('mongoose'),
  * Create a project
  */
 exports.create = function(req, res) {
-	var log = new Log({
-		user: req.user,
-		timestamp: Date.now()
-	});
+    var log = new Log({
+        user: req.user,
+        timestamp: Date.now()
+    });
 
-	var project = new Project(req.body);
-	project.user = req.user;
-	project.lastEditor = req.user;
+    var project = new Project(req.body);
+    project.user = req.user;
+    project.lastEditor = req.user;
     log.save(function(err, doc) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        log._id = doc._id;
-        project.logs = [log._id];
-        project.save(function(err) {
-          if (err) {
-            log.remove(function(err) {
-              return res.status(400).send({
+        if (err) {
+            return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
-              });
             });
-          } else {
-            res.jsonp(project);
-          }
-        });
-      }
-  });
+        } else {
+            log._id = doc._id;
+            project.logs = [log._id];
+            project.save(function(err) {
+                if (err) {
+                    log.remove(function(err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    });
+                } else {
+                    res.jsonp(project);
+                }
+            });
+        }
+    });
 };
 
 exports.generatePlateTemplate = function(req){
@@ -83,8 +83,6 @@ exports.generatePlateTemplate = function(req){
 	var numberOfPlates = parseInt(numberOfSamples / 96) + 1;
 	for(var i = 1; i <= numberOfPlates; ++i) {
 		var plate = new Plate();
-		plate.user = req.user;
-		plate.users.push(req.user);
 		if (i < 10) {
 			plate.plateCode = project.projectCode + '_P0' + i;
 		}
@@ -136,7 +134,6 @@ exports.emailPlateLayout = function(req) {
 exports.generatePlates = function(req){
     console.log('we are in generatePlates');
     var project = req.project;
-    //var fn = req.whichFile;
     var fn = 'app/tmp/plate_layouts/' + project.projectCode + '.xlsx';
     var plateWorkbook = xlsx.readFile(fn);
     var workSheet = plateWorkbook.Sheets[plateWorkbook.SheetNames[0]];
@@ -228,101 +225,101 @@ exports.uploadPlateLayout = function(req, res) {
  * Show the current project
  */
 exports.read = function(req, res) {
-	res.jsonp(req.project);
+    res.jsonp(req.project);
 };
 
 /**
  * Update a project
  */
 exports.update = function(req, res) {
-	var project = req.project;
+    var project = req.project;
 
-	project = _.extend(project, req.body);
-	project.lastEditor = req.user;
-	project.lastEdited = Date.now();
+    project = _.extend(project, req.body);
+    project.lastEditor = req.user;
+    project.lastEdited = Date.now();
 
-	var log = new Log({
-		user: req.user,
-		timestamp: Date.now()
-	});
+    var log = new Log({
+        user: req.user,
+        timestamp: Date.now()
+    });
 
-  log.save(function(err, doc) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        log._id = doc._id;
-        project.logs.push(log._id);
-        project.save(function(err) {
-          if (err) {
-            log.remove(function(err) {
-              return res.status(400).send({
+    log.save(function(err, doc) {
+        if (err) {
+            return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
-              });
             });
-          } else {
-            res.jsonp(project);
-          }
-        });
-      }
-  });
+        } else {
+            log._id = doc._id;
+            project.logs.push(log._id);
+            project.save(function(err) {
+                if (err) {
+                    log.remove(function(err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    });
+                } else {
+                    res.jsonp(project);
+                }
+            });
+        }
+    });
 };
 
 /**
  * Delete an project
  */
 exports.delete = function(req, res) {
-	var project = req.project;
+    var project = req.project;
 
-	project.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(project);
-		}
-	});
+    project.remove(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(project);
+        }
+    });
 };
 
 /**
  * List of Projects
  */
 exports.list = function(req, res) {
-	Project.find().populate('customer').populate('organism').populate('lastEditor').sort('-created').exec(function(err, projects) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(projects);
-		}
-	});
+    Project.find().populate('customer').populate('organism').populate('lastEditor').sort('-created').exec(function(err, projects) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(projects);
+        }
+    });
 };
 
 /**
  * Project middleware
  */
 exports.projectByID = function(req, res, next, id) {
-	Project.findById(id).populate('user', 'displayName').populate('lastEditor').populate('customer').populate('organism').populate('plates').exec(function(err, project) {
-		if (err) return next(err);
-		if (!project) return next(new Error('Failed to load project ' + id));
-		req.project = project;
-		next();
-	});
+    Project.findById(id).populate('user', 'displayName').populate('lastEditor').populate('customer').populate('organism').populate('plates').exec(function(err, project) {
+        if (err) return next(err);
+        if (!project) return next(new Error('Failed to load project ' + id));
+        req.project = project;
+        next();
+    });
 };
 
 /**
  * Project authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.project.user.id !== req.user.id) {
-		return res.status(403).send({
-			message: 'User is not authorized'
-		});
-	}
-	next();
+    if (req.project.user.id !== req.user.id) {
+        return res.status(403).send({
+            message: 'User is not authorized'
+        });
+    }
+    next();
 };
 
 exports.listOfProjectsByStatus = function(req, res){

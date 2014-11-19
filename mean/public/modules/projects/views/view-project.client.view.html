@@ -36,22 +36,35 @@
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
-                        <span class="value-pair-left">Sequencing</span>
-                        <span class="value-pair-right">{{project.sequencingMethod}}</span>
-                </div>
-                <div class="overview-col-right">
                         <span class="value-pair-left">Plates</span>
                         <span class="value-pair-right">{{project.plates.length}}</span>
                 </div>
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
-                    <span class="value-pair-left">Description</span>
-                    <span class="value-pair-right">{{project.description}}</span>
+                    <span class="value-pair-left">Sequencing</span>
+                    <span class="value-pair-right">{{project.sequencingMethod}}</span>
                 </div>
-                <div class="overview-col-right">
-                    <span class="value-pair-left">Samples</span>
-                    <span class="value-pair-right" ng-bind="numSamples()"></span>
+            </div>
+            <br>
+            <div class="row overview-row text-center">
+                <b>Description</b>
+                <div class="well text-left">
+                    {{project.description}}
+                </div>
+            </div>
+           <div class="text-center">
+                <p><b>Plate Status</b></p>
+                <div class="progress center-block noselect" style="width: 42%">
+                    <div class="progress-bar progress-bar-striped" ng-repeat="count in latestStepCounts track by $index" style="width: 7.143%" ng-class="{'progress-bar-success': count === project.plates.length, 'progress-bar-warning': count > 0 && count < project.plates.length, 'progress-bar-danger': count === 0}">
+                     <span title="Step {{$index + 1}}" data-toggle="popover">
+                         <div ng-if="count===project.plates.length && project.plates.length !== 0">
+                            &#x2713;
+                         </div>
+                         <div ng-if="count!==project.plates.length || project.plates.length === 0">
+                            {{project.plates.length - count}}
+                         </div>
+                     </span>
                 </div>
             </div>
             <div class="text-center"  data-ng-show="authentication.user._id == project.user._id">
@@ -67,6 +80,7 @@
                 </a>
             </div>
         </div>
+    </div>
         <br>
          <div ng-if="project.plates.length === 0" class="bs-callout" >
     	    <div class="row">
