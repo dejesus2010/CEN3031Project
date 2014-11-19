@@ -94,9 +94,9 @@ exports.generatePlateTemplate = function(req){
 			console.log(error);
 		} else {
 			console.log('Message sent: ' + info.response);
-			fs.unlink(path.join(__dirname, '../../temp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx'));
 		}
 	});
+    fs.unlink('app/tmp/plate_layouts/' + project.projectCode + '_Plate_Layout.xlsx', function(err){if(err){console.log(err);}});
 };
 
 exports.generatePlates = function(req){
