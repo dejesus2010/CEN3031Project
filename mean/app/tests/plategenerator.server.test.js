@@ -21,7 +21,8 @@ var project;
 /**
  * Unit tests
  */
-describe('Project Model Unit Tests:', function() {
+/*
+describe('Plate Generator Unit Tests:', function() {
     var customerID;
     var organismID;
 
@@ -97,4 +98,4 @@ describe('Project Model Unit Tests:', function() {
         Project.remove().exec();
         done();
     });
-});
+});*/

@@ -1,0 +1,37 @@
+<section data-ng-controller="WorklistController" data-ng-init="init()">
+	<div class="page-header">
+		<h1>Work List</h1>
+	</div>
+	<div class="container">
+
+		<div ng-if="!platesExist">
+			There are no plates in your work list
+		</div>
+
+		<div class="boxed" ng-repeat="plates in groupOfPlates" ng-if="plates.length > 0">
+
+			<div>
+				<h3>{{stageNumberToName[plates[0].stage]}}</h3>
+				<button type="button" class="btn btn-default performButton">Perform selected</button>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<td>Plate Code</td>
+					<td>Latest Step</td>
+					<td>Number of Samples</td>
+					<td></td>
+				</tr>
+
+				<tr class="aPlate" ng-repeat="plate in plates">
+					<td>{{plate.plateCode}}</td>
+					<td>{{plate.stage}}</td>
+					<td>{{plate.samples.length}}</td>
+					<td>
+						<input type="checkbox" value="checked">
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+</section>

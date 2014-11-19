@@ -39,10 +39,6 @@
                         <span class="value-pair-left">Plates</span>
                         <span class="value-pair-right">{{project.plates.length}}</span>
                 </div>
-                <div class="overview-col-right">
-                    <span class="value-pair-left">Samples</span>
-                    <span class="value-pair-right" ng-bind="numSamples()"></span>
-                </div>
             </div>
             <div class="row overview-row">
                 <div class="overview-col-left">
@@ -57,18 +53,19 @@
                     {{project.description}}
                 </div>
             </div>
-            <div class="text-center">
+           <div class="text-center">
                 <p><b>Plate Status</b></p>
-                <div class="progress center-block" style="width: 42%">
+                <div class="progress center-block noselect" style="width: 42%">
                     <div class="progress-bar progress-bar-striped" ng-repeat="count in latestStepCounts track by $index" style="width: 7.143%" ng-class="{'progress-bar-success': count === project.plates.length, 'progress-bar-warning': count > 0 && count < project.plates.length, 'progress-bar-danger': count === 0}">
-                    <div ng-if="count===project.plates.length && project.plates.length !== 0">
-                        &#x2713;
-                    </div>
-                    <div ng-if="count!==project.plates.length || project.plates.length === 0">
-                        {{project.plates.length - count}}
-                    </div>
+                     <span title="Step {{$index + 1}}" data-toggle="popover">
+                         <div ng-if="count===project.plates.length && project.plates.length !== 0">
+                            &#x2713;
+                         </div>
+                         <div ng-if="count!==project.plates.length || project.plates.length === 0">
+                            {{project.plates.length - count}}
+                         </div>
+                     </span>
                 </div>
-
             </div>
             <div class="text-center"  data-ng-show="authentication.user._id == project.user._id">
                 <hr style="margin: 15px">
@@ -83,14 +80,15 @@
                 </a>
             </div>
         </div>
+    </div>
         <br>
          <div ng-if="project.plates.length === 0" class="bs-callout" >
     	    <div class="row">
                 <div class="col-xs-4">
-                    <label class="control-label" for="numberOfSamples">Enter Number of Samples </label>
+                    <label class="control-label">Enter Number of Samples </label>
                 </div>
                 <div class="col-xs-3">
-                    <input data-ng-model="numberOfSamples" name="numberOfSamples" type="text" id="numberOfSamples" class="form-control"/>
+                    <input data-ng-model="$parent.numberOfSamples" type="text" class="form-control"/>
                 </div>
                 <div class="col-xs-3">
                     <a class="btn btn-primary " data-ng-click="grayOut || generatePlateTemplate()">
@@ -99,19 +97,20 @@
                     </a>
                 </div>
     	    </div>
-            <br>
-            <div class="row">
-                <div class="text-center">
-                    <a class="btn btn-primary" data-ng-click="grayOut || generatePlates()">
-                        Generate Plates From Excel
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                </div>
-            </div>
         </div>
         <div ng-if="project.plates.length != 0">
             <div class="text-center">
                 || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
+            </div>
+	    <br>
+	    <div class="row">
+                <div class="text-center">
+			<input type="file" ng-file-select="onFileSelect($files)">
+			<a class="btn btn-primary" data-multiple="true">
+                        Upload Plate Layout
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </div>
             </div>
             <br>
             <div class="bs-callout">
