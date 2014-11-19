@@ -16,7 +16,8 @@
     "select2": "~3.4.5",
     "ngReactGrid": "~0.6.5",
     "react": "~0.11.2",
-    "ngDialog": "~0.3.2"
+    "ngDialog": "~0.3.2",
+    "ng-file-upload": "~1.6.12"
   },
   "devDependencies": {}
 }
