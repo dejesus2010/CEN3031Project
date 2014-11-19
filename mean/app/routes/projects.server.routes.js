@@ -23,6 +23,9 @@ module.exports = function(app) {
     	app.route('/projects/:projectId/GeneratePlates')
 		.post(users.requiresLogin, projects.generatePlates);
 
+    	app.route('/projects/:projectId/UploadPlateLayout')
+		.post(users.requiresLogin, projects.uploadPlateLayout);
+
 	app.route('/projectsByStatus/:projectStatus')
 		.get(users.requiresLogin, projects.listOfProjectsByStatus);
 

@@ -15,7 +15,11 @@ var mongoose = require('mongoose'),
 	fs = require('fs'),
 	nodemailer=require('nodemailer'),
 	sys = require('sys'),
-	exec = require('child_process').exec;
+	exec = require('child_process').exec,
+	multiparty = require('multiparty'),
+	util = require('util'),
+	http = require('http'),
+	uuid = require('node-uuid');
 
 /**
  * Create a project
@@ -77,7 +81,6 @@ exports.generatePlateTemplate = function(req){
 	};
 
 	var numberOfPlates = parseInt(numberOfSamples / 96) + 1;
-	console.log('number of plates : ' + numberOfPlates);
 	for(var i = 1; i <= numberOfPlates; ++i) {
 		var plate = new Plate();
 		plate.user = req.user;
@@ -97,8 +100,8 @@ exports.generatePlateTemplate = function(req){
 		    console.log(project);
 		    console.log(errorHandler.getErrorMessage(err));
 		}
-	    });
-	};
+	});
+};
 
 exports.emailPlateLayout = function(req) {
     var project = req.project;
@@ -131,15 +134,11 @@ exports.emailPlateLayout = function(req) {
 };
 
 exports.generatePlates = function(req){
+    console.log('we are in generatePlates');
     var project = req.project;
-    var fn = req.whichFile;
-    var plateWorkbook;
-    if(fn !== undefined){
-        plateWorkbook = xlsx.readFile('app/tmp/' + fn);
-    }
-    else {
-        plateWorkbook = xlsx.readFile('app/tmp/Sample_Layout_3.xlsx');
-    }
+    //var fn = req.whichFile;
+    var fn = 'app/tmp/plate_layouts/' + project.projectCode + '.xlsx';
+    var plateWorkbook = xlsx.readFile(fn);
     var workSheet = plateWorkbook.Sheets[plateWorkbook.SheetNames[0]];
     var data = xlsx.utils.sheet_to_json(workSheet);
     var index = 0;
@@ -159,6 +158,7 @@ exports.generatePlates = function(req){
     var plateIndex = 0;
     while(index < data.length){
     	var curPlate = project.plates[plateIndex];
+	console.log('CurPlate: ' + curPlate);
         for(var i = 0; i < 96 && index < data.length; ++i){
             var propNum = 1;
             var row = data[index];
@@ -193,6 +193,35 @@ exports.generatePlates = function(req){
             console.log(errorHandler.getErrorMessage(err));
         }
     });
+};
+
+exports.uploadPlateLayout = function(req, res) {
+	console.log('here, trying to upload a plate layout');
+	var project = req.project;
+	var form = new multiparty.Form({
+		uploadDir: 'app/tmp'
+	});
+
+	form.parse(req, function(err, fields, files) {
+		var file = files.file[0];
+		var contentType = file.headers['content-type'];
+		var tmpPath = file.path;
+
+		var fileName = project.projectCode + '.xlsx';
+		//var destPath = path.join(__dirname, '../tmp/' + fileName);
+		var destPath = 'app/tmp/plate_layouts/' + fileName;
+
+		console.log('ContentType: ' + contentType);
+
+		fs.rename(tmpPath, destPath, function(err) {
+			if (err) {
+				console.log(err);
+				return res.status(400).send('plate layout did not save');
+			}
+			return res.json(destPath);
+		});
+
+	});
 };
 
 /**

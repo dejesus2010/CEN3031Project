@@ -21,6 +21,7 @@ var project;
 /**
  * Unit tests
  */
+/*
 describe('Plate Generator Unit Tests:', function() {
     var customerID;
     var organismID;
@@ -97,4 +98,4 @@ describe('Plate Generator Unit Tests:', function() {
         Project.remove().exec();
         done();
     });
-});
+});*/
