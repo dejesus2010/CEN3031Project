@@ -2,6 +2,13 @@
 	<div class="page-header">
 		<h1>All Projects</h1>
 	</div>
+	<div role="navigation">
+		<ul class="nav nav-tabs">
+			<li class="tab" role="presentation" data-ng-class="{true: 'active', false: ''}[allProjectsActive]"><a data-ng-click="showAllProjects()">All</a></li>
+			<li class="tab" role="presentation" data-ng-class="{true: 'active', false: ''}[openProjectsActive]"><a data-ng-click="showProjectsByStatus(false, true, false)">Open</a></li>
+			<li class="tab" role="presentation" data-ng-class="{true: 'active', false: ''}[closedProjectsActive]"><a data-ng-click="showProjectsByStatus(true, false, true)">Closed</a></li>
+		</ul>
+	</div>
 	<div ng-if="gridReady && projects.length && authentication.user">
 		<ng-react-grid grid="grid"></ng-react-grid>
 	</div>

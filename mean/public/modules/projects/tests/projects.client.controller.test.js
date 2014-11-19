@@ -106,6 +106,30 @@
 			expect(scope.project).toEqualData(sampleProject);
 		}));
 
+		it('$scope.numSamples() should return the total number of samples in a project', inject(function(Projects) {
+			// Create a sample project with a couple plates with samples inside
+			scope.project = new Projects({
+        plates: [{
+        	samples: ['sample0', 'sample1']
+        }, {
+        	samples: ['sample2', 'sample3', 'sample4']
+        }]
+			});
+
+			expect(scope.numSamples()).toBe(5);
+		}));
+
+		it('$scope.numSamples() should return 0 when $scope.project is undefined', inject(function() {
+			delete scope.project;
+
+			expect(scope.numSamples()).toBe(0);
+		}));
+
+		it('$scope.numSamples() should return 0 when $scope.project.plates is undefined', inject(function(Projects) {
+			scope.project = new Projects({});
+
+			expect(scope.numSamples()).toBe(0);
+		}));
 
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects, Customers, Organisms) {
 			// Create a sample customer object
@@ -400,5 +424,70 @@
 
 			expect(scope.projectCode()).toBe('ABC_XX23XX');
 		}));
+
+		describe('Retrieving projects by status', function(){
+
+			beforeEach(inject(function(Projects){
+				var sampleProject1 = new Projects({
+					projectCode: 'ABC_012345',
+					description: 'MEAN rocks!',
+					due: '2014-10-30T04:00:00.100Z',
+					projectStatus: true
+				});
+
+				var sampleProject2 = new Projects({
+					projectCode: 'ABC_012346',
+					description: 'MEAN is mean!',
+					due: '2014-10-30T04:00:00.020Z',
+					projectStatus: false
+				});
+
+				var sampleProject3 = new Projects({
+					projectCode: 'ABC_012347',
+					description: 'NEAM is MEAN spelled backwards!',
+					due: '2014-10-30T04:00:00.300Z',
+					projectStatus: true
+				});
+
+				var sampleProject4 = new Projects({
+					projectCode: 'ABC_012348',
+					description: 'MEAN, you mean nice!',
+					due: '2014-10-30T04:00:00.400Z',
+					projectStatus: false
+				});
+
+				scope.openProjects = [sampleProject2, sampleProject4];
+				scope.closedProjects = [sampleProject1, sampleProject3];
+			}));
+
+			it('should retrieve open projects', inject(function(){
+
+				$httpBackend.expectGET('customers').respond();
+				$httpBackend.expectGET('organisms').respond();
+				$httpBackend.expectGET('http://localhost:3000/projectsByStatus/false').respond(scope.openProjects);
+				scope.showProjectsByStatus(false, true, false);
+				$httpBackend.flush();
+
+				expect(scope.openProjectsActive).toBeTruthy();
+				expect(scope.closedProjectsActive).toBeFalsy();
+				expect(scope.projects).toEqualData(scope.openProjects);
+
+			}));
+
+			it('should retrieve closed projects', inject(function(){
+
+				$httpBackend.expectGET('customers').respond();
+				$httpBackend.expectGET('organisms').respond();
+				$httpBackend.expectGET('http://localhost:3000/projectsByStatus/true').respond(scope.closedProjects);
+				scope.showProjectsByStatus(true, false, true);
+				$httpBackend.flush();
+
+				expect(scope.openProjectsActive).toBeFalsy();
+				expect(scope.closedProjectsActive).toBeTruthy();
+				expect(scope.projects).toEqualData(scope.closedProjects);
+
+			}));
+		});
+
 	});
 }());

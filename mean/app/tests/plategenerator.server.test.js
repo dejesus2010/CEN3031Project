@@ -21,7 +21,7 @@ var project;
 /**
  * Unit tests
  */
-describe('Project Model Unit Tests:', function() {
+describe('Plate Generator Unit Tests:', function() {
     var customerID;
     var organismID;
 
@@ -59,7 +59,7 @@ describe('Project Model Unit Tests:', function() {
     describe('PlateGenerator', function() {
        it('should be able to generate 1 plate from Sample_Layout_1.xlsx', function(done) {
             // with 10 samples
-            var req = {};
+            var req = {user: '542c4fdd8d1bb1ef4a689623'};
             req.project = project;
             req.whichFile = 'Sample_Layout_1.xlsx';
             projects.generatePlates(req);
@@ -69,7 +69,7 @@ describe('Project Model Unit Tests:', function() {
         });
         it('should be able to generate 1 plate from Sample_Layout_2.xlsx', function(done) {
             //with 96 samples
-            var req = {};
+            var req = {user: '542c4fdd8d1bb1ef4a689623'};
             req.project = project;
             req.whichFile = 'Sample_Layout_2.xlsx';
             projects.generatePlates(req);
@@ -78,7 +78,7 @@ describe('Project Model Unit Tests:', function() {
         });
         it('should be able to generate 3 plates from Sample_Layout_3.xlsx', function(done) {
             //--two with 96 samples and one with 8--
-            var req = {};
+            var req = {user: '542c4fdd8d1bb1ef4a689623'};
             req.project = project;
             req.whichFile = 'Sample_Layout_3.xlsx';
             projects.generatePlates(req);

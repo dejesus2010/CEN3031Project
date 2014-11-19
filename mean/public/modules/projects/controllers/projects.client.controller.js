@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
-	function($window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
+angular.module('projects').controller('ProjectsController', ['$animate','$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
+	function($animate, $window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
@@ -13,6 +13,34 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
 		$scope.numberOfSamples = 0;
 		$scope.customer = {};
 		$scope.organism = {};
+
+		$scope.init = function() {
+			$scope.allProjectsActive = true;
+			$scope.openProjectsActive = false;
+			$scope.closedProjectsActive = false;
+
+			$scope.projects = Projects.query(function(err, res) {
+				$scope.initReactGrid();
+			});
+		};
+
+		$scope.showAllProjects = function(){
+			$scope.init();
+		};
+
+		$scope.showProjectsByStatus = function(status, openProjectsActive, closedProjectsActive){
+			$scope.allProjectsActive = false;
+			$scope.openProjectsActive = openProjectsActive;
+			$scope.closedProjectsActive = closedProjectsActive;
+
+			$http.get('http://localhost:3000/projectsByStatus/' + status).success(function(projects){
+
+				$scope.projects = projects;
+				$scope.initReactGrid();
+
+			});
+
+		};
 
 		$scope.create = function() {
 			if ($scope.customer.selected === undefined || $scope.organism.selected === undefined) {
@@ -90,12 +118,6 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
 			});
 		};
 
-		$scope.init = function() {
-			$scope.projects = Projects.query(function(err, res) {
-				$scope.initReactGrid();
-			});
-		};
-
 		$scope.findOne = function() {
             $scope.project = Projects.get({
                 projectId: $stateParams.projectId
@@ -105,6 +127,16 @@ angular.module('projects').controller('ProjectsController', ['$window', '$http',
                 $scope.disabled = true;
                 $scope.initReactPlateGrid();
             });
+		};
+
+		$scope.numSamples = function() {
+			if ($scope.project === undefined || $scope.project.plates === undefined) {
+				return 0;
+			} else {
+				return $scope.project.plates.reduce(function(sum, plate) {
+					return sum + plate.samples.length;
+				}, 0);
+			}
 		};
 
 		$scope.editing = function() {
