@@ -2,7 +2,7 @@
 
 (function() {
 	// Worklist controller Controller Spec
-	describe('Worklist controller Controller Tests', function() {
+	describe('Worklist Controller Tests', function() {
 		// Initialize global variables
 		var WorklistControllerController,
 			scope,
@@ -45,14 +45,10 @@
 			$location = _$location_;
 
 			// Initialize the Worklist controller controller.
-			WorklistControllerController = $controller('WorklistControllerController', {
+			WorklistControllerController = $controller('WorklistController', {
 				$scope: scope
 			});
 		}));
 
-		it('Should do some controller test', inject(function() {
-			// The test logic
-			// ...
-		}));
 	});
 }());
