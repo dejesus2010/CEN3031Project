@@ -1,0 +1,39 @@
+<section data-ng-controller="PlatesController" data-ng-init="init()">
+  <div ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
+    <div class="page-header">
+      <h1>Plates</h1>
+    </div>
+  <div role="navigation">
+    <ul class="nav nav-tabs">
+      <li class="tab" role="presentation" data-ng-class="{true: 'active', false: ''}[unassignedTab]"><a data-ng-click="switchTab('unassigned')">Unassigned</a></li>
+      <li class="tab" role="presentation" data-ng-class="{true: 'active', false: ''}[assignedTab]"><a data-ng-click="switchTab('assigned')">Assigned</a></li>
+      <li class="tab" role="presentation" data-ng-class="{true: 'active', false: ''}[allTab]"><a data-ng-click="switchTab('all')">All</a></li>
+    </ul>
+  </div>
+    <div ng-if="gridReady && plateList.length && authentication.user">
+      <ng-react-grid grid="grid"></ng-react-grid>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-if="gridReady && !plateList.length">
+      No plates yet
+    </div>
+  </div>
+</section>
+<script type="text/ng-template" id="addConfirmDialog">
+    <div class="ngdialog-message">
+        <h2>Continue?</h2>
+        <h5>This project will be added to your work list</h5>
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="addPlate()">Add Plate</button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeDialog()">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="errorDialog">
+    <div class="ngdialog-message form-group">
+      <h2>Error</h2>
+      <h5>{{error}}</h5>
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeDialog()">Cancel</button>
+    </div>
+</script>

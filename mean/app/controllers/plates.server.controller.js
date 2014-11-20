@@ -104,6 +104,68 @@ exports.list = function(req, res) {
 };
 
 /**
+ * List of all plates which have a user assigned to them
+ */
+exports.listAssigned = function(req, res) {
+	Plate.find({isAssigned: true}).lean().sort({stage: 1}).populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+				Customer.populate(plates, {path: 'project.customer'}, function(err, doc) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					Organism.populate(doc, {path: 'project.organism'}, function(err, doc) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.jsonp(doc);
+						}
+					});
+				}
+			});
+		}
+	});
+};
+
+/**
+ * List of all plates which do not have a user assigned to them
+ */
+exports.listUnassigned = function(req, res) {
+	Plate.find({isAssigned: false}).lean().sort({stage: 1}).populate('user', 'displayName').populate('assignee', 'displayName').populate('project').exec(function(err, plates) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+				Customer.populate(plates, {path: 'project.customer'}, function(err, doc) {
+				if (err) {
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					Organism.populate(doc, {path: 'project.organism'}, function(err, doc) {
+						if (err) {
+							return res.status(400).send({
+								message: errorHandler.getErrorMessage(err)
+							});
+						} else {
+							res.jsonp(doc);
+						}
+					});
+				}
+			});
+		}
+	});
+};
+
+/**
  * Assigns a specific plate to a user. If req.body.assignee is defined, the plate can be assigned
  * on behalf of a user given the request is done by an admin user.
  */
@@ -113,8 +175,11 @@ exports.assignPlate = function(req, res) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		}
-		if(req.body.isAssigned) {
+		} else if (plate === null) {
+			return res.status(404).send({
+				message: 'Plate not found'
+			});
+		} else if(req.body.isAssigned) {
 			return res.status(409).send({
 				message: 'Plate is already assigned'
 			});
@@ -218,7 +283,7 @@ exports.hasAuthorization = function(req, res, next) {
 	User.findOne({_id: req.user.id}).exec(function(err, user) {
 		if (err) {
 			return next(err);
-		} else if (req.body.isAssigned && req.body.assigned.id !== req.user.id && user.roles !== 'admin') {
+		} else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee._id !== req.user.id && user.roles !== 'admin') {
 			return res.status(403).send('User is not authorized');
 		}
 		next();

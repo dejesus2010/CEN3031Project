@@ -17,11 +17,14 @@ module.exports = function(app) {
 		.put(users.requiresLogin, projects.hasAuthorization, projects.update)
 		.delete(users.requiresLogin, projects.hasAuthorization, projects.delete);
 
-  app.route('/projects/:projectId/GeneratePlateTemplate')
-    .post(users.requiresLogin, projects.generatePlateTemplate);
+    	app.route('/projects/:projectId/GeneratePlateTemplate')
+		.post(users.requiresLogin, projects.generatePlateTemplate);
 
-  app.route('/projects/:projectId/GeneratePlates')
-    .post(users.requiresLogin, projects.generatePlates);
+    	app.route('/projects/:projectId/GeneratePlates')
+		.post(users.requiresLogin, projects.generatePlates);
+
+    	app.route('/projects/:projectId/UploadPlateLayout')
+		.post(users.requiresLogin, projects.uploadPlateLayout);
 
 	app.route('/projectsByStatus/:projectStatus')
 		.get(users.requiresLogin, projects.listOfProjectsByStatus);

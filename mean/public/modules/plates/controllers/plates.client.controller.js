@@ -1,81 +1,133 @@
 'use strict';
 
-angular.module('plates').controller('PlatesController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Plates',
-  function($scope, $stateParams, $location, $window, Authentication, Plates) {
+angular.module('plates').controller('PlatesController', ['$scope', '$http', '$stateParams', '$location', '$window', 'ngDialog', 'Authentication', 'Plates',
+  function($scope, $http, $stateParams, $location, $window, ngDialog, Authentication, Plates) {
     $scope.authentication = Authentication;
 
-    $scope.remove = function(plate) {
-      if (plate) {
-        plate.$remove();
+    $scope.authentication = Authentication;
+    $scope.gridReady = false;
+    $scope.grayOut = false;
+    $scope.plateList = [];
+    $scope.selectedPlate = null;
+    $scope.error = '';
+    // Tab flags
+    $scope.unassignedTab = false;
+    $scope.assignedTab = false;
+    $scope.allTab = false;
 
-        for (var i in $scope.plates) {
-          if ($scope.plates[i] === plate) {
-            $scope.plates.splice(i, 1);
-          }
-        }
+    $scope.init = function(tab) {
+      $scope.closeDialog();
+      var url = '/plates';
+      switch (tab) {
+        case 'unassinged': $scope.unassignedTab = true; url = url.concat('/unassigned'); break;
+        case 'assigned':   $scope.assignedTab = true; url = url.concat('/assigned'); break;
+        case 'all':        $scope.allTab = true; break;
+        default:           $scope.unassignedTab = true; url = url.concat('/unassigned'); break;
+      }
+      $http.get(url).success(function(response) {
+        $scope.plateList = response;
+        $scope.initReactGrid();
+      }).error(function(err) {
+        $scope.error = err.message;
+        $scope.errorDialog();
+      });
+    };
+
+    $scope.switchTab = function(tab) {
+      $scope.unassignedTab = false;
+      $scope.assignedTab = false;
+      $scope.allTab = false;
+
+      $scope.init(tab);
+    };
+
+    $scope.initReactGrid = function() {
+      // We set the gridReady to false here to force the DOM to update
+      $scope.gridReady = false;
+      $scope.grid.data = JSON.parse(JSON.stringify($scope.plateList));
+      for (var plate = 0; plate < $scope.grid.data.length; ++plate) {
+        // Make dates human readable
+        $scope.grid.data[plate].project.due = new Date(Date.parse($scope.grid.data[plate].project.due)).toISOString().slice(0,10);
+      }
+      $scope.gridReady = true;
+    };
+
+    $scope.addPlate = function() {
+      if ($scope.selectedPlate === null) {
+        $scope.error = 'No plate is selected';
+        $scope.errorDialog();
+      } else if ($scope.selectedPlate.isAssigned) {
+        $scope.error = 'Plate is already assigned';
+        $scope.errorDialog();
       } else {
-        $scope.plate.$remove(function() {
-          $location.path('plates');
+        $http.post('/plates/assignPlate', $scope.selectedPlate).success(function(response) {
+          // Reload ngGrid
+          $scope.init();
+        }).error(function(err) {
+          $scope.error = err.message;
+          $scope.errorDialog();
         });
       }
     };
 
-    $scope.update = function() {
-      var plate = $scope.plate;
-
-      plate.$update(function() {
-        $location.path('plates/' + plate._id);
-      }, function(errorResponse) {
-        $scope.error = errorResponse.data.message;
+    $scope.confirmAdd = function() {
+      $scope.closeDialog();
+      ngDialog.open({
+        template: 'addConfirmDialog',
+        className: 'ngdialog-theme-default',
+        scope: $scope,
+        showClose: false
       });
+      $scope.grayOut = true;
     };
 
-    $scope.findOne = function() {
-      $scope.plate = Plates.get({
-        plateId: $stateParams.plateId
-      }, function(err, doc) {
-        var plateStage = $scope.plate.stage;
-        $scope.steps[plateStage - 1].active = true;
-        // Disable the steps that haven't been reached yet
-        for (var i = plateStage - 1; i < $scope.steps.length; ++i) {
-          $scope.steps[i].disabled = true;
-        }
+    $scope.errorDialog = function() {
+      // Save error
+      var error = $scope.error;
+      // Makes sure we'll never have two confirmation dialogs
+      $scope.closeDialog();
+      $scope.error = error;
+      ngDialog.open({
+        template: 'errorDialog',
+        className: 'ngdialog-theme-default',
+        scope: $scope,
+        showClose: false
       });
+      $scope.grayOut = true;
     };
 
-    $scope.init = function() {
-      $scope.findOne();
+    $scope.closeDialog = function() {
+      ngDialog.closeAll();
+      $scope.error = '';
+      $scope.grayOut = false;
     };
 
-    $scope.steps = [{
-        title: '1'
+    $scope.grid = {
+      data: [],
+      rowClick: function(plate) {
+        console.log($scope.authentication);
+        $scope.selectedPlate = plate;
+        $scope.confirmAdd();
+      },
+      columnDefs: [{
+        field: 'plateCode',
+        displayName: 'Plate Code',
+        width: '7%'
       }, {
-        title: '2'
+        field: 'project.organism.name',
+        displayName: 'Organism',
       }, {
-        title: '3'
+        field: 'project.customer.name',
+        displayName: 'Customer'
       }, {
-        title: '4'
+        field: 'project.due',
+        displayName: 'Due Date',
+        width: '6%'
       }, {
-        title: '5'
-      }, {
-        title: '6'
-      }, {
-        title: '7'
-      }, {
-        title: '8'
-      }, {
-        title: '9'
-      }, {
-        title: '10'
-      }, {
-        title: '11'
-      }, {
-        title: '12'
-      }, {
-        title: '13'
-      }, {
-        title: '14'
-      }
-    ];
+        field: 'assignee.displayName',
+        displayName: 'Assignee',
+        width: '7%'
+      }]
+    };
   }
 ]);

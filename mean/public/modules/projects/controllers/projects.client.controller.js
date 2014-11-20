@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$animate','$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms',
-	function($animate, $window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms) {
+angular.module('projects').controller('ProjectsController', ['$animate','$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms', '$upload',
+	function($animate, $window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms, $upload) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
@@ -81,14 +81,31 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 			}
 		};
 
-		$scope.generatePlateTemplate = function(){
-			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
+		$scope.onFileSelect = function(file) {
+			console.log('onFileSelect');
+			/*if (angular.isArray(file)) {
+				file = file[0];
+			}*/
+
+			$scope.upload = $upload.upload({
+				url: '/projects/' + $scope.project._id + '/UploadPlateLayout',
+				method: 'POST',
+				file: file
+			}).success(function(data, status, headers, config) {
+				console.log('success');
+				$http.post('projects/' + $scope.project._id + '/GeneratePlates');
+				$window.location.reload();
+			}).error(function(err) {
+				console.log('error');
+			});
+			console.log('here, with: ' + file);
 		};
 
-    $scope.generatePlates = function(){
-      $http.post('projects/' + $scope.project._id + '/GeneratePlates');
-      $window.location.reload();
-    };
+		$scope.generatePlateTemplate = function(){
+			console.log($scope.numberOfSamples);
+			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
+			$window.location.reload();
+		};
 
 		$scope.confirmRemove = function() {
 			ngDialog.open({
@@ -119,7 +136,7 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 		};
 
 		$scope.findOne = function() {
-            $scope.project = Projects.get({
+            	$scope.project = Projects.get({
                 projectId: $stateParams.projectId
             }, function(err, res) {
                 $scope.selectedCustomer = {selected: $scope.project.customer};

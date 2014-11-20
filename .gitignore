@@ -10,3 +10,5 @@ mean/.idea/
 .idea/
 *.swp
 mean/app/secure/password.txt
+mean/app/tmp
+bower_components/
