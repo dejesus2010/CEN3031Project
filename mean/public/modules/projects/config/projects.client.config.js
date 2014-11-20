@@ -1,7 +1,7 @@
 'use strict';
 
 // Configuring the Projects module
-angular.module('projects').run(['Menus',
+angular.module('projects', ['worklist']).run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
 		Menus.addMenuItem('topbar', 'Projects', 'projects', 'dropdown', '/projects(/create)?');
