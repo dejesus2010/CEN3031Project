@@ -142,7 +142,6 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
                 $scope.selectedCustomer = {selected: $scope.project.customer};
                 $scope.selectedOrganism = {selected: $scope.project.organism};
                 $scope.disabled = true;
-                $scope.initReactPlateGrid();
                 $scope.getLatestStepCounts();
             });
 		};
@@ -290,27 +289,5 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 			}]
 		};
 
-        $scope.initReactPlateGrid = function() {
-            $scope.grid = {
-                data: JSON.parse(JSON.stringify($scope.project.plates)),
-                rowClick: function(row) {
-									$scope.$apply(function() {
-										$location.path('plates/' + row._id);
-									});
-                },
-                columnDefs: [{
-                    field: 'plateCode',
-                    displayName: 'Plate Code',
-                    width: '7%'
-                }, {
-                    field: 'stage',
-                    displayName: 'Latest Step'
-                }, {
-                    field: 'samples.length',
-                    displayName: 'Number of Samples'
-                }]
-            };
-            $scope.gridReady = true;
-        };
 	}
 ]);

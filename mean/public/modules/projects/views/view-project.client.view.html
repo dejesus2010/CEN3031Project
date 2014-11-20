@@ -102,23 +102,39 @@
             <div class="text-center">
                 || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
             </div>
-	    <br>
-	    <div class="row">
-                <div class="text-center">
-			<input type="file" ng-file-select="onFileSelect($files)">
-			<a class="btn btn-primary" data-multiple="true">
-                        Upload Plate Layout
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
+            <br>
+            <div class="row">
+                    <div class="text-center">
+                <input type="file" ng-file-select="onFileSelect($files)">
+                <a class="btn btn-primary" data-multiple="true">
+                            Upload Plate Layout
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             <br>
             <div class="bs-callout">
                 <h3 class="text-center" style="margin: 2px">Plates</h3>
-                <div ng-if="gridReady && project.plates.length">
-                    <ng-react-grid grid="grid"></ng-react-grid>
+                <div ng-if="project.plates.length" my-worklist-selected>
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Plate Code</td>
+                            <td>Number of Samples</td>
+                            <td></td>
+                        </tr>
+
+                        <tr class="aPlate" ng-repeat="plate in project.plates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+                            <td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
+                            <td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
+                            <td>
+                                <input class="checkbox" type="checkbox" value="checked" data-ng-model="plateChecked" data-ng-click="clickCheckBox()">
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+            <br>
         </div>
     </div>
 </section>
