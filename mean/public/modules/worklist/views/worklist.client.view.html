@@ -8,26 +8,24 @@
 			There are no plates in your work list
 		</div>
 
-		<div class="boxed" ng-repeat="plates in groupOfPlates" ng-if="plates.length > 0">
+		<div class="boxed" ng-repeat="plates in groupOfPlates" ng-if="plates.length > 0" my-worklist-stage>
 
 			<div>
 				<h3>{{stageNumberToName[plates[0].stage]}}</h3>
-				<button type="button" class="btn btn-default performButton">Perform selected</button>
+				<button type="button" class="btn btn-default performButton" data-ng-click="directToStagePage(stageNumberToUrl[plates[0].stage], stageSelectedPlates)">Perform selected</button>
 			</div>
 			<table class="table table-striped">
 				<tr>
 					<td>Plate Code</td>
-					<td>Latest Step</td>
 					<td>Number of Samples</td>
 					<td></td>
 				</tr>
 
-				<tr class="aPlate" ng-repeat="plate in plates">
-					<td>{{plate.plateCode}}</td>
-					<td>{{plate.stage}}</td>
-					<td>{{plate.samples.length}}</td>
+				<tr class="aPlate" ng-repeat="plate in plates" my-worklist-plate my-plate-object="plate" my-stage-selected-plates="stageSelectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
+					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
 					<td>
-						<input type="checkbox" value="checked">
+						<input class="checkbox" type="checkbox" value="checked" data-ng-model="plateChecked" data-ng-click="clickCheckBox()">
 					</td>
 				</tr>
 			</table>
