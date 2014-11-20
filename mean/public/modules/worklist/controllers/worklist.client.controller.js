@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('worklist').controller('WorklistController', ['$scope', '$http', 'Plates',
-	function($scope, $http, Plates){
+angular.module('worklist').controller('WorklistController', ['$scope', '$http', '$location',
+	function($scope, $http, $location){
 
 
 		// This array is to group plates into stages.
@@ -12,6 +12,7 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 
 		$scope.platesExist = false;
 
+		// retrieves plates and saves the plates into groups in the groupOfPlates array
 		$scope.init = function(){
 			initializeGroupOfPlates();
 
@@ -39,6 +40,11 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 				var currentPlate = plates[i];
 				$scope.groupOfPlates[currentPlate.stage].push(currentPlate);
 			}
+		};
+
+		// Function call for directing the user to the stage's step page
+		$scope.directToPage = function(url, selectedPlates){
+			$location.path(url + '/' + JSON.stringify(selectedPlates));
 		};
 
 
