@@ -114,3 +114,7 @@
 .tab:hover{
     cursor: pointer;
 }
+
+.form-control-static.col-xs-4:hover {
+    cursor: pointer;
+}
