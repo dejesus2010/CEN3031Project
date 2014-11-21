@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 	Log = mongoose.model('Log'),
 	Plate = mongoose.model('Plate'),
 	Sample = mongoose.model('Sample'),
+    User = mongoose.model('User'),
 	_ = require('lodash'),
    	xlsx = require('xlsx'),
 	path = require('path'),
@@ -305,8 +306,21 @@ exports.projectByID = function(req, res, next, id) {
     Project.findById(id).populate('user', 'displayName').populate('lastEditor').populate('customer').populate('organism').populate('plates').exec(function(err, project) {
         if (err) return next(err);
         if (!project) return next(new Error('Failed to load project ' + id));
-        req.project = project;
-        next();
+        User.populate(project, {path: 'plates.assignee'}, function(err, doc) {
+            if (err) return next(err);
+            if (!doc) return next(new Error('Failed to load plate'));
+            // Remove identifying user information
+            for (var i = 0; i < doc.plates.length; ++i) {
+                if (doc.plates[i].assignee !== null) {
+                    var keysToDelete = ['salt', 'provider', 'created', 'password', 'email', 'firstName', 'lastName'];
+                    for (var key in keysToDelete) {
+                        doc.plates[i].assignee[keysToDelete[key]] = null;
+                    }
+                }
+            }
+            req.project = doc;
+            next();
+        });
     });
 };
 
