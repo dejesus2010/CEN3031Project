@@ -99,17 +99,13 @@
     	    </div>
         </div>
         <div ng-if="project.plates.length != 0">
-            <div class="text-center">
-                || Plate # | Latest Step | Date Updated | Next Step | Scan (start/end) ||
-            </div>
             <br>
             <div class="row">
                     <div class="text-center">
-                <input type="file" ng-file-select="onFileSelect($files)">
-                <a class="btn btn-primary" data-multiple="true">
+			<button class="btn btn-primary" ng-file-select="onFileSelect($files)">
                             Upload Plate Layout
                             <i class="glyphicon glyphicon-edit"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
