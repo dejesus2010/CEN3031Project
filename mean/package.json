@@ -36,12 +36,13 @@
     "method-override": "~2.1.2",
     "mongoose": "~3.8.8",
     "morgan": "~1.2.2",
+    "multiparty": "~4.0.0",
+    "node-uuid": "^1.4.1",
     "nodemailer": "~1.1.1",
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
-    "xlsx": "^0.7.12",
     "swig": "~1.4.1",
-    "multiparty": "~4.0.0"
+    "xlsx": "^0.7.12"
   },
   "devDependencies": {
     "supertest": "~0.13.0",
