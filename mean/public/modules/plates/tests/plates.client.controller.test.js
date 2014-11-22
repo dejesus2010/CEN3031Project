@@ -174,5 +174,17 @@
 			expect(scope.grayOut).toBeFalsy();
 			expect(scope.error).toBe('');
 		}));
+
+		it('should emit "workListUpdated" signal upon adding a plate to the worklist', inject(function() {
+			scope.selectedPlate = {'__v':0,'_id':'546cc49feedb31ca75693aca','assignee':null,'isAssigned':false,'plateCode':'UFL_010101_P2','project':{'__v':6,'_id':'546aacc8e6d1b14748520268','created':'2014-11-18T02:19:52.149Z','customer':{'_id':'546aacb7e6d1b14748520265','__v':0,'email':'ufl@ufl.edu','projects':[],'code':'UFL','id':1,'name':'University of Florida'},'description':'asdfad','due':'2014-11-20T05:00:00.000Z','lastEdited':'2014-11-19T04:10:55.239Z','lastEditor':'546aac97e6d1b14748520264','logs':[],'projectCode':'UFL_010101','projectStatus':false,'sequencingMethod':'','user':'546aac97e6d1b14748520264'},'samples':[],'stage':1};
+
+			spyOn(scope, '$emit');
+			$httpBackend.expectPOST('/plates/assignPlate').respond(200);
+			$httpBackend.expectGET('/plates/unassigned').respond([scope.selectedPlate]);
+			scope.addPlate();
+			$httpBackend.flush();
+
+			expect(scope.$emit).toHaveBeenCalledWith('workListUpdated');
+		}));
 	});
 }());

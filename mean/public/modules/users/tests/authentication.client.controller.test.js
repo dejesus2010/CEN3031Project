@@ -114,5 +114,15 @@
 			// Test scope value
 			expect(scope.error).toBe('Username already exists');
 		});
+
+		it('should emit "workListUpdated" signal to tell the header a user is now signed in and to display the size of the user\'s work list', inject(function() {
+			spyOn(scope, '$emit');
+
+			$httpBackend.expectPOST('/auth/signin').respond(200, 'Fred');
+			scope.signin();
+			$httpBackend.flush();
+
+			expect(scope.$emit).toHaveBeenCalled();
+		}));
 	});
 }());
