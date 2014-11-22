@@ -34,6 +34,9 @@ module.exports = function(app) {
     .put(users.requiresLogin, plates.hasAuthorization, plates.update)
     .delete(users.requiresLogin, plates.hasAuthorization, plates.delete);
 
+  app.route('/numberOfPlatesAssignedToUser')
+    .get(users.requiresLogin, plates.numberOfPlatesAssignedToUser);
+
   // Finish by binding the plate middleware
   app.param('plateId', plates.plateByID);
 };

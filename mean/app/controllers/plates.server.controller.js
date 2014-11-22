@@ -263,6 +263,22 @@ exports.platesByUser = function(req, res) {
 		}
 	});
 };
+/*
+Return number of plates assigned to user
+ */
+exports.numberOfPlatesAssignedToUser = function(req, res){
+	var userId = req.user._id;
+
+	Plate.find({assignee: userId}).exec(function(err, doc) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(doc.length);
+		}
+	});
+};
 
 /**
  * Plate middleware
