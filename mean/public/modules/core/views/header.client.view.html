@@ -1,4 +1,4 @@
-<div class="container" data-ng-controller="HeaderController">
+<div class="container" data-ng-controller="HeaderController" ng-init="init()">
 	<div class="navbar-header">
 		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
 			<span class="sr-only">Toggle navigation</span>
@@ -33,7 +33,7 @@
 			<li>
 				<a href="/#!/worklist">
 					<span>Work List</span>
-					<span class="badge">42</span>
+					<span class="badge">{{sizeOfWorklist}}</span>
 				</a>
 			</li>
 			<li class="dropdown">

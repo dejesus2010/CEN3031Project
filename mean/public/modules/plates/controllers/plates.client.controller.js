@@ -63,6 +63,9 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
         $http.post('/plates/assignPlate', $scope.selectedPlate).success(function(response) {
           // Reload ngGrid
           $scope.init();
+
+          // emit signal that a plate was added to update Work List plates assigned size in header
+          $scope.$emit('workListUpdated');
         }).error(function(err) {
           $scope.error = err.message;
           $scope.errorDialog();

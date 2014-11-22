@@ -24,6 +24,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				// If successful we assign the response to the global user model
 				$scope.authentication.user = response;
 
+				// emit signal to display size of worklist in header
+				$scope.$emit('workListUpdated');
+
 				// And redirect to the index page
 				$location.path('/projects');
 			}).error(function(response) {
