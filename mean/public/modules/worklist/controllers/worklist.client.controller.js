@@ -29,7 +29,7 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 			});
 		};
 
-        $scope.removePlate = function(plate){
+        $scope.removePlate = function(plate, plates){
 
 	        worklistFactory.removePlateFromWorkList(plate, function(err){
 		        if(err){
@@ -37,6 +37,15 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 		        }
 		        else{
 			        $scope.$emit('workListUpdated');
+
+			        var indexOfPlateInPlates = -1;
+			        for(var i = 0; i < plates.length; i++){
+				        if(plates[i] === plate){
+					        indexOfPlateInPlates = i;
+					        break;
+				        }
+			        }
+			        plates.splice(indexOfPlateInPlates, 1);
 		        }
 	        });
 
