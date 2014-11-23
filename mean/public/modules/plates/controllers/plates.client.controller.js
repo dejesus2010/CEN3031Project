@@ -41,6 +41,16 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
       $scope.init(tab);
     };
 
+    $scope.currentTab = function() {
+      if ($scope.assignedTab) {
+        return 'assigned';
+      } else if ($scope.allTab) {
+        return 'all';
+      } else {
+        return 'unassigned';
+      }
+    };
+
     $scope.initReactGrid = function() {
       // We set the gridReady to false here to force the DOM to update
       $scope.gridReady = false;
@@ -58,11 +68,10 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
         if(err){
           $scope.error = err;
           $scope.errorDialog();
-        }
-        else{
+        } else{
           // Reload ngGrid & emit signal that a plate was added to update Work List plates assigned size in header
           $scope.$emit('workListUpdated');
-          $scope.init();
+          $scope.init($scope.currentTab());
         }
       });
 
