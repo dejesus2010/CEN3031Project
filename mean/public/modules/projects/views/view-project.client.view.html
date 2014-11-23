@@ -1,5 +1,5 @@
 <section data-ng-controller="ProjectsController" data-ng-init="findOne()" xmlns="http://www.w3.org/1999/html">
-    <div ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
+    <div class="min-content-width" ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
         <div class="page-header">
             <h2 class="text-center" style="margin: 0 auto;">Manage Project</h2>
         </div>
@@ -38,6 +38,10 @@
                 <div class="overview-col-left">
                         <span class="value-pair-left">Plates</span>
                         <span class="value-pair-right">{{project.plates.length}}</span>
+                </div>
+                <div class="overview-col-right">
+                    <span class="value-pair-left">Samples</span>
+                    <span class="value-pair-right" ng-bind="numSamples()"></span>
                 </div>
             </div>
             <div class="row overview-row">
