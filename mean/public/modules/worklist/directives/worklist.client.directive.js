@@ -65,12 +65,6 @@ angular.module('worklist').directive('myWorklistSelected', [
 						scope.clickCheckBox = function(){
 							selectPlate(scope.selectedPlates, scope.plate);
 						};
-
-						scope.removePlate = function(){
-							console.log('removed plate');
-							// insert http call to remove scope.plate from DB
-						};
-
 					}
 				};
 			},

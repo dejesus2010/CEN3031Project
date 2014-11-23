@@ -219,15 +219,15 @@ exports.unassignPlate = function(req, res) {
 		}
 		plate.assignee = null;
 		plate.isAssigned = false;
-		plate.remove(function(err) {
-			if (err) {
-				return res.status(400).send({
-					message: errorHandler.getErrorMessage(err)
-				});
-			} else {
-				res.jsonp(plate);
-			}
-		});
+        plate.save(function(err) {
+            if (err) {
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                res.jsonp(plate);
+            }
+        });
 	});
 };
 
@@ -296,10 +296,13 @@ exports.plateByID = function(req, res, next, id) {
  * Plate authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	User.findOne({_id: req.user.id}).exec(function(err, user) {
-		if (err) {
-			return next(err);
-		} else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee._id !== req.user.id && user.roles !== 'admin') {
+	User.findOne({_id: req.user._id}).exec(function(err, user) {
+        if (err) {
+            return next(err);
+        }
+        //not using req.body.assignee !== req.user._id b/c !== causes type check to fail and say they're not equal when thy are equal values
+        //switchd to .contains b/c user.roles = list
+		else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee != req.user._id && !(_.contains(user.roles,'admin'))) {
 			return res.status(403).send('User is not authorized');
 		}
 		next();
