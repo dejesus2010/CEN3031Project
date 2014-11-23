@@ -18,7 +18,9 @@
 				<tr>
 					<td>Plate Code</td>
 					<td>Number of Samples</td>
-					<td></td>
+					<td>
+						<input class="checkbox" type="checkbox" value="checked" data-ng-model="selectedAllPlates" data-ng-click="selectAll(plates)">
+					</td>
 				</tr>
 
 				<tr class="aPlate" ng-repeat="plate in plates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">

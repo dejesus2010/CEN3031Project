@@ -5,8 +5,18 @@ angular.module('worklist').directive('myWorklistSelected', [
 			return{
 				restrict: 'A',
 				link: function postLink(scope, element, attrs){
+					scope.selectedAllPlates = false;
 					// creating an empty array which will hold the plate objects that are selected
 					scope.selectedPlates = [];
+					scope.selectAll = function(plates){
+						if(!scope.selectedAllPlates){
+							scope.selectedPlates = plates;
+						}
+						else{
+							scope.selectedPlates = [];
+						}
+						scope.$broadcast('selectedAll', !scope.selectedAllPlates);
+					};
 				}
 			};
 		}
@@ -63,6 +73,15 @@ angular.module('worklist').directive('myWorklistSelected', [
 
 						scope.clickCheckBox = function(){
 							selectPlate(scope.selectedPlates, scope.plate);
+						};
+						scope.$on('selectedAll', function(event, selectedAllPlates){
+							console.log(scope.selectedPlates);
+							scope.plateChecked = selectedAllPlates;
+						});
+
+						scope.removePlate = function(){
+							console.log('removed plate');
+							// insert http call to remove scope.plate from DB
 						};
 
 					}
