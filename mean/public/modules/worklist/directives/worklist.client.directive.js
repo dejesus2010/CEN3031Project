@@ -47,7 +47,8 @@ angular.module('worklist').directive('myWorklistSelected', [
 				selectedPlates: '=mySelectedPlates',
 				plateChecked: '=myPlateChecked',
 				clickNotOnCheckBox: '=myClickedNotOnCheckbox',
-				clickCheckBox: '=myClickedCheckbox'
+				clickCheckBox: '=myClickedCheckbox',
+				removePlate: '=myRemovePlateFunction'
 			},
 			compile: function(tElem, tAttrs){
 				return{
@@ -63,6 +64,11 @@ angular.module('worklist').directive('myWorklistSelected', [
 
 						scope.clickCheckBox = function(){
 							selectPlate(scope.selectedPlates, scope.plate);
+						};
+
+						scope.removePlate = function(){
+							console.log('removed plate');
+							// insert http call to remove scope.plate from DB
 						};
 
 					}
