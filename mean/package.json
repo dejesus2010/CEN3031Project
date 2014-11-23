@@ -42,7 +42,14 @@
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
     "swig": "~1.4.1",
-    "xlsx": "^0.7.12"
+    "xlsx": "^0.7.12",
+    "handlebars": "~2.0.0",
+    "wordwrap": "0.0.2",
+    "fileset": "~0.1.5",
+    "esprima": "~1.2.2",
+    "escodegen": "~1.4.1",
+    "js-yaml": "~3.2.3",
+    "resolve": "~1.0.0"
   },
   "devDependencies": {
     "supertest": "~0.13.0",
