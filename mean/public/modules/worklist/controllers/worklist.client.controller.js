@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('worklist').controller('WorklistController', ['$scope', '$http', '$location',
-	function($scope, $http, $location){
+angular.module('worklist').controller('WorklistController', ['$scope', '$http', '$location', 'worklistFactory',
+	function($scope, $http, $location, worklistFactory){
 
 
 		// This array is to group plates into stages.
@@ -30,18 +30,17 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 		};
 
         $scope.removePlate = function(plate){
-            console.log('removed plate');
-            $http.post('/plates/unassignPlate', plate).success(function(response) {
-                // emit signal that a plate was removed to update Work List plates assigned size in header
-                $scope.$emit('workListUpdated');
-            }).error(function(err) {
-                console.log(err);
-                //doesn't exist for this controller. should be remedied later?
-                //$scope.error = err.message;
-                //$scope.errorDialog();
-            });
-        };
 
+	        worklistFactory.removePlateFromWorkList(plate, function(err){
+		        if(err){
+			        console.log(err);
+		        }
+		        else{
+			        $scope.$emit('workListUpdated');
+		        }
+	        });
+
+        };
 
 		var initializeGroupOfPlates = function(){
 			for(var i = 0; i < 14; i++){

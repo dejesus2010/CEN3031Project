@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('plates').controller('PlatesController', ['$scope', '$http', '$stateParams', '$location', '$window', 'ngDialog', 'Authentication', 'Plates',
-  function($scope, $http, $stateParams, $location, $window, ngDialog, Authentication, Plates) {
+angular.module('plates').controller('PlatesController', ['$scope', '$http', '$stateParams', '$location', '$window', 'ngDialog', 'Authentication', 'Plates', 'worklistFactory',
+  function($scope, $http, $stateParams, $location, $window, ngDialog, Authentication, Plates, worklistFactory) {
     $scope.authentication = Authentication;
 
     $scope.authentication = Authentication;
@@ -53,24 +53,19 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
     };
 
     $scope.addPlate = function() {
-      if ($scope.selectedPlate === null) {
-        $scope.error = 'No plate is selected';
-        $scope.errorDialog();
-      } else if ($scope.selectedPlate.isAssigned) {
-        $scope.error = 'Plate is already assigned';
-        $scope.errorDialog();
-      } else {
-        $http.post('/plates/assignPlate', $scope.selectedPlate).success(function(response) {
-          // Reload ngGrid
-          $scope.init();
 
-          // emit signal that a plate was added to update Work List plates assigned size in header
-          $scope.$emit('workListUpdated');
-        }).error(function(err) {
-          $scope.error = err.message;
+      worklistFactory.addPlateToWorkList($scope.selectedPlate, function(err){
+        if(err){
+          $scope.error = err;
           $scope.errorDialog();
-        });
-      }
+        }
+        else{
+          // Reload ngGrid & emit signal that a plate was added to update Work List plates assigned size in header
+          $scope.$emit('workListUpdated');
+          $scope.init();
+        }
+      });
+
     };
 
     $scope.confirmAdd = function() {
