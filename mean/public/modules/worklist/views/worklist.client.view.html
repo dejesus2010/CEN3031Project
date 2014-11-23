@@ -16,6 +16,7 @@
 			</div>
 			<table class="table table-striped">
 				<tr>
+					<td>Remove from Work List</td>
 					<td>Plate Code</td>
 					<td>Number of Samples</td>
 					<td>
@@ -23,7 +24,10 @@
 					</td>
 				</tr>
 
-				<tr class="aPlate" ng-repeat="plate in plates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+				<tr class="aPlate" ng-repeat="plate in plates" my-worklist-plate my-remove-plate-function="removePlate" my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+					<td>
+						<button class="btn btn-default" data-ng-click="removePlate()">Remove</button>
+					</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
 					<td>
