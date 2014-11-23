@@ -29,6 +29,19 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 			});
 		};
 
+		var initializeGroupOfPlates = function(){
+			for(var i = 0; i < 14; i++){
+				$scope.groupOfPlates[i] = [];
+			}
+		};
+
+		var separatePlatesIntoGroups = function(plates){
+			for(var i = 0; i < plates.length; i++){
+				var currentPlate = plates[i];
+				$scope.groupOfPlates[currentPlate.stage].push(currentPlate);
+			}
+		};
+
         $scope.removePlate = function(plate, plates){
 
 	        worklistFactory.removePlateFromWorkList(plate, function(err){
@@ -50,19 +63,6 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 	        });
 
         };
-
-		var initializeGroupOfPlates = function(){
-			for(var i = 0; i < 14; i++){
-				$scope.groupOfPlates[i] = [];
-			}
-		};
-
-		var separatePlatesIntoGroups = function(plates){
-			for(var i = 0; i < plates.length; i++){
-				var currentPlate = plates[i];
-				$scope.groupOfPlates[currentPlate.stage].push(currentPlate);
-			}
-		};
 
 		// Function call for directing the user to the stage's step page
 		$scope.directToPage = function(url, selectedPlates){
