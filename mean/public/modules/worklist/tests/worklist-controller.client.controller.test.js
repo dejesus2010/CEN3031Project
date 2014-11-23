@@ -50,5 +50,17 @@
 			});
 		}));
 
+		it('should remove plate from worklist when the remove button is pressed', inject(function(){
+			expect(true).toBeFalsy();
+		}));
+
+		it('should direct to the stage\'s step page when the Perform selected button is pressed', inject(function(){
+			expect(true).toBeFalsy();
+		}));
+
+		it('should retrieve plates in user\'s worklist when work list page is visited', inject(function(){
+			expect(true).toBeFalsy();
+		}));
+
 	});
 }());
