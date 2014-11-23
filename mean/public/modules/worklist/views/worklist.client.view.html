@@ -8,11 +8,11 @@
 			There are no plates in your work list
 		</div>
 
-		<div class="boxed" ng-repeat="plates in groupOfPlates" ng-if="plates.length > 0" my-worklist-selected>
+		<div class="boxed" ng-repeat="stagePlates in groupOfPlates" ng-if="stagePlates.length > 0" my-worklist-selected>
 
 			<div>
-				<h3>{{stageNumberToName[plates[0].stage]}}</h3>
-				<button type="button" class="btn btn-default performButton" data-ng-click="directToPage(stageNumberToUrl[plates[0].stage], selectedPlates)">Perform selected</button>
+				<h3>{{stageNumberToName[stagePlates[0].stage]}}</h3>
+				<button type="button" class="btn btn-default performButton" data-ng-click="directToPage(stageNumberToUrl[stagePlates[0].stage], selectedPlates)">Perform selected</button>
 			</div>
 			<table class="table table-striped">
 				<tr>
@@ -20,13 +20,13 @@
 					<td>Plate Code</td>
 					<td>Number of Samples</td>
 					<td>
-						<input class="checkbox" type="checkbox" value="checked" data-ng-model="selectedAllPlates" data-ng-click="selectAll(plates)">
+						<input class="checkbox" type="checkbox" value="checked" data-ng-model="selectedAllPlates" data-ng-click="selectAll(stagePlates)">
 					</td>
 				</tr>
 
-				<tr class="aPlate" ng-repeat="plate in plates" my-worklist-plate my-remove-plate-function="removePlate" my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+				<tr class="aPlate" ng-repeat="plate in stagePlates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
 					<td>
-						<button class="btn btn-default" data-ng-click="removePlate(plate, plates)">Remove</button>
+						<button class="btn btn-default" data-ng-click="removePlate(plate, stagePlates, selectedPlates)">Remove</button>
 					</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
