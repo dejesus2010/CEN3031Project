@@ -5,9 +5,12 @@ angular.module('worklist').directive('myWorklistSelected', [
 			return{
 				restrict: 'A',
 				link: function postLink(scope, element, attrs){
+					// false == have not selected all plates
+					// true == selected all plates
 					scope.selectedAllPlates = false;
-					// creating an empty array which will hold the plate objects that are selected
+					// creating an empty array which will hold the plate objects that are selected in a stage
 					scope.selectedPlates = [];
+
 					scope.selectAll = function(plates){
 						if(!scope.selectedAllPlates){
 							scope.selectedPlates = plates;
@@ -57,8 +60,7 @@ angular.module('worklist').directive('myWorklistSelected', [
 				selectedPlates: '=mySelectedPlates',
 				plateChecked: '=myPlateChecked',
 				clickNotOnCheckBox: '=myClickedNotOnCheckbox',
-				clickCheckBox: '=myClickedCheckbox',
-				removePlate: '=myRemovePlateFunction'
+				clickCheckBox: '=myClickedCheckbox'
 			},
 			compile: function(tElem, tAttrs){
 				return{

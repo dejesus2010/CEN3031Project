@@ -42,23 +42,51 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 			}
 		};
 
-        $scope.removePlate = function(plate, plates){
+        $scope.removePlate = function(plate, stagePlates, selectedPlates){
 
 	        worklistFactory.removePlateFromWorkList(plate, function(err){
 		        if(err){
 			        console.log(err);
 		        }
 		        else{
+			        // Let the header know the worklist has been updated so the size icon can update accordingly
 			        $scope.$emit('workListUpdated');
 
-			        var indexOfPlateInPlates = -1;
-			        for(var i = 0; i < plates.length; i++){
-				        if(plates[i] === plate){
-					        indexOfPlateInPlates = i;
+			        // index where the plate occurs in the stage's all
+			        // plates array (which is all the plates in the stage on the client side)
+			           // removing it from this array makes the plate's row disappear client side
+			        var indexOfPlateInStagePlates  = -1;
+
+			        // index where the plate occurs in the stage's
+			        // selectedPlates array (which is the array of plates selected in a stage)
+			           // removing it from this array will remove it from the selected plates to be sent to perform a stage
+			        var indexOfPlateInSelectedPlates = -1;
+
+			        // Going to iterate over both arrays in one shot
+			        var maxLengthOfArrays = Math.max(stagePlates.length, selectedPlates.length);
+
+			        for(var i = 0; i < maxLengthOfArrays; i++){
+
+				        if(indexOfPlateInStagePlates  === -1 && i < stagePlates.length && stagePlates[i] === plate){
+					        indexOfPlateInStagePlates  = i;
+				        }
+
+				        if(indexOfPlateInSelectedPlates === -1 && i < selectedPlates.length && selectedPlates[i] === plate){
+					        indexOfPlateInSelectedPlates = i;
+				        }
+
+				        if(indexOfPlateInStagePlates  !== -1 && indexOfPlateInSelectedPlates !== -1){
 					        break;
 				        }
 			        }
-			        plates.splice(indexOfPlateInPlates, 1);
+
+			        if(indexOfPlateInStagePlates  !== -1){
+				        stagePlates.splice(indexOfPlateInStagePlates , 1);
+			        }
+
+			        if(indexOfPlateInSelectedPlates !== -1){
+				        selectedPlates.splice(indexOfPlateInSelectedPlates, 1);
+			        }
 		        }
 	        });
 
