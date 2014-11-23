@@ -39,4 +39,18 @@ var PlateSchema = new Schema({
   }
 });
 
+//create a hook that intercepts a remove and deletes all samples before the plate is deleted
+PlateSchema.pre('remove', function(next){
+    //this uses a direct mongo-styled remove, so if we needed a remove hook on
+    //samples for some reason, it wouldn't work. if we needed that, we would switch
+    //to the foreach style remove used in projects.
+    this.model('Sample').remove({_id: {$in: this.samples}},function(err){
+        if(err) {
+            console.log('Failed to remove nested samples: ' + err);
+        }
+    });
+    next();
+});
+
+
 mongoose.model('Plate', PlateSchema);
