@@ -29,6 +29,20 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 			});
 		};
 
+        $scope.removePlate = function(plate){
+            console.log('removed plate');
+            $http.post('/plates/unassignPlate', plate).success(function(response) {
+                // emit signal that a plate was removed to update Work List plates assigned size in header
+                $scope.$emit('workListUpdated');
+            }).error(function(err) {
+                console.log(err);
+                //doesn't exist for this controller. should be remedied later?
+                //$scope.error = err.message;
+                //$scope.errorDialog();
+            });
+        };
+
+
 		var initializeGroupOfPlates = function(){
 			for(var i = 0; i < 14; i++){
 				$scope.groupOfPlates[i] = [];

@@ -75,20 +75,10 @@ angular.module('worklist').directive('myWorklistSelected', [
 						scope.clickCheckBox = function(){
 							selectPlate(scope.selectedPlates, scope.plate);
 						};
+
 						scope.$on('selectedAll', function(event, selectedAllPlates){
-							console.log(scope.selectedPlates);
 							scope.plateChecked = selectedAllPlates;
 						});
-
-						scope.removePlate = function(){
-							console.log('removed plate');
-							// insert http call to remove scope.plate from DB
-						};
-
-						scope.removePlate = function(){
-							console.log('removed plate');
-							// insert http call to remove scope.plate from DB
-						};
 
 					}
 				};
