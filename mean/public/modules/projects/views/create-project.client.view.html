@@ -15,14 +15,14 @@
                 <div class="form-group row">
                     <label class="control-label col-xs-4">Customer</label>
                     <div class="form-control-static col-xs-4">
-                        <ui-select class="bootstrap-col-size dont-squish-me" ng-model="customer.selected"  theme="select2" ng-disabled="disabled"  rows=2>
+                        <ui-select id="selectCustomer" class="bootstrap-col-size dont-squish-me" ng-model="customer.selected"  theme="select2" ng-disabled="disabled"  rows=2>
                             <ui-select-match placeholder="Select a customer...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="customer in customers | filter: {name: $select.search}">
-                                <div ng-bind-html="customer.name | highlight: $select.search"></div>
+				    <div id="{{customer.name}}" ng-bind-html="customer.name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="form-control-static  col-xs-2">
+                    <div id="createCustomerButton" class="form-control-static  col-xs-2">
                         <a class="btn btn-primary btn-xs" href="/#!/customers/create">
                             <i class="glyphicon glyphicon-plus"></i>
                             Create a Customer
@@ -32,14 +32,14 @@
                 <div class="form-group row">
                     <label class="col-xs-4 control-label">Organism</label>
                     <div class="form-control-static col-xs-4">
-                        <ui-select class="bootstrap-col-size dont-squish-me" ng-model="organism.selected" theme="select2" ng-disabled="disabled"  rows=2>
+                        <ui-select id="selectOrganism" class="bootstrap-col-size dont-squish-me" ng-model="organism.selected" theme="select2" ng-disabled="disabled"  rows=2>
                             <ui-select-match placeholder="Select an organism...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="organism in organisms | filter: {name: $select.search}">
-                                <div ng-bind-html="organism.name | highlight: $select.search"></div>
+				    <div id="{{organism.name}}" ng-bind-html="organism.name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
-                    <div class="form-control-static  col-xs-2">
+                    <div id="createOrganismButton" class="form-control-static  col-xs-2">
                         <a class="btn btn-primary btn-xs" href="/#!/organisms/create">
                             <i class="glyphicon glyphicon-plus"></i>
                             Create an Organism
@@ -49,7 +49,7 @@
                 <div class="form-group row">
                     <label class="control-label col-xs-4" for="datePickerControl">Due Date</label>
                     <div class="input-group col-xs-4 dont-squish-me" style="padding-left: 16px; padding-right: 16px;">
-                        <input type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" id="datePickerControl" />
+                        <input id="datePickerInput" type="text" class="form-control" datepicker-popup="{{format}}" data-ng-model="due" is-open="opened" min-date="minDate" show-weeks="showWeeks" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" id="datePickerControl" />
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                           </span>

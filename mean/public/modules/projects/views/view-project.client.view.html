@@ -78,7 +78,7 @@
                     <i class="glyphicon glyphicon-edit"></i>
                 </a>
                 &nbsp
-                <a class="btn btn-danger" data-ng-click="grayOut || confirmRemove();">
+                <a id="deleteProjectButton" class="btn btn-danger" data-ng-click="grayOut || confirmRemove();">
                     Delete
                     <i class="glyphicon glyphicon-trash"></i>
                 </a>
@@ -158,7 +158,7 @@
         <h5>This project will be permanently deleted</h5>
     </div>
     <div class="ngdialog-buttons">
-        <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="remove(project)">Delete Project</button>
+        <button id="confirmDeleteButton"type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="remove(project)">Delete Project</button>
         <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="closeDialog()">Cancel</button>
     </div>
 </script>
