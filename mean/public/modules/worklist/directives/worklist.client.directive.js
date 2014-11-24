@@ -23,9 +23,7 @@ angular.module('worklist').directive('myWorklistSelected', [
 								scope.selectedPlates.push(plate);
 							});
 						}
-						else{
-							scope.selectedPlates = [];
-						}
+
 						scope.$broadcast('selectedAll', !scope.selectedAllPlates);
 					};
 				}
