@@ -347,7 +347,7 @@ exports.hasAuthorization = function(req, res, next) {
         }
         //not using req.body.assignee !== req.user._id b/c !== causes type check to fail and say they're not equal when thy are equal values
         //switchd to .contains b/c user.roles = list
-		else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee !== req.user._id && !(_.contains(user.roles,'admin'))) {
+		else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee != req.user._id && !(_.contains(user.roles,'admin'))) {
 			return res.status(403).send('User is not authorized');
 		}
 		next();
