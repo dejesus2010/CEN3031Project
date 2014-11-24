@@ -18,6 +18,10 @@ var LogSchema = new Schema({
   timestamp: {
     type: Date,
     required: 'A timestamp must be specified for the log'
+  },
+  status: {
+    type: String,
+    default: ''
   }
 });
 
