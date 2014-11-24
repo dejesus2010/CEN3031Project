@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('projects').controller('ProjectsController', ['$animate','$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms', '$upload',
-	function($animate, $window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms, $upload) {
+angular.module('projects').controller('ProjectsController', ['$animate','$window', '$http', '$scope', '$stateParams', '$location', 'ngDialog', 'Authentication', 'Projects', 'Customers', 'Organisms', '$upload', 'worklistFactory',
+	function($animate, $window, $http, $scope, $stateParams, $location, ngDialog, Authentication, Projects, Customers, Organisms, $upload, worklistFactory) {
 
 		$scope.authentication = Authentication;
 		$scope.customers = Customers.query();
@@ -37,9 +37,7 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 
 				$scope.projects = projects;
 				$scope.initReactGrid();
-
 			});
-
 		};
 
 		$scope.create = function() {
@@ -118,6 +116,23 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 		$scope.closeDialog = function() {
 			ngDialog.closeAll();
 			$scope.grayOut = false;
+		};
+
+		$scope.addPlates = function(selectedPlates) {
+			var reloadCounter = selectedPlates.length;
+			for (var plate in selectedPlates) {
+				worklistFactory.addPlateToWorkList(selectedPlates[plate], function(err) {
+					if (err) {
+						$scope.error = err;
+					}
+					reloadCounter = reloadCounter - 1;
+					if (reloadCounter === 0) {
+						// Reload page and update worklist indicator when all plates have been added
+						$scope.$emit('workListUpdated');
+						$scope.findOne();
+					}
+				}); /*jshint ignore:line */
+			}
 		};
 
 		$scope.update = function() {

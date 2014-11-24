@@ -270,6 +270,24 @@
 			expect(scope.projects.length).toBe(0);
 		}));
 
+		it('$scope.addPlates(selectedPlates) should add the selectedPlates to the user\'s workList and trigger reload', inject(function() {
+			var selectedPlates = [{isAssigned: false}, {isAssigned: false}];
+
+			// Account for the Customer query
+			$httpBackend.expectGET('customers').respond();
+
+			// Account for the Organisms query
+			$httpBackend.expectGET('organisms').respond();
+
+			$httpBackend.expectPOST('/plates/assignPlate').respond(200);
+			$httpBackend.expectPOST('/plates/assignPlate').respond(200);
+
+			spyOn(scope, 'findOne');
+			scope.addPlates(selectedPlates);
+			$httpBackend.flush();
+			expect(scope.findOne).toHaveBeenCalled();
+		}));
+
 		it('$scope.initReactGrid() should set gridReady equal to true when done', inject(function(Projects) {
 			scope.initReactGrid();
 			expect(scope.gridReady).toBeTruthy();

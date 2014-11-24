@@ -61,7 +61,6 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
     };
 
     $scope.addPlate = function() {
-
       worklistFactory.addPlateToWorkList($scope.selectedPlate, function(err){
         if(err){
           $scope.error = err;
@@ -72,7 +71,6 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
           $scope.init($scope.currentTab());
         }
       });
-
     };
 
     $scope.confirmAdd = function() {

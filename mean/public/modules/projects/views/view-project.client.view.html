@@ -121,17 +121,31 @@
                         <tr>
                             <td>Plate Code</td>
                             <td>Number of Samples</td>
+                            <td>Stage</td>
+                            <td>Assignee</td>
                             <td></td>
                         </tr>
-
                         <tr class="aPlate" ng-repeat="plate in project.plates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
-                            <td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
-                            <td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
-                            <td>
+                            <td data-ng-click="plate.isAssigned ? alert(0) : clickNotOnCheckBox()">{{plate.plateCode}}</td>
+                            <td data-ng-click="plate.isAssigned ? alert(0) : clickNotOnCheckBox()">{{plate.samples.length}}</td>
+                            <td data-ng-click="plate.isAssigned ? alert(0) : clickNotOnCheckBox()">{{plate.stage}}</td>
+                            <td data-ng-click="plate.isAssigned ? alert(0) : clickNotOnCheckBox()">{{plate.assignee.displayName}}</td>
+                            <td ng-if="!plate.isAssigned">
                                 <input class="checkbox" type="checkbox" value="checked" data-ng-model="plateChecked" data-ng-click="clickCheckBox()">
+                            </td>
+                            <td ng-if="plate.isAssigned">
+                                <input class="checkbox" type="checkbox" value="checked" data-ng-model="plateChecked" disabled>
                             </td>
                         </tr>
                     </table>
+                    <div class="row">
+                        <div class="text-center">
+                            <button class="btn btn-primary" data-ng-click="addPlates(selectedPlates)">
+                                Add selected plates to worklist
+                                <i class="glyphicon glyphicon-check"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
