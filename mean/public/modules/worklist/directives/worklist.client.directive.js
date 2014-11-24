@@ -12,8 +12,16 @@ angular.module('worklist').directive('myWorklistSelected', [
 					scope.selectedPlates = [];
 
 					scope.selectAll = function(plates){
+						scope.selectedPlates = [];
+						// Can't simply set scope.selectedPlates = plates, because the next time we unselect
+						// a plate i.e removing the plate from scope.selectedPlates, it's as if we are removing
+						// from the plate array that was passed as an argument which references stagePlates.
+						// Modifying stagePlates will remove the plate's row from the table, because of two way data
+						// binding
 						if(!scope.selectedAllPlates){
-							scope.selectedPlates = plates;
+							plates.forEach(function(plate){
+								scope.selectedPlates.push(plate);
+							});
 						}
 						else{
 							scope.selectedPlates = [];
