@@ -66,17 +66,17 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 
 		$scope.remove = function(project) {
 			$scope.closeDialog();
-            project.$remove();
-            if($scope.projects) {
-                for (var i in $scope.projects) {
-                    if ($scope.projects[i] === project) {
-                        $scope.projects.splice(i, 1);
-                    }
-                }
-            }
-            //emit signal notifies the Work List to update in case an assigned plate was deleted
-            $scope.$emit('workListUpdated');
-            $location.path('projects');
+         project.$remove();
+         if($scope.projects) {
+             for (var i in $scope.projects) {
+                 if ($scope.projects[i] === project) {
+                     $scope.projects.splice(i, 1);
+                 }
+             }
+         }
+         //emit signal notifies the Work List to update in case an assigned plate was deleted
+         $scope.$emit('workListUpdated');
+         $location.path('projects');
 		};
 
 		$scope.onFileSelect = function(file) {
