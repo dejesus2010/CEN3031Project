@@ -3,8 +3,6 @@
 angular.module('plates').controller('PlatesController', ['$scope', '$http', '$stateParams', '$location', '$window', 'ngDialog', 'Authentication', 'Plates', 'worklistFactory',
   function($scope, $http, $stateParams, $location, $window, ngDialog, Authentication, Plates, worklistFactory) {
     $scope.authentication = Authentication;
-
-    $scope.authentication = Authentication;
     $scope.gridReady = false;
     $scope.grayOut = false;
     $scope.plateList = [];
