@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 	Customer = mongoose.model('Customer'),
 	Organism = mongoose.model('Organism'),
 	User = mongoose.model('User'),
+	Log = mongoose.model('Log'),
 	_ = require('lodash');
 
 /**
@@ -41,16 +42,30 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var plate = req.plate;
-
 	plate = _.extend(plate, req.body);
+	var log = new Log({
+		user: req.user,
+		timestamp: Date.now(),
+		status: 'Updating plate'
+	});
 
-	plate.save(function(err) {
+	log.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(plate);
+			plate.logs.push(log._id);
+			plate.save(function(err) {
+				if (err) {
+					Log.remove({id: log._id}).exec();
+					return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+				} else {
+					res.jsonp(plate);
+				}
+			});
 		}
 	});
 };
@@ -191,15 +206,30 @@ exports.assignPlate = function(req, res) {
 		} else {
 			assignee = req.body.assignee._id;
 		}
+		var log = new Log({
+			user: req.user,
+			timestamp: Date.now(),
+			status: 'Assigning plate: ' + plate.plateCode + ' to user: ' +	assignee
+		});
 		plate.assignee = assignee;
 		plate.isAssigned = true;
-		plate.save(function(err) {
+		log.save(function(err) {
 			if (err) {
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.jsonp(plate);
+				plate.logs.push(log._id);
+				plate.save(function(err) {
+					if (err) {
+						Log.remove({id: log._id}).exec();
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						res.jsonp(plate);
+					}
+				});
 			}
 		});
 	});
@@ -219,15 +249,30 @@ exports.unassignPlate = function(req, res) {
 		}
 		plate.assignee = null;
 		plate.isAssigned = false;
-        plate.save(function(err) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp(plate);
-            }
-        });
+		var log = new Log({
+			user: req.user,
+			timestamp: Date.now(),
+			status: 'Unassigning plate: ' + plate.plateCode + ' to user: ' + plate.assignee
+		});
+		log.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				plate.logs.push(log._id);
+		        plate.save(function(err) {
+		            if (err) {
+		            	Log.remove({id: log._id}).exec();
+		                return res.status(400).send({
+		                    message: errorHandler.getErrorMessage(err)
+		                });
+		            } else {
+		                res.jsonp(plate);
+		            }
+		        });
+	        }
+		});
 	});
 };
 
@@ -302,7 +347,7 @@ exports.hasAuthorization = function(req, res, next) {
         }
         //not using req.body.assignee !== req.user._id b/c !== causes type check to fail and say they're not equal when thy are equal values
         //switchd to .contains b/c user.roles = list
-		else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee != req.user._id && !(_.contains(user.roles,'admin'))) {
+		else if (req.body.isAssigned && req.body.assignee !== null && req.body.assignee !== req.user._id && !(_.contains(user.roles,'admin'))) {
 			return res.status(403).send('User is not authorized');
 		}
 		next();

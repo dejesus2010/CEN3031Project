@@ -3,8 +3,6 @@
 angular.module('plates').controller('PlatesController', ['$scope', '$http', '$stateParams', '$location', '$window', 'ngDialog', 'Authentication', 'Plates', 'worklistFactory',
   function($scope, $http, $stateParams, $location, $window, ngDialog, Authentication, Plates, worklistFactory) {
     $scope.authentication = Authentication;
-
-    $scope.authentication = Authentication;
     $scope.gridReady = false;
     $scope.grayOut = false;
     $scope.plateList = [];
@@ -63,7 +61,6 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
     };
 
     $scope.addPlate = function() {
-
       worklistFactory.addPlateToWorkList($scope.selectedPlate, function(err){
         if(err){
           $scope.error = err;
@@ -74,7 +71,6 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
           $scope.init($scope.currentTab());
         }
       });
-
     };
 
     $scope.confirmAdd = function() {

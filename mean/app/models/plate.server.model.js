@@ -36,7 +36,11 @@ var PlateSchema = new Schema({
   isAssigned: {
     type: Boolean,
     default: false
-  }
+  },
+  logs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Log'
+  }]
 });
 
 //create a hook that intercepts a remove and deletes all samples before the plate is deleted
