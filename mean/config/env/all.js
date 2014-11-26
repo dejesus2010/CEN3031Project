@@ -33,7 +33,8 @@ module.exports = {
 				'public/lib/react/react.min.js',
 				'public/lib/ngReactGrid/build/js/ngReactGrid.min.js',
 				'public/lib/ngDialog/js/ngDialog.min.js',
-				'public/lib/ng-file-upload/angular-file-upload.js'
+				'public/lib/ng-file-upload/angular-file-upload.js',
+				'public/lib/async/lib/async.js'
 			]
 		},
 		css: [
