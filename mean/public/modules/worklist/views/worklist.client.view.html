@@ -23,7 +23,7 @@
 					</td>
 				</tr>
 
-				<tr class="aPlate" ng-repeat="plate in stagePlates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+				<tr class="aPlate" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
 					<td>
