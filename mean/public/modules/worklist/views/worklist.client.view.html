@@ -16,7 +16,6 @@
 			</div>
 			<table class="table table-striped">
 				<tr>
-					<td>Remove from Work List</td>
 					<td>Plate Code</td>
 					<td>Number of Samples</td>
 					<td>
@@ -25,9 +24,6 @@
 				</tr>
 
 				<tr class="aPlate" ng-repeat="plate in stagePlates" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
-					<td>
-						<button class="btn btn-default" data-ng-click="removePlate(plate, stagePlates, selectedPlates)">Remove</button>
-					</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
 					<td>
@@ -35,6 +31,10 @@
 					</td>
 				</tr>
 			</table>
+			<div class="removePlatesButton" data-ng-click="removePlates(stagePlates, selectedPlates)">
+				<img alt="Delete plate" class="img-responsive img-rounded removePlatesImage" src="imgs/trashcan.png"/>
+				<!--<div>Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
+			</div>
 		</div>
 		<br>
 	</div>

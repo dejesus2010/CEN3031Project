@@ -27,3 +27,22 @@ td{
     text-align: center;
     horiz-align: center;
 }
+
+.doneButton:hover{
+    cursor: pointer;
+}
+
+.removePlatesButton{
+    float: right;
+    position: relative;
+}
+
+.removePlatesButton:hover{
+    cursor: pointer;
+}
+
+.removePlatesImage{
+    margin: 0 auto;
+    float: right;
+    position: relative;
+}

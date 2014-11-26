@@ -42,60 +42,44 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 			}
 		};
 
-        $scope.removePlate = function(plate, stagePlates, selectedPlates){
+		var removePlate = function(plate, callback){
+			worklistFactory.removePlateFromWorkList(plate, function(err) {
+				if (err) {
+					callback(err);
+				}
+				else {
+					callback();
+				}
+			});
+		};
 
-	        worklistFactory.removePlateFromWorkList(plate, function(err){
-		        if(err){
-			        console.log(err);
-		        }
-		        else{
-			        // Let the header know the worklist has been updated so the size icon can update accordingly
-			        $scope.$emit('workListUpdated');
+		$scope.removePlates = function(stagePlates, selectedPlates){
+			async.each(selectedPlates, function(plate, callback){ // jshint ignore:line
+				removePlate(plate, function(err){
+					if(err){
+						console.log(err);
+					}
+					else{
+						var indexOfPlateInStagePlates = stagePlates.indexOf(plate);
+						var indexOfPlateInSelectedPlates = selectedPlates.indexOf(plate);
 
-			        // index where the plate occurs in the stage's all
-			        // plates array (which is all the plates in the stage on the client side)
-			           // removing it from this array makes the plate's row disappear client side
-			        var indexOfPlateInStagePlates  = -1;
+						stagePlates.splice(indexOfPlateInStagePlates, 1);
+						selectedPlates.splice(indexOfPlateInSelectedPlates, 1);
 
-			        // index where the plate occurs in the stage's
-			        // selectedPlates array (which is the array of plates selected in a stage)
-			           // removing it from this array will remove it from the selected plates to be sent to perform a stage
-			        var indexOfPlateInSelectedPlates = -1;
-
-			        // Going to iterate over both arrays in one shot
-			        var maxLengthOfArrays = Math.max(stagePlates.length, selectedPlates.length);
-
-			        for(var i = 0; i < maxLengthOfArrays; i++){
-
-				        if(indexOfPlateInStagePlates  === -1 && i < stagePlates.length && stagePlates[i] === plate){
-					        indexOfPlateInStagePlates  = i;
-				        }
-
-				        if(indexOfPlateInSelectedPlates === -1 && i < selectedPlates.length && selectedPlates[i] === plate){
-					        indexOfPlateInSelectedPlates = i;
-				        }
-
-				        if(indexOfPlateInStagePlates  !== -1 && indexOfPlateInSelectedPlates !== -1){
-					        break;
-				        }
-			        }
-
-			        if(indexOfPlateInStagePlates  !== -1){
-				        stagePlates.splice(indexOfPlateInStagePlates , 1);
-			        }
-
-			        if(indexOfPlateInSelectedPlates !== -1){
-				        selectedPlates.splice(indexOfPlateInSelectedPlates, 1);
-			        }
-		        }
-	        });
-
-        };
+						$scope.$emit('workListUpdated');
+					}
+					callback();
+				});
+			}, function(err){
+				if(err){
+					console.log(err);
+				}
+			});
+		};
 
 		// Function call for directing the user to the stage's step page
 		$scope.directToPage = function(url, selectedPlates){
 			$location.path(url + '/' + JSON.stringify(selectedPlates));
 		};
-
 
 	}]);
