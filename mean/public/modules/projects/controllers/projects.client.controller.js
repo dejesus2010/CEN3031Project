@@ -78,11 +78,6 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 		};
 
 		$scope.onFileSelect = function(file) {
-			console.log('onFileSelect');
-			/*if (angular.isArray(file)) {
-				file = file[0];
-			}*/
-
 			$scope.upload = $upload.upload({
 				url: '/projects/' + $scope.project._id + '/UploadPlateLayout',
 				method: 'POST',
@@ -94,11 +89,9 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 			}).error(function(err) {
 				console.log('error');
 			});
-			console.log('here, with: ' + file);
 		};
 
 		$scope.generatePlateTemplate = function(){
-			console.log($scope.numberOfSamples);
 			$http.post('projects/' + $scope.project._id + '/GeneratePlateTemplate?numberOfSamples=' + $scope.numberOfSamples);
 			$window.location.reload();
 		};

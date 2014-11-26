@@ -21,8 +21,7 @@ var project;
 /**
  * Unit tests
  */
-/*
-describe('Plate Generator Unit Tests:', function() {
+describe('Empty Plate Generator Unit Tests:', function() {
     var customerID;
     var organismID;
 
@@ -57,34 +56,34 @@ describe('Plate Generator Unit Tests:', function() {
         done();
     });
 
-    describe('PlateGenerator', function() {
-       it('should be able to generate 1 plate from Sample_Layout_1.xlsx', function(done) {
+    describe('EmptyPlateGenerator', function() {
+       it('should be able to generate 1 empty plate should we specify 96 samples', function(done) {
             // with 10 samples
-            var req = {};
+            var req = {query: {}};
             req.project = project;
-            req.whichFile = 'Sample_Layout_1.xlsx';
-            projects.generatePlates(req);
+	    req.query.numberOfSamples = 96;
+            projects.generatePlateTemplate(req);
             project.plates.length.should.equal(1);
-            //project.plates[0].name.should.equal('ABC_010203_P1');
             done();
         });
-        it('should be able to generate 1 plate from Sample_Layout_2.xlsx', function(done) {
+	it('should be able to generate 1 empty plate from specifying < 96 samples (44)', function(done) {
             //with 96 samples
-            var req = {};
+            var req = {query: {}};
             req.project = project;
-            req.whichFile = 'Sample_Layout_2.xlsx';
-            projects.generatePlates(req);
+            req.project = project;
+	    req.query.numberOfSamples = 44;
+            projects.generatePlateTemplate(req);
             project.plates.length.should.equal(1);
             done();
         });
-        it('should be able to generate 3 plates from Sample_Layout_3.xlsx', function(done) {
+        it('should be able to generate 3 empty plates from specifying 200 samples', function(done) {
             //--two with 96 samples and one with 8--
-            var req = {};
+            var req = {query: {}};
             req.project = project;
-            req.whichFile = 'Sample_Layout_3.xlsx';
-            projects.generatePlates(req);
+	    req.query.numberOfSamples = 200;
+            projects.generatePlateTemplate(req);
             project.plates.length.should.equal(3);
-            done();
+	    done();
         });
     });
 
@@ -98,4 +97,4 @@ describe('Plate Generator Unit Tests:', function() {
         Project.remove().exec();
         done();
     });
-});*/
+});

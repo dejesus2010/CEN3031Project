@@ -81,7 +81,7 @@ exports.generatePlateTemplate = function(req){
 		}
 	};
 
-	var numberOfPlates = parseInt(numberOfSamples / 96) + 1;
+	var numberOfPlates = parseInt(numberOfSamples / 97) + 1;
 	for(var i = 1; i <= numberOfPlates; ++i) {
 		var plate = new Plate();
 		if (i < 10) {

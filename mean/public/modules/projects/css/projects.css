@@ -128,3 +128,7 @@
 .form-control-static.col-xs-4:hover {
     cursor: pointer;
 }
+
+.bs-callout table tr:not(:first-child):nth-child(odd):hover td{
+    background: #dbdbdb;
+}
