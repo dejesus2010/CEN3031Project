@@ -26,6 +26,7 @@ h3{
 td{
     text-align: center;
     horiz-align: center;
+    vertical-align: middle;
 }
 
 .doneButton:hover{
@@ -45,4 +46,8 @@ td{
     margin: 0 auto;
     float: right;
     position: relative;
+}
+
+.selectAllButton:hover{
+    cursor: pointer;
 }
