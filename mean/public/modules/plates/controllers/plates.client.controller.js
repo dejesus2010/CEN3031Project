@@ -17,7 +17,7 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
       $scope.closeDialog();
       var url = '/plates';
       switch (tab) {
-        case 'unassinged': $scope.unassignedTab = true; url = url.concat('/unassigned'); break;
+        case 'unassigned': $scope.unassignedTab = true; url = url.concat('/unassigned'); break;
         case 'assigned':   $scope.assignedTab = true; url = url.concat('/assigned'); break;
         case 'all':        $scope.allTab = true; break;
         default:           $scope.unassignedTab = true; url = url.concat('/unassigned'); break;

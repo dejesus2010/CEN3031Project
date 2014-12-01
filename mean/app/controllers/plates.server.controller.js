@@ -118,6 +118,45 @@ exports.list = function(req, res) {
 	});
 };
 
+exports.incrementStep = function(req, res) {
+	Plate.findOne({_id: req.body._id}).exec(function(err, plate) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else if (plate === null) {
+			return res.status(404).send({
+				message: 'Plate not found'
+			});
+		} 
+		plate.stage++;
+		var log = new Log({
+			user: req.user,
+			timestamp: Date.now(),
+			status: 'Updating plate: ' + plate.plateCode + ' to stage: ' + plate.stage	
+		});
+		log.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				plate.logs.push(log._id);
+				plate.save(function(err) {
+					if (err) {
+						Log.remove({id: log._id}).exec();
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						res.jsonp(plate);
+					}
+				});
+			}
+		});
+	});
+};
+
 /**
  * List of all plates which have a user assigned to them
  */
@@ -353,3 +392,5 @@ exports.hasAuthorization = function(req, res, next) {
 		next();
 	});
 };
+
+

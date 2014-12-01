@@ -37,6 +37,10 @@ module.exports = function(app) {
   app.route('/numberOfPlatesAssignedToUser')
     .get(users.requiresLogin, plates.numberOfPlatesAssignedToUser);
 
+  app.route('/plates/increment/:plateId')
+    .post(plates.hasAuthorization, plates.incrementStep);
+
+
   // Finish by binding the plate middleware
   app.param('plateId', plates.plateByID);
 };
