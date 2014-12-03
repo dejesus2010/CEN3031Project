@@ -37,7 +37,7 @@ module.exports = function(app) {
   app.route('/numberOfPlatesAssignedToUser')
     .get(users.requiresLogin, plates.numberOfPlatesAssignedToUser);
 
-  app.route('/plates/increment/:plateId')
+  app.route('/plates/increment/')
     .post(plates.hasAuthorization, plates.incrementStep);
 
 
