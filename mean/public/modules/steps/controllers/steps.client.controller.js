@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('steps').controller('StepsController', ['$scope', '$stateParams', '$http', '$location', 'Plates',
-	function($scope, $stateParams, $http, $location, Plates) {
+angular.module('steps').controller('StepsController', ['$scope', '$stateParams', '$http', '$location', 'Plates', '$timeout',
+	function($scope, $stateParams, $http, $location, Plates, $timeout) {
 		// Controller Logic
 		// ...
 		$scope.plates = JSON.parse($stateParams.samples);
@@ -23,24 +23,27 @@ angular.module('steps').controller('StepsController', ['$scope', '$stateParams',
 		    // Check if condition met. If not, re-check later (msec).
 		    // Found on Stack Overflow, very useful.
 		    if (testValue !== expectedValue) {
-			    setTimeout($scope.waitFor(testValue, expectedValue, callback), 5000);
+			    $timeout($scope.waitFor(testValue, expectedValue, callback), 50);
 		    }
 		    callback();
 		};
 
 		$scope.incrementPlate = function(plate, callback) {
-			var emission = function() {
-				$scope.$emit('workListUpdated');
-			};
 			$http.post('plates/increment/', plate);
 			if ($scope.removeFromWorklist) {
 				$http.post('plates/unassignPlate', plate).then(callback());
 			}
+			else {
+				callback();
+			}
 		};
 
 		$scope.returnToWorklist = function() {
-			$scope.$emit('workListUpdated');
-			$location.path('worklist');
+			$timeout(function() {
+				$scope.$emit('workListUpdated');
+				$location.path('worklist');
+			}, 400);
+
 		};
 
 	}
