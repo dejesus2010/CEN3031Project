@@ -1,13 +1,21 @@
 <section data-ng-controller="StepsController">
-	<br>
-    <div class="text-center">
-        <h3>Sample Arrival</h3>
-        <br>
-        Lab techs will scan barcodes to record sample arrivals on this page.
-	<div class="text-center">
-		<button class="btn btn-primary" ng-click="incrementPlates($scope.returnToWorklist())">
-		    Confirm
-		</button>
-	</div>
+    <div class="boxed text-center">
+        <h3>Samples Received</h3>
+	<h4>Procedure:</h4>
+	<table class="table table-striped">
+		<tr>
+			<td>
+			Scan CLIENT plate barcode
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="btn btn-primary" ng-click="incrementPlates()">
+				    Confirm
+				</button>
+			</td>
+		</tr>
+
+	</table>
     </div>
 </section>
