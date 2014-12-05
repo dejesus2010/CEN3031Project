@@ -7,8 +7,15 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 		// This array is to group plates into stages.
 		$scope.groupOfPlates = [15];
 
-		$scope.stageNumberToName = ['N/A', 'Samples Arrive', 'Quantification', 'Normalization'];
-		$scope.stageNumberToUrl = ['/', '/steps/sample-arrival', '/steps/quantification', '/steps/normalization'];
+		$scope.stageNumberToName = ['N/A', 'Sample Arrival', 'DNA Quantification', 'DNA Normalization', 'DNA Shearing',
+		                            'End Repair & Phosphorylation', 'Adenylation', 'Adaptor Ligation', 'Size Selection', 
+		                            'PCR Enrichment', 'PCR Reaction Cleanup', 'Library Quantification', 'Sample Pooling', 
+		                            'Hybridization', 'Sequencing'];
+		$scope.stageNumberToUrl = ['/', '/steps/sample-arrival', '/steps/dna-quantification', '/steps/normalization',
+		                           '/steps/shearing','/steps/end-repair', '/steps/adenylation', '/steps/ligation', 
+		                           '/steps/size-selection', '/steps/pcr-enrichment', '/steps/pcr-cleanup', 
+		                           '/steps/library-quantification', '/steps/pooling', '/steps/hybridization', 
+		                           '/steps/sequencing'];
 
 		$scope.platesExist = false;
 

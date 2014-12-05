@@ -10,12 +10,16 @@ angular.module('steps').config(['$stateProvider',
 			templateUrl: 'modules/steps/views/normalization.client.view.html'
 		}).
 		state('quantification', {
-			url: '/steps/quantification/:samples',
+			url: '/steps/dna-quantification/:samples',
 			templateUrl: 'modules/steps/views/quantification.client.view.html'
 		}).
 		state('sample-arrival', {
 			url: '/steps/sample-arrival/:samples',
 			templateUrl: 'modules/steps/views/sample-arrival.client.view.html'
+		}).
+		state('shearing', {
+			url: '/steps/shearing/:samples',
+			templateUrl: 'modules/steps/views/shearing.client.view.html'
 		});
 	}
 ]);
