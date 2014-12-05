@@ -37,7 +37,7 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 		};
 
 		var initializeGroupOfPlates = function(){
-			for(var i = 0; i < 14; i++){
+			for(var i = 0; i < 15; i++){
 				$scope.groupOfPlates[i] = [];
 			}
 		};
