@@ -315,6 +315,7 @@
 			expectedGrouping[11] = [];
 			expectedGrouping[12] = [];
 			expectedGrouping[13] = [];
+			expectedGrouping[14] = [];
 
 
 			$httpBackend.expectGET('/plates/userPlates').respond(plates);
