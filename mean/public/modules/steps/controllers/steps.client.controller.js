@@ -5,8 +5,13 @@ angular.module('steps').controller('StepsController', ['$scope', '$stateParams',
 		// Controller Logic
 		// ...
 		$scope.plates = JSON.parse($stateParams.samples);
-		$scope.removeFromWorklist = true;
+		$scope.shouldRemoveFromWorklist = true;
 		$scope.count = 0;
+		$scope.numberOfSamples = 0;
+		
+		for (var i in $scope.plates) {
+			$scope.numberOfSamples += $scope.plates[i].samples.length;
+		}
 
 		$scope.incrementPlates = function() {
 			var incCount = function() {
@@ -30,7 +35,7 @@ angular.module('steps').controller('StepsController', ['$scope', '$stateParams',
 
 		$scope.incrementPlate = function(plate, callback) {
 			$http.post('plates/increment/', plate);
-			if ($scope.removeFromWorklist) {
+			if ($scope.shouldRemoveFromWorklist) {
 				$http.post('plates/unassignPlate', plate).then(callback());
 			}
 			else {
@@ -47,7 +52,5 @@ angular.module('steps').controller('StepsController', ['$scope', '$stateParams',
 		};
 
 	}
-
-
 	
 ]);
