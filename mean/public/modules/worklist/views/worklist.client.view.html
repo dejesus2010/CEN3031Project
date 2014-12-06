@@ -12,7 +12,7 @@
 
 			<div>
 				<h3>{{stageNumberToName[stagePlates[0].stage]}}</h3>
-				<button type="button" class="btn btn-default performButton" data-ng-click="directToPage(stageNumberToUrl[stagePlates[0].stage], selectedPlates)">Perform selected</button>
+				<button type="button" class="btn btn-default performButton" data-ng-disabled="selectedPlates.length <= 0" data-ng-click="directToPage(stageNumberToUrl[stagePlates[0].stage], selectedPlates)">Perform selected</button>
 			</div>
 			<table class="table table-striped">
 				<tr>
