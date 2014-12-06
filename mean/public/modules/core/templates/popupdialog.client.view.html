@@ -1,8 +1,10 @@
-<div class="ngdialog-message">
-	<h2>{{popUpHeading}}</h2>
-	<h3>{{popUpSubHeading}}</h3>
-</div>
-<div class="ngdialog-buttons">
-	<button type="button" ng-show="displayConfirmDialogButton" class="ngdialog-button ngdialog-button-primary" ng-click="confirmDialog()">{{popUpConfirmButtonText}}</button>
-	<button type="button" ng-show="displayCloseDialogButton" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()">{{popUpCloseButtonText}}</button>
+<div id="popupDialog" class="dialog-contents">
+	<div class="ngdialog-message">
+		<h2>{{popUpHeading}}</h2>
+		<h3>{{popUpSubHeading}}</h3>
+	</div>
+	<div class="ngdialog-buttons">
+		<button id="confirmButton" type="button" ng-show="displayConfirmDialogButton" class="ngdialog-button ngdialog-button-primary" ng-click="confirmDialog()">{{popUpConfirmButtonText}}</button>
+		<button type="button" ng-show="displayCloseDialogButton" class="ngdialog-button ngdialog-button-secondary" ng-click="closeDialog()">{{popUpCloseButtonText}}</button>
+	</div>
 </div>
