@@ -50,9 +50,25 @@
 			});
 		}));
 
-		it('Should do some controller test', inject(function() {
-			// The test logic
-			// ...
+		it('should perform step on plates', inject(function() {
+			expect(false).toBeTruthy();
 		}));
+
+		it('should perform step on plates and remove the plates from the worklist when user wants to remove the plates from the worklist', inject(function() {
+			expect(false).toBeTruthy();
+		}));
+
+		it('should notify the header that the worklist has been updated after removing the plates from the worklist', inject(function() {
+			expect(false).toBeTruthy();
+		}));
+
+		it('should redirect the page to the worklist page after performing step on all plates', inject(function() {
+			expect(false).toBeTruthy();
+		}));
+
+		it('should not gray out the display behind the popup when the dialog is closed', inject(function() {
+			expect(false).toBeTruthy();
+		}));
+
 	});
 }());
