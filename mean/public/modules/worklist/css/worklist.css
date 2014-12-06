@@ -5,6 +5,10 @@
     clear: both;
 }
 
+.box{
+    border: 1px solid #A3A3A3;
+}
+
 .aPlate:hover{
     background: #dbdbdb;
     cursor: pointer;
@@ -44,4 +48,8 @@ a:hover{
 .removeButton{
     background: #dd4444;
     color: white;
+}
+
+.table{
+    margin-bottom: 0;
 }
