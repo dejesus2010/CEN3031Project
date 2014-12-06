@@ -1,5 +1,5 @@
 <section data-ng-controller="StepsController">
-	<div class="boxed text-center">
+	<div class="boxed text-center" ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
 		<h3>PCR Reaction Cleanup</h3>
 		<h4>Procedure:</h4>
 		<table class="table table-striped">
@@ -17,8 +17,8 @@
 			</tr>
 			<tr>
 				<td>
-					<button class="btn btn-primary" ng-click="incrementPlates()">
-					    Confirm
+					<button class="btn btn-primary" ng-click="grayOut = true;" ng-dialog="modules/core/templates/popupdialog.client.view.html" ng-dialog-controller="StepsController">
+						Confirm
 					</button>
 				</td>
 			</tr>

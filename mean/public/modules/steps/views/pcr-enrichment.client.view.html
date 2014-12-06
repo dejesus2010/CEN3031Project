@@ -1,5 +1,5 @@
 <section data-ng-controller="StepsController">
-	<div class="boxed text-center">
+	<div class="boxed text-center" ng-class="grayOut ? 'gray-out' : ''" ng-disabled="grayOut">
 		<h3>PCR Enrichment</h3>
 		<h4>Procedure:</h4>
 		<table class="table table-striped">
@@ -11,7 +11,7 @@
 				thermal profile (PCR_ENRICH):</td>
 			</tr>
 			<tr>
-				<td>3. Prepare the master mix with the reagents below in a 1.7 mL tube, for the 
+				<td>3. Prepare the master mix with the reagents below in a 1.7 mL tube, for the
 				number of SAMPLES = {{numberOfSamples}}</td>
 			</tr>
 			<tr>
@@ -28,8 +28,8 @@
 			</tr>
 			<tr>
 				<td>
-					<button class="btn btn-primary" ng-click="incrementPlates()">
-					    Confirm
+					<button class="btn btn-primary" ng-click="grayOut = true;" ng-dialog="modules/core/templates/popupdialog.client.view.html" ng-dialog-controller="StepsController">
+						Confirm
 					</button>
 				</td>
 			</tr>
