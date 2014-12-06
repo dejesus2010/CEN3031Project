@@ -49,39 +49,53 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 			}
 		};
 
-		var removePlate = function(plate, callback){
-			worklistFactory.removePlateFromWorkList(plate, function(err) {
-				if (err) {
-					callback(err);
-				}
-				else {
-					callback();
-				}
-			});
-		};
-
 		$scope.removePlates = function(stagePlates, selectedPlates){
 			async.each(selectedPlates, function(plate, callback){ // jshint ignore:line
-				removePlate(plate, function(err){
+
+				removePlate(plate, stagePlates, selectedPlates, function(err){
 					if(err){
-						console.log(err);
-					}
-					else{
-						var indexOfPlateInStagePlates = stagePlates.indexOf(plate);
-						var indexOfPlateInSelectedPlates = selectedPlates.indexOf(plate);
-
-						stagePlates.splice(indexOfPlateInStagePlates, 1);
-						selectedPlates.splice(indexOfPlateInSelectedPlates, 1);
-
-						$scope.$emit('workListUpdated');
+						console.log(err.message);
 					}
 					callback();
 				});
+
 			}, function(err){
 				if(err){
 					console.log(err);
 				}
 			});
+		};
+
+		$scope.remove = function(plate, stagePlates, selectedPlates){
+
+			removePlate(plate, stagePlates, selectedPlates, function(err){
+				if(err){
+					console.log(err.message);
+				}
+			});
+
+		};
+
+		var removePlate = function(plate, stagePlates, selectedPlates, callback){
+			worklistFactory.removePlateFromWorkList(plate, function(err) {
+				if (err) {
+					callback(err);
+				}
+				else {
+
+					removePlateFromArray(plate, stagePlates);
+					removePlateFromArray(plate, selectedPlates);
+
+					$scope.$emit('workListUpdated');
+
+					callback();
+				}
+			});
+		};
+
+		var removePlateFromArray = function(plate, array){
+			var indexOfPlateInArray = array.indexOf(plate);
+			array.splice(indexOfPlateInArray, 1);
 		};
 
 		// Function call for directing the user to the stage's step page

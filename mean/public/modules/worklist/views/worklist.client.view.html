@@ -1,4 +1,4 @@
-<section data-ng-controller="WorklistController" data-ng-init="init()">
+<section data-ng-controller="WorklistController" data-ng-init="init(); showEdit = false">
 	<div class="page-header">
 		<h1>Work List</h1>
 	</div>
@@ -10,20 +10,28 @@
 
 		<div class="boxed" ng-repeat="stagePlates in groupOfPlates" ng-if="stagePlates.length > 0" my-worklist-selected>
 
-			<div>
-				<h3>{{stageNumberToName[stagePlates[0].stage]}}</h3>
-				<button type="button" class="btn btn-default performButton" data-ng-disabled="selectedPlates.length <= 0" data-ng-click="directToPage(stageNumberToUrl[stagePlates[0].stage], selectedPlates)">Perform selected</button>
+			<div class="row">
+				<div class="col-xs-6 col-sm-9 col-md-10">
+					<h3>{{stageNumberToName[stagePlates[0].stage]}}</h3>
+					<a data-ng-click="showEdit = !showEdit">{{showEdit ? 'done' : 'edit'}}</a>
+				</div>
+				<div class="col-xs-6 col-sm-3 col-md-2">
+					<button type="button" class="btn btn-default performButton" data-ng-disabled="selectedPlates.length <= 0" data-ng-click="directToPage(stageNumberToUrl[stagePlates[0].stage], selectedPlates)">Perform selected</button>
+				</div>
 			</div>
+
 			<table class="table table-striped">
 				<tr>
+					<td ng-show="showEdit"></td>
 					<td>Plate Code</td>
 					<td>Number of Samples</td>
 					<td>
-						<a class="selectAllButton" data-ng-click="selectAll(stagePlates)">Select all</a>
+						<a data-ng-click="selectAll(stagePlates)">Select all</a>
 					</td>
 				</tr>
 
 				<tr class="aPlate" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+					<td class="removeButton" ng-show="showEdit" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
 					<td>
@@ -31,11 +39,6 @@
 					</td>
 				</tr>
 			</table>
-			<div class="removePlatesButton" data-ng-click="removePlates(stagePlates, selectedPlates)">
-				<a><img src="modules/worklist/imgs/trashcan.png" onmouseover="this.src='modules/worklist/imgs/trashcanopen.png'" onmousedown="this.src='modules/worklist/imgs/trashcan.png'" onmouseout="this.src='modules/worklist/imgs/trashcan.png'"> </a>
-				<!--<div>Closed trash can made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
-				<!--<div>Open trash can made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
-			</div>
 		</div>
 		<br>
 	</div>
