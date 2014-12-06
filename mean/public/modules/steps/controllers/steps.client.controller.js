@@ -18,6 +18,8 @@ angular.module('steps').controller('StepsController', ['$scope', '$stateParams',
 		$scope.popUpSubHeading = 'Would you like to unassign plates?';
 		$scope.popUpConfirmButtonText = 'Yes';
 		$scope.popUpCloseButtonText = 'No';
+		$scope.displayConfirmDialogButton = true;
+		$scope.displayCloseDialogButton = true;
 
 		$scope.closeDialog = function() {
 			ngDialog.closeAll();
