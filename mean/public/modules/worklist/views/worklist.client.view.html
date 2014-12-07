@@ -8,9 +8,9 @@
 			There are no plates in your work list
 		</div>
 
-		<div class="container boxed" ng-repeat="stagePlates in groupOfPlates" ng-if="stagePlates.length > 0" my-worklist-selected>
+		<div class="container" ng-repeat="stagePlates in groupOfPlates" ng-if="stagePlates.length > 0" my-worklist-selected>
 
-			<div class="row">
+			<div class="row stageHeader">
 				<div class="col-xs-6 col-sm-9 col-md-10">
 					<h3>{{stageNumberToName[stagePlates[0].stage]}}</h3>
 					<a data-ng-click="showEdit = !showEdit">{{showEdit ? 'done' : 'edit'}}</a>
@@ -20,26 +20,26 @@
 				</div>
 			</div>
 
-			<div>
-				<div class="row">
-					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="data" ng-show="showEdit">hello</div>
-					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="data" >Plate Code</div>
-					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="data" >Number of Samples</div>
-					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="data" >
+			<div class="stageBody">
+				<div class="row platesHeader">
+					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" ng-show="showEdit">&nbsp;</div>
+					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" >Plate Code</div>
+					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" >Number of Samples</div>
+					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" >
 						<a data-ng-click="selectAll(stagePlates)">Select all</a>
 					</div >
 				</div>
-				<!--
-				<tr class="aPlate" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
-					<td class="removeButton" ng-show="showEdit" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</td>
-					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
-					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
-					<td>
+
+				<div class="row aPlate" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+					<div class="removeButton" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" ng-show="showEdit" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</div>
+					<div class="data" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</div>
+					<div class="data" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</div>
+					<div class="data" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" >
 						<input type="checkbox" value="checked" data-ng-model="plateChecked" data-ng-click="clickCheckBox()" >
-					</td>
-				</tr>
-				-->
-		</div>
+					</div>
+				</div>
+			</div>
+
 		<br>
 	</div>
 </section>
