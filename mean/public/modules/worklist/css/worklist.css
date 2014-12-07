@@ -5,8 +5,9 @@
     clear: both;
 }
 
-.box{
+.data{
     border: 1px solid #A3A3A3;
+    text-align: center;
 }
 
 .aPlate:hover{
