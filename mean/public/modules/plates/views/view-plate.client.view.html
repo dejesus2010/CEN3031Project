@@ -44,10 +44,20 @@
                     <span class="value-pair-right">{{plate.samples.length}}</span>
                 </div>
             </div>
-            <div ng-if="plate.stage > 1" class="row">
-            	<div class="text-center">
-					<button class="btn btn-warning" data-ng-click="decrementPlate(plate)">
+    	</div>
+    	<br>
+    	<div class="bs-callout text-center">
+    		<h3>Admin Functions</h3>
+    		<p>
+            <div class="row overview-row">
+            	<div class="overview-col-left text-center">
+					<button ng-disabled="plate.stage <= 1" class="btn btn-warning" data-ng-click="decrementPlate(plate)">
 						Revert Plate One Step	
+					</button>
+            	</div>
+            	<div class="overview-col-right text-center">
+					<button class="btn btn-danger" data-ng-click="resetPlate(plate)">
+						Reset Plate
 					</button>
             	</div>
 	    	</div>

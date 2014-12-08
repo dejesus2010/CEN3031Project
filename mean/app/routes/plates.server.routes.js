@@ -43,6 +43,8 @@ module.exports = function(app) {
   app.route('/plates/decrement/')
     .post(plates.hasAdminAuthorization, plates.decrementStep);
 
+  app.route('/plates/reset/')
+  	.post(plates.hasAdminAuthorization, plates.resetPlate);
   // Finish by binding the plate middleware
   app.param('plateId', plates.plateByID);
 };

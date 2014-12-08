@@ -133,7 +133,6 @@ exports.emailPlateLayout = function(req) {
 };
 
 exports.generatePlates = function(req){
-    console.log('we are in generatePlates');
     var project = req.project;
     var fn = 'app/tmp/plate_layouts/' + project.projectCode + '.xlsx';
     var plateWorkbook = xlsx.readFile(fn);
@@ -156,17 +155,16 @@ exports.generatePlates = function(req){
     var plateIndex = 0;
     while(index < data.length){
     	var curPlate = project.plates[plateIndex];
-	console.log('CurPlate: ' + curPlate);
         for(var i = 0; i < 96 && index < data.length; ++i){
             var propNum = 1;
             var row = data[index];
             var curSample = new Sample();
-	    if (i < 10) {
-		    curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + '0' + (parseInt(i%12,10) + 1); 
-	    }
-	    else {
-		    curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + (parseInt(i%12,10) + 1); 
-	    }
+		    if (i < 10) {
+			    curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + '0' + (parseInt(i%12,10) + 1); 
+		    }
+		    else {
+			    curSample.sampleCode = curPlate.plateCode + '_W' + String.fromCharCode(65 + parseInt(i/12,10)) + (parseInt(i%12,10) + 1); 
+		    }
             for(var key in row){
                 if(propNum === 6){ //volume
                     curSample.volume = row[key];
@@ -181,8 +179,8 @@ exports.generatePlates = function(req){
             curPlate.samples.push(curSample);
             ++index;
         }
-	++plateIndex;
-	curPlate.save(logPlateErr);
+        ++plateIndex;
+        curPlate.save(logPlateErr);
     }
 
     project.save(function(err){

@@ -83,7 +83,6 @@ angular.module('projects').controller('ProjectsController', ['$animate','$window
 				method: 'POST',
 				file: file
 			}).success(function(data, status, headers, config) {
-				console.log('success');
 				$http.post('projects/' + $scope.project._id + '/GeneratePlates');
 				$window.location.reload();
 			}).error(function(err) {

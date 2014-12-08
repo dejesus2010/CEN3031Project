@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Plate = mongoose.model('Plate'),
 	Customer = mongoose.model('Customer'),
+	Project = mongoose.model('Project'),
 	Organism = mongoose.model('Organism'),
 	User = mongoose.model('User'),
 	Log = mongoose.model('Log'),
@@ -21,6 +22,7 @@ exports.create = function(req, res) {
 
 	plate.save(function(err) {
 		if (err) {
+			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
@@ -197,6 +199,85 @@ exports.decrementStep = function(req, res) {
 		});
 	});
 };
+
+exports.resetPlate = function(req, res) {
+	Plate.findOne({_id: req.body._id}).populate('project').populate('logs').exec(function(err, plate) {
+		var oldLogs = plate.logs;
+		var oldProject = plate.project;
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else if (plate === null) {
+			return res.status(404).send({
+				message: 'Plate not found'
+			});
+		} 
+		plate.remove(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				var log = new Log({
+					user: req.user,
+					timestamp: Date.now(),
+					status: 'Resetting plate: ' + plate.plateCode + ' to stage: 0'
+				});
+				log.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						plate.logs.push(log._id);
+						plate.save(function(err) {
+							var resetPlate = new Plate({
+								plateCode: plate.plateCode,
+								logs: oldLogs,
+								project: oldProject._id
+							});
+							resetPlate.user = req.user;
+							resetPlate.save(function(err) {
+							if (err) {
+									return res.status(400).send({
+										message: errorHandler.getErrorMessage(err)
+									});
+								} else {
+									Project.findOne({_id: plate.project._id}).populate('plates').exec(function(err, project) {
+										if (err) {
+											return res.status(400).send({
+												message: errorHandler.getErrorMessage(err)
+											});
+										} else {
+											for(var i in project.plates) {
+												if (project.plates[i].plateCode === resetPlate.plateCode) {
+													project.plates[i] = null;
+												}
+											}
+											project.plates.push(resetPlate);
+											project.save(function(err) {
+												if(err) {
+													return res.status(400).send({
+														message: errorHandler.getErrorMessage(err)
+													});
+												}
+												else {
+													res.jsonp(resetPlate);
+												}
+											});
+										}
+									});
+								}
+							});
+						});
+					}
+				});
+			}
+		});
+	});
+};
+
 
 /**
  * List of all plates which have a user assigned to them
