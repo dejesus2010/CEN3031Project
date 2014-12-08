@@ -67,18 +67,10 @@ a:hover{
     border-right: 1px solid #A3A3A3;
 }
 
-.stageBody .row:nth-child(odd){
+.oddRow{
     background: #f9f9f9;
 }
 
-.stageBody .row:nth-child(odd):hover{
-    background-color: #f5f5f5;
-}
-
-/*
-site that helped solve transition problem:
-http://www.ng-newsletter.com/advent2013/#!/day/11#transitions
-*/
 .row.aPlate.ng-leave{
     -webkit-transition:all ease 0.3s;
     -moz-transition:all ease 0.3s;
@@ -103,3 +95,7 @@ http://www.ng-newsletter.com/advent2013/#!/day/11#transitions
     max-height: 0;
     opacity: 0;
 }
+
+/*
+remove button animation
+*/
