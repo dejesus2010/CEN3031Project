@@ -11,7 +11,7 @@ angular.module('plates').config(['$stateProvider',
     }).
   	state('viewPlate', {
       url: '/plates/:plateId',
-      templateUrl: 'modules/plates/views/plates.client.view.html'
+      templateUrl: 'modules/plates/views/view-plate.client.view.html'
     });
 	}
 ]);

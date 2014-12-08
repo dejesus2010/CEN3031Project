@@ -72,6 +72,12 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
         }
       });
     };
+    
+    $scope.viewSelectedPlate = function() {
+    	$scope.closeDialog(function() {
+		    $location.path('/plates/' + $scope.selectedPlate._id);
+    	});
+    };
 
     $scope.confirmAdd = function() {
       $scope.closeDialog();
@@ -99,10 +105,13 @@ angular.module('plates').controller('PlatesController', ['$scope', '$http', '$st
       $scope.grayOut = true;
     };
 
-    $scope.closeDialog = function() {
+    $scope.closeDialog = function(callback) {
       ngDialog.closeAll();
       $scope.error = '';
       $scope.grayOut = false;
+      if (callback) {
+    	  callback();
+      }
     };
 
     $scope.grid = {

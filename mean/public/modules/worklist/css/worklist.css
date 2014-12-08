@@ -50,6 +50,11 @@ a:hover{
     color: white;
 }
 
+.revertButton{
+    background: #0000FF;
+    color: white;
+}
+
 .table{
     margin-bottom: 0;
 }

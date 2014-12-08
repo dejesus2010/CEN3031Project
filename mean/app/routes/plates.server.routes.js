@@ -40,6 +40,8 @@ module.exports = function(app) {
   app.route('/plates/increment/')
     .post(plates.hasAuthorization, plates.incrementStep);
 
+  app.route('/plates/decrement/')
+    .post(plates.hasAuthorization, plates.decrementStep);
 
   // Finish by binding the plate middleware
   app.param('plateId', plates.plateByID);

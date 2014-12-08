@@ -57,7 +57,9 @@ exports.update = function(req, res) {
 		} else {
 			plate.logs.push(log._id);
 			plate.save(function(err) {
+				console.log(err);
 				if (err) {
+					console.log('here');
 					Log.remove({id: log._id}).exec();
 					return res.status(400).send({
 						message: errorHandler.getErrorMessage(err)
@@ -119,7 +121,7 @@ exports.list = function(req, res) {
 };
 
 exports.incrementStep = function(req, res) {
-	Plate.findOne({_id: req.body._id}).exec(function(err, plate) {
+	Plate.findOne({_id: req.body._id}).populate('project').exec(function(err, plate) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -130,6 +132,45 @@ exports.incrementStep = function(req, res) {
 			});
 		} 
 		plate.stage++;
+		var log = new Log({
+			user: req.user,
+			timestamp: Date.now(),
+			status: 'Updating plate: ' + plate.plateCode + ' to stage: ' + plate.stage	
+		});
+		log.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				plate.logs.push(log._id);
+				plate.save(function(err) {
+					if (err) {
+						Log.remove({id: log._id}).exec();
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						res.jsonp(plate);
+					}
+				});
+			}
+		});
+	});
+};
+
+exports.decrementStep = function(req, res) {
+	Plate.findOne({_id: req.body._id}).exec(function(err, plate) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else if (plate === null) {
+			return res.status(404).send({
+				message: 'Plate not found'
+			});
+		} 
+		plate.stage--;
 		var log = new Log({
 			user: req.user,
 			timestamp: Date.now(),
@@ -321,7 +362,7 @@ exports.unassignPlate = function(req, res) {
 exports.platesByUser = function(req, res) {
 	var userId = req.user._id;
 
-	Plate.find({assignee: userId}).populate('samples').populate('project').exec(function(err, doc) {
+	Plate.find({assignee: userId}).populate('samples').populate('project').populate('project.customer').populate('project.organism').exec(function(err, doc) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -368,7 +409,7 @@ exports.numberOfPlatesAssignedToUser = function(req, res){
  * Plate middleware
  */
 exports.plateByID = function(req, res, next, id) {
-	Plate.findById(id).populate('user', 'displayName').exec(function(err, plate) {
+	Plate.findById(id).populate('user', 'displayName').populate('project').populate('assignee', 'displayName').exec(function(err, plate) {
 		if (err) return next(err);
 		if (!plate) return next(new Error('Failed to load Plate ' + id));
 		req.plate = plate;

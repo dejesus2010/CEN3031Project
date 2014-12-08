@@ -1,0 +1,56 @@
+<section data-ng-controller="IndividualPlateController" xmlns="http://www.w3.org/1999/html">
+    <div class="min-content-width">
+        <div class="page-header">
+            <h2 class="text-center" style="margin: 0 auto;">Plate: {{plate.plateCode}}</h2>
+        </div>
+        <div class="bs-callout" >
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                        <span class="value-pair-left">Plate Code</span>
+                        <span class="value-pair-right">{{plate.plateCode}}</span>
+                </div>
+                <div class="overview-col-right">
+                        <span class="value-pair-left">Due Date</span>
+                        <span class="value-pair-right">{{project.due | date}}</span>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <span class="value-pair-left">Customer</span>
+                    <span class="value-pair-right">{{project.customer.name}}</span>
+                </div>
+                <div class="overview-col-right">
+                    <span class="value-pair-left">Stage</span>
+                    <span class="value-pair-right">{{plate.stage}}</span>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                    <span class="value-pair-left">Organism</span>
+                    <span class="value-pair-right">{{project.organism.name}}</span>
+                </div>
+                <div class="overview-col-right">
+                        <span class="value-pair-left">Assignee</span>
+                        <span class="value-pair-right">{{plate.assignee.displayName}}</span>
+                </div>
+            </div>
+            <div class="row overview-row">
+                <div class="overview-col-left">
+                        <span class="value-pair-left">Project</span>
+                        <a class="value-pair-right" href="#!/projects/{{project._id}}">{{project.projectCode}}</a>
+                </div>
+                <div class="overview-col-right">
+                    <span class="value-pair-left">#Samples</span>
+                    <span class="value-pair-right">{{plate.samples.length}}</span>
+                </div>
+            </div>
+            <div ng-if="plate.stage > 1" class="row">
+            	<div class="text-center">
+					<button class="btn btn-warning" data-ng-click="decrementPlate(plate)">
+						Revert Plate One Step	
+					</button>
+            	</div>
+	    	</div>
+	    </div>
+    </div>
+</section>

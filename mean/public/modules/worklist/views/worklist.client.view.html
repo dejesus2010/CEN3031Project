@@ -11,7 +11,7 @@
 		<div class="boxed" ng-repeat="stagePlates in groupOfPlates" ng-if="stagePlates.length > 0" my-worklist-selected>
 
 			<div class="row">
-				<div class="col-xs-6 col-sm-9 col-md-10">
+				<div class="col-xs-6 col-xs-6 col-sm-9 col-md-10">
 					<h3>{{stageNumberToName[stagePlates[0].stage]}}</h3>
 					<a data-ng-click="showEdit = !showEdit">{{showEdit ? 'done' : 'edit'}}</a>
 				</div>
@@ -32,6 +32,7 @@
 
 				<tr class="aPlate" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
 					<td class="removeButton" ng-show="showEdit" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</td>
+					<!--td class="revertButton" ng-show="showEdit" ng-click="remove(plate, stagePlates, selectedPlates)">Revert 1 Step</td-->
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</td>
 					<td data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</td>
 					<td>
