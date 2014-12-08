@@ -4,6 +4,7 @@ angular.module('plates').controller('IndividualPlateController', ['$scope', '$ht
   function($scope, $http, $stateParams, $location, $window, Authentication, Plates, Projects) {
     $scope.authentication = Authentication;
     $scope.project = {};
+    $scope.errorMessage = '';
 
     $scope.plate = Plates.get({plateId: $stateParams.plateId},
     		function(err, res) {
@@ -20,7 +21,7 @@ angular.module('plates').controller('IndividualPlateController', ['$scope', '$ht
 			    callback(error);
     		}
     	}).error(function(err) {
-    		console.log(err);
+    		$scope.errorMessage = err;
     	});
 
     };

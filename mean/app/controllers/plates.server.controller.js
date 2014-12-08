@@ -434,4 +434,19 @@ exports.hasAuthorization = function(req, res, next) {
 	});
 };
 
+/**
+ * Plate admin auth middleware
+ */
+exports.hasAdminAuthorization = function(req, res, next) {
+	User.findOne({_id: req.user._id}).exec(function(err, user) {
+        if (err) {
+            return next(err);
+        }
+		if (!(_.contains(user.roles,'admin'))) { // jshint ignore:line
+			return res.status(403).send('User is not authorized, contact Admin');
+		}
+		next();
+	});
+};
+
 

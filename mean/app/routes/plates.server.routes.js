@@ -41,7 +41,7 @@ module.exports = function(app) {
     .post(plates.hasAuthorization, plates.incrementStep);
 
   app.route('/plates/decrement/')
-    .post(plates.hasAuthorization, plates.decrementStep);
+    .post(plates.hasAdminAuthorization, plates.decrementStep);
 
   // Finish by binding the plate middleware
   app.param('plateId', plates.plateByID);
