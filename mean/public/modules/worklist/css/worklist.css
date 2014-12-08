@@ -90,6 +90,12 @@ remove button
     color: white;
 }
 
+.dataCell.col-xs-0.col-sm-0.col-md-0.col-lg-0 {
+    width: 0;
+    padding: 8px 0 8px 0;
+}
+
+/*
 .removeButton{
     transition: width ease-in 3s;
 }
@@ -106,6 +112,20 @@ remove button
 .removeButton.ng-animate.ng-hide-remove.col-xs-3-add.col-sm-3-add.col-md-3-add.col-lg-3-add.ng-hide-remove-active.col-xs-3.col-sm-3.col-md-3.col-lg-3.col-xs-3-add-active.col-sm-3-add-active.col-md-3-add-active.col-lg-3-add-active{
     width: 33.33333333%;
 }
+*/
+.removeButton.dataCell.removeButtonHidden{
+    width: 0;
+    padding: 0;
+    height: 0;
+}
+
+/*
+.removeButton.dataCell.ng-animate.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.removeButtonHidden-add.removeButtonHidden.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active.removeButtonHidden-add-active{
+    height: 20px;
+    min-height: 20px;
+    padding: 8px;
+}
+*/
 
 /********************************/
 
@@ -117,21 +137,24 @@ remove button
 }
 
 .dataCell{
-    transition: width ease-in 3s;
+    transition: width ease-in 8s, padding ease-in 8s;
 }
 
 /*
 Remove button
 */
+/*
 .dataCell.ng-animate.ng-hide-add.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.ng-hide.ng-hide-add-active.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active{
    width: 25%;
 }
+*/
 
 /*
 Show button
 */
 
+/*
 .dataCell.ng-animate.ng-hide-remove.col-xs-3-add.col-sm-3-add.col-md-3-add.col-lg-3-add.ng-hide-remove-active.col-xs-3.col-sm-3.col-md-3.col-lg-3.col-xs-3-add-active.col-sm-3-add-active.col-md-3-add-active.col-lg-3-add-active{
     width: 33.33333333%;
 }
-
+*/
