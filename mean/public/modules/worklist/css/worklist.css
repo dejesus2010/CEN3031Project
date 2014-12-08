@@ -30,6 +30,11 @@ a:hover{
     display: block;
 }
 
+.oddRow{
+    background: #f9f9f9;
+}
+
+
 .aPlate{
     border-top: 1px solid #ddd;
     border-right: 1px solid #A3A3A3;
@@ -41,34 +46,14 @@ a:hover{
     cursor: pointer;
 }
 
-.data{
-    text-align: center;
-    horiz-align: center;
-    vertical-align: middle;
-    padding: 8px;
-}
-
 .performButton{
     float: right;
-}
-
-.removeButton{
-    background: #dd4444;
-    color: white;
-    text-align: center;
-    horiz-align: center;
-    vertical-align: middle;
-    padding: 8px;
 }
 
 .row.aPlate:last-of-type{
     border-bottom: 1px solid #A3A3A3;
     border-left: 1px solid #A3A3A3;
     border-right: 1px solid #A3A3A3;
-}
-
-.oddRow{
-    background: #f9f9f9;
 }
 
 .row.aPlate.ng-leave{
@@ -97,5 +82,56 @@ a:hover{
 }
 
 /*
-remove button animation
+remove button
 */
+
+.removeButton{
+    background: #dd4444;
+    color: white;
+}
+
+.removeButton{
+    transition: width ease-in 3s;
+}
+
+.removeButton.ng-hide{
+    width: 0;
+    padding: 8px 0 8px 0;
+}
+
+.removeButton.ng-animate.ng-hide-add.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.ng-hide.ng-hide-add-active.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active{
+    width: 25%;
+}
+
+.removeButton.ng-animate.ng-hide-remove.col-xs-3-add.col-sm-3-add.col-md-3-add.col-lg-3-add.ng-hide-remove-active.col-xs-3.col-sm-3.col-md-3.col-lg-3.col-xs-3-add-active.col-sm-3-add-active.col-md-3-add-active.col-lg-3-add-active{
+    width: 33.33333333%;
+}
+
+/********************************/
+
+.dataCell{
+    text-align: center;
+    horiz-align: center;
+    vertical-align: middle;
+    padding: 8px;
+}
+
+.dataCell{
+    transition: width ease-in 3s;
+}
+
+/*
+Remove button
+*/
+.dataCell.ng-animate.ng-hide-add.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.ng-hide.ng-hide-add-active.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active{
+   width: 25%;
+}
+
+/*
+Show button
+*/
+
+.dataCell.ng-animate.ng-hide-remove.col-xs-3-add.col-sm-3-add.col-md-3-add.col-lg-3-add.ng-hide-remove-active.col-xs-3.col-sm-3.col-md-3.col-lg-3.col-xs-3-add-active.col-sm-3-add-active.col-md-3-add-active.col-lg-3-add-active{
+    width: 33.33333333%;
+}
+
