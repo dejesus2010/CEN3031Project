@@ -1,0 +1,115 @@
+h3{
+    display: inline !important;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+.stageHeader{
+    border-top: 1px solid #A3A3A3;
+    border-right: 1px solid #A3A3A3;
+    border-left: 1px solid #A3A3A3;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.platesHeader{
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #A3A3A3;
+    border-left: 1px solid #A3A3A3;
+    border-spacing: 0;
+    border-collapse: collapse;
+    text-align: center;
+    horiz-align: center;
+    vertical-align: middle;
+}
+
+.heading{
+    padding: 8px;
+}
+
+.oddRow{
+    background: #f9f9f9;
+}
+
+
+.aPlate{
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #A3A3A3;
+    border-left: 1px solid #A3A3A3;
+}
+
+.aPlate:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.performButton{
+    float: right;
+}
+
+.row.aPlate:last-of-type{
+    border-bottom: 1px solid #A3A3A3;
+    border-left: 1px solid #A3A3A3;
+    border-right: 1px solid #A3A3A3;
+}
+
+.row.aPlate.ng-leave{
+    -webkit-transition:all ease 0.3s;
+    -moz-transition:all ease 0.3s;
+    -o-transition:all ease 0.3s;
+    transition:all ease 0.3s;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+/*
+(what the element will animate from)
+*/
+.row.aPlate.ng-leave{
+    max-height: 40px;
+    opacity: 1;
+}
+
+/*
+(what the element will animate towards))
+*/
+.row.aPlate.ng-leave.ng-leave-active{
+    max-height: 0;
+    opacity: 0;
+}
+
+
+
+/***************************************************/
+
+/*
+remove button
+*/
+
+.removeButton{
+    background: #dd4444;
+    color: white;
+}
+
+/********************************/
+
+.platesHeader > div, .aPlate > div{
+    transition: width linear 0.1s, padding linear 0.1s, margin linear 0.1s;
+    transform: translateZ(0);
+}
+
+.dataCell{
+    text-align: center;
+    horiz-align: center;
+    vertical-align: middle;
+    padding: 8px;
+}
+
+.col-xs-0.col-sm-0.col-md-0.col-lg-0 {
+    width: 0;
+    float: left;
+    padding: 8px 0 8px 0;
+    overflow: hidden;
+}

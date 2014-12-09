@@ -171,11 +171,6 @@ td{
     vertical-align: middle;
 }
 
-.stageHeader{
-    margin-top: 3px;
-    margin-left: 0.1px;
-}
-
 a:hover{
     cursor: pointer;
 }
