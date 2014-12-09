@@ -8,16 +8,16 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 		$scope.groupOfPlates = [15];
 
 		$scope.stageNumberToName = ['N/A', 'Sample Arrival', 'DNA Quantification', 'DNA Normalization', 'DNA Shearing',
-		                            'End Repair & Phosphorylation', 'Adenylation', 'Adaptor Ligation', 'Size Selection', 
-		                            'PCR Enrichment', 'PCR Reaction Cleanup', 'Library Quantification', 'Sample Pooling', 
+		                            'End Repair & Phosphorylation', 'Adenylation', 'Adaptor Ligation', 'Size Selection',
+		                            'PCR Enrichment', 'PCR Reaction Cleanup', 'Library Quantification', 'Sample Pooling',
 		                            'Hybridization', 'Sequencing'];
 		$scope.stageNumberToUrl = ['/', '/steps/sample-arrival', '/steps/dna-quantification', '/steps/normalization',
-		                           '/steps/shearing','/steps/end-repair', '/steps/adenylation', '/steps/ligation', 
-		                           '/steps/size-selection', '/steps/pcr-enrichment', '/steps/pcr-cleanup', 
-		                           '/steps/library-quantification', '/steps/pooling', '/steps/hybridization', 
+		                           '/steps/shearing','/steps/end-repair', '/steps/adenylation', '/steps/ligation',
+		                           '/steps/size-selection', '/steps/pcr-enrichment', '/steps/pcr-cleanup',
+		                           '/steps/library-quantification', '/steps/pooling', '/steps/hybridization',
 		                           '/steps/sequencing'];
 
-		$scope.platesExist = false;
+		$scope.platesExist = true;
 
 		// retrieves plates and saves the plates into groups in the groupOfPlates array
 		$scope.init = function(){
@@ -27,6 +27,7 @@ angular.module('worklist').controller('WorklistController', ['$scope', '$http', 
 				$scope.plates = plates;
 				if($scope.plates.length < 1){
 					console.log('Received no plates');
+					$scope.platesExist = false;
 					return;
 				}
 				else{
