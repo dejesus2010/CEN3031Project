@@ -27,7 +27,6 @@ a:hover{
 
 .heading{
     padding: 8px;
-    display: block;
 }
 
 .oddRow{
@@ -81,6 +80,10 @@ a:hover{
     opacity: 0;
 }
 
+
+
+/***************************************************/
+
 /*
 remove button
 */
@@ -90,44 +93,12 @@ remove button
     color: white;
 }
 
-.dataCell.col-xs-0.col-sm-0.col-md-0.col-lg-0 {
-    width: 0;
-    padding: 8px 0 8px 0;
-}
-
-/*
-.removeButton{
-    transition: width ease-in 3s;
-}
-
-.removeButton.ng-hide{
-    width: 0;
-    padding: 8px 0 8px 0;
-}
-
-.removeButton.ng-animate.ng-hide-add.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.ng-hide.ng-hide-add-active.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active{
-    width: 25%;
-}
-
-.removeButton.ng-animate.ng-hide-remove.col-xs-3-add.col-sm-3-add.col-md-3-add.col-lg-3-add.ng-hide-remove-active.col-xs-3.col-sm-3.col-md-3.col-lg-3.col-xs-3-add-active.col-sm-3-add-active.col-md-3-add-active.col-lg-3-add-active{
-    width: 33.33333333%;
-}
-*/
-.removeButton.dataCell.removeButtonHidden{
-    width: 0;
-    padding: 0;
-    height: 0;
-}
-
-/*
-.removeButton.dataCell.ng-animate.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.removeButtonHidden-add.removeButtonHidden.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active.removeButtonHidden-add-active{
-    height: 20px;
-    min-height: 20px;
-    padding: 8px;
-}
-*/
-
 /********************************/
+
+.platesHeader > div, .aPlate > div{
+    transition: width linear 0.1s, padding linear 0.1s, margin linear 0.1s;
+    transform: translateZ(0);
+}
 
 .dataCell{
     text-align: center;
@@ -136,25 +107,9 @@ remove button
     padding: 8px;
 }
 
-.dataCell{
-    transition: width ease-in 8s, padding ease-in 8s;
+.col-xs-0.col-sm-0.col-md-0.col-lg-0 {
+    width: 0;
+    float: left;
+    padding: 8px 0 8px 0;
+    overflow: hidden;
 }
-
-/*
-Remove button
-*/
-/*
-.dataCell.ng-animate.ng-hide-add.col-xs-3-remove.col-sm-3-remove.col-md-3-remove.col-lg-3-remove.ng-hide.ng-hide-add-active.col-xs-3-remove-active.col-sm-3-remove-active.col-md-3-remove-active.col-lg-3-remove-active{
-   width: 25%;
-}
-*/
-
-/*
-Show button
-*/
-
-/*
-.dataCell.ng-animate.ng-hide-remove.col-xs-3-add.col-sm-3-add.col-md-3-add.col-lg-3-add.ng-hide-remove-active.col-xs-3.col-sm-3.col-md-3.col-lg-3.col-xs-3-add-active.col-sm-3-add-active.col-md-3-add-active.col-lg-3-add-active{
-    width: 33.33333333%;
-}
-*/

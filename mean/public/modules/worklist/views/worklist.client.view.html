@@ -22,7 +22,7 @@
 
 			<div class="stageBody">
 				<div class="row platesHeader">
-					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" ng-show="showEdit">&nbsp;</div>
+					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-0 col-sm-0 col-md-0 col-lg-0':!showEdit}" class="heading">&nbsp;</div>
 					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" >Plate Code</div>
 					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" >Number of Samples</div>
 					<div ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" class="heading" >
@@ -31,7 +31,7 @@
 				</div>
 
 				<div class="row aPlate" ng-class-odd="'oddRow'" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
-					<div class="removeButton dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, ' col-xs-0 col-sm-0 col-md-0 col-lg-0':!showEdit}" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</div>
+					<div class="removeButton dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-0 col-sm-0 col-md-0 col-lg-0':!showEdit}" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</div>
 					<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</div>
 					<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</div>
 					<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" >
