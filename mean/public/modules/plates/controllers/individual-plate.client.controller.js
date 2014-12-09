@@ -31,7 +31,7 @@ angular.module('plates').controller('IndividualPlateController', ['$scope', '$ht
     	var emptyPlate = {};
 
     	$http.post('plates/reset', $scope.plate).success(function() {
-    		$location.path('projects');
+    		$location.path('plates/listPlates');
     	});
     };
 

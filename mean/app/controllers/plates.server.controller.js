@@ -250,9 +250,11 @@ exports.resetPlate = function(req, res) {
 												message: errorHandler.getErrorMessage(err)
 											});
 										} else {
-											for(var i in project.plates) {
-												if (project.plates[i].plateCode === resetPlate.plateCode) {
-													project.plates[i] = null;
+											for(var i = 0; i < project.plates.length; ++i) {
+												var curPlateCode = project.plates[i].plateCode;
+												if (curPlateCode === resetPlate.plateCode) {
+													project.plates[i].split(i, 1);
+													--i;
 												}
 											}
 											project.plates.push(resetPlate);
