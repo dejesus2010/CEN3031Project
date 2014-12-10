@@ -104,3 +104,8 @@
 .tab:hover{
     cursor: pointer;
 }
+
+.viewPlateButton.ngdialog-button.ngdialog-button-secondary{
+    padding-right: 4px;
+    padding-left: 4px;
+}
