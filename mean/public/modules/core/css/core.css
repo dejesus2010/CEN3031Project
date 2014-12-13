@@ -17,3 +17,16 @@
 .dropdown:hover .dropdown-menu{
 	display: block;
 }
+
+header{
+	box-shadow: -2px 1.5px 5px rgba(0, 0, 0, 0.12);
+	background: #2F6FAD;
+}
+
+header *{
+	color: white;
+}
+
+.navbar-toggle > span{
+	background-color: white;
+}
