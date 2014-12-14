@@ -28,12 +28,12 @@
 			</div >
 		</div>
 
-		<div class="row aPlate" ng-class-odd="'oddRow'" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate my-plate-object="plate" my-selected-plates="selectedPlates" my-plate-checked="plateChecked" my-clicked-not-on-checkbox="clickNotOnCheckBox" my-clicked-checkbox="clickCheckBox">
+		<div class="row aPlate" ng-class-odd="'oddRow'" ng-repeat="plate in stagePlates | orderBy:['plateCode', 'samples.length']:true" my-worklist-plate >
 			<div class="removeButton dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-0 col-sm-0 col-md-0 col-lg-0':!showEdit}" ng-click="remove(plate, stagePlates, selectedPlates)">Remove</div>
-			<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" data-ng-click="clickNotOnCheckBox()">{{plate.plateCode}}</div>
-			<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" data-ng-click="clickNotOnCheckBox()">{{plate.samples.length}}</div>
-			<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}" >
-				<input type="checkbox" value="checked" data-ng-model="plateChecked" data-ng-click="clickCheckBox()" >
+			<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}">{{plate.plateCode}}</div>
+			<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}">{{plate.samples.length}}</div>
+			<div class="dataCell" ng-class="{'col-xs-3 col-sm-3 col-md-3 col-lg-3':showEdit, 'col-xs-4 col-sm-4 col-md-4 col-lg-4':!showEdit}">
+				<input id="checkbox" type="checkbox" value="checked" data-ng-model="plateChecked">
 			</div>
 		</div>
 

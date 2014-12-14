@@ -120,7 +120,7 @@ remove button
 /********************************/
 
 .platesHeader > div, .aPlate > div{
-    transition: width linear 0.1s, padding linear 0.1s, margin linear 0.1s;
+    transition: width ease 0.1s, padding ease 0.1s, margin linear 0.1s;
     transform: translateZ(0);
 }
 

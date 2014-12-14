@@ -52,7 +52,7 @@ angular.module('worklist').directive('myWorklistSelected', [
 		// before. If the plate has already been selected, remove it from the selected plates, because the
 		// user is deselecting the plate. If it hasn't, add it to the selected plates
 		var selectPlate = function(selectedPlates, plateToAdd){
-			var IndexOfPlateInSelectedPlates = indexInselectedPlates(selectedPlates, plateToAdd);
+			var IndexOfPlateInSelectedPlates = indexInSelectedPlates(selectedPlates, plateToAdd);
 
 			if(IndexOfPlateInSelectedPlates === -1){
 				selectedPlates.push(plateToAdd);
@@ -62,7 +62,7 @@ angular.module('worklist').directive('myWorklistSelected', [
 			}
 		};
 
-		var indexInselectedPlates = function(selectedPlates, plate){
+		var indexInSelectedPlates = function(selectedPlates, plate){
 			var result = -1;
 
 			for(var i = 0; i < selectedPlates.length; i++){
@@ -77,31 +77,36 @@ angular.module('worklist').directive('myWorklistSelected', [
 
 		return {
 			restrict: 'A',
-			scope: {
-				plate: '=myPlateObject',
-				selectedPlates: '=mySelectedPlates',
-				plateChecked: '=myPlateChecked',
-				clickNotOnCheckBox: '=myClickedNotOnCheckbox',
-				clickCheckBox: '=myClickedCheckbox'
-			},
 			compile: function(tElem, tAttrs){
 				return{
 					pre: function (scope,element,attrs){
-
+						scope.plateChecked = false;
 					},
 					post: function (scope, element, attrs) {
 
-						scope.clickNotOnCheckBox = function(){
+						var clickNotOnCheckBox = function(){
 							scope.plateChecked = !scope.plateChecked;
 							selectPlate(scope.selectedPlates, scope.plate);
+							scope.$apply();
 						};
 
-						scope.clickCheckBox = function(){
+						var clickOnCheckBox = function(){
 							selectPlate(scope.selectedPlates, scope.plate);
+							scope.$apply();
 						};
 
 						scope.$on('selectedAll', function(event, selectedAllPlates){
 							scope.plateChecked = selectedAllPlates;
+						});
+
+						element.bind('click', function(event){
+							var clickedOnElement = angular.element(event.toElement)[0];
+							if(clickedOnElement.id === 'checkbox'){
+								clickOnCheckBox();
+							}
+							else{
+								clickNotOnCheckBox();
+							}
 						});
 
 					}
